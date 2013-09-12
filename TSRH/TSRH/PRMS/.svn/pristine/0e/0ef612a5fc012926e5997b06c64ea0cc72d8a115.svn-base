@@ -1,0 +1,106 @@
+<%@page import="edu.uta.tsrh.db.*"%>
+<%@page import="edu.uta.tsrh.model.Permissions" %>
+<%@page import="edu.uta.tsrh.json.*"%>
+<%@page import="javax.servlet.http.HttpSession"%>
+<%@page language="java" import="java.util.*" %>
+<% 
+
+// Create permissions map
+HashMap<String, Boolean> mappedpermissions = new HashMap<String, Boolean>();
+
+// Log the uri
+//System.out.println(request.getRequestURI());
+
+// Record the uri
+String checkPermission = request.getRequestURI();
+
+// Try to get permissions from session
+String p = (String)session.getAttribute("permissions");
+
+// Create blank permissions
+Permissions permissions = null;
+
+// If permissions in session, fill permissions from that, otherwise default everything as false
+
+
+if( p != null && ! p.equals("") )
+    permissions = new Permissions(p);
+else
+    permissions = new Permissions();
+
+// Log the permissions
+//System.out.println(permissions.toString());
+
+// Make sure permissions have been set (if not, redirect to home)
+if(permissions != null)
+{
+    // Fill in all uri permissions 
+    
+    // Consultations
+    mappedpermissions.put("/TSRH/test.jsp", permissions.getViewConsultations());
+    mappedpermissions.put("/TSRH/testrequest.jsp", permissions.getViewConsultations());
+    mappedpermissions.put("/TSRH/recordtestrequest.jsp", permissions.getViewConsultations());
+    mappedpermissions.put("/TSRH/recordtestresult.jsp", permissions.getAddConsultations());
+    mappedpermissions.put("/TSRH/testconsultation.jsp", permissions.getAddConsultations());
+    mappedpermissions.put("/TSRH/recordtestconsultation.jsp", permissions.getViewConsultations());
+
+    // Files
+    mappedpermissions.put("/TSRH/filetracking.jsp", permissions.getViewFile());
+    mappedpermissions.put("/TSRH/filetrackingpage.org", permissions.getViewFile());
+    mappedpermissions.put("/TSRH/filetracking/todaypendingfilespage.org", permissions.getViewFile());
+    mappedpermissions.put("/TSRH/filetracking/todaypendingfiles.org", permissions.getViewFile());
+    mappedpermissions.put("/TSRH/filetracking/searchquery.org", permissions.getViewFile());
+    mappedpermissions.put("/TSRH/filetracking/search/results.org", permissions.getViewFile());
+    mappedpermissions.put("/TSRH/filetracking/file/historypage.org", permissions.getViewFile());
+    mappedpermissions.put("/TSRH/filetracking/file/historyquery.org", permissions.getViewFile());
+    mappedpermissions.put("/TSRH/filetracking/file/historyquery.org", permissions.getMoveFile());
+    mappedpermissions.put("/TSRH/filetracking/file/checkoutquery.org", permissions.getMoveFile());
+    mappedpermissions.put("/TSRH/filetracking/file/checkinpage.org", permissions.getMoveFile());
+    mappedpermissions.put("/TSRH/filetracking/file/checkinquery.org", permissions.getMoveFile());
+    mappedpermissions.put("/TSRH/filetracking/file/transferpage.org", permissions.getMoveFile());
+    mappedpermissions.put("/TSRH/filetracking/file/transferquery.org", permissions.getMoveFile());
+    mappedpermissions.put("/TSRH/filetracking/file/historypage.org", permissions.getMoveFile());
+    mappedpermissions.put("/TSRH/filetracking/file/historyquery.org", permissions.getMoveFile());
+    mappedpermissions.put("/TSRH/filetracking/file/pendingdatespage.org", permissions.getViewFile());
+    mappedpermissions.put("/TSRH/filetracking/file/pendingdates/add.org", permissions.getEditFile());
+    mappedpermissions.put("/TSRH/filetracking/file/pendingdates/addDates.org", permissions.getEditFile());
+
+    // Alerts
+    mappedpermissions.put("/TSRH/notification.jsp", permissions.getAddAlert());
+    mappedpermissions.put("/TSRH/setAlert.jsp", permissions.getAddAlert());
+
+    // Phone
+    mappedpermissions.put("/TSRH/phone.jsp", permissions.getViewPhone());
+    mappedpermissions.put("/TSRH/phoneEditSelector.jsp", permissions.getViewPhone());
+    mappedpermissions.put("/TSRH/phoneChooseNote.jsp", permissions.getViewPhone());
+    mappedpermissions.put("/TSRH/phoneConvView.jsp", permissions.getViewPhone());
+    mappedpermissions.put("/TSRH/phoneEditConfirmed.jsp", permissions.getEditPhone());
+    mappedpermissions.put("/TSRH/phoneaddconfirm.jsp", permissions.getAddPhone());
+
+    // Users
+    mappedpermissions.put("/TSRH/Admin.jsp", permissions.getViewUser());
+    mappedpermissions.put("/TSRH/AdminAdd.jsp", permissions.getAddUser());
+    mappedpermissions.put("/TSRH/AdminAddResults.jsp", permissions.getAddUser());
+    mappedpermissions.put("/TSRH/AdminAddUser.jsp", permissions.getAddUser());
+    mappedpermissions.put("/TSRH/AdminEdit.jsp", permissions.getEditUser());
+    mappedpermissions.put("/TSRH/AdminEditResults.jsp", permissions.getEditUser());
+    mappedpermissions.put("/TSRH/AdminEditUser.jsp", permissions.getEditUser());
+    
+
+    // Try to get permissions for the page being loaded
+    Object permission = mappedpermissions.get(checkPermission);
+
+    // If it wasn't found, it doesn't need permissions, if it was found, make sure they have permissions and redirect if they don't
+    if( permission != null && ! ((Boolean)permission) ) {
+        //System.out.println("SUCCESS TEST");
+ 
+        %><jsp:forward page="failpermissions.jsp" /><%
+        return;
+    }
+
+}
+else
+    %><jsp:forward page="failpermissions.jsp" /><%
+%>
+
+<% return; %>

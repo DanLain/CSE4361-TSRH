@@ -1,0 +1,177 @@
+<%-- 
+    Document   : userCreation
+    Created on : 13 Oct, 2012, 10:50:15 AM
+    Author     : Shwetha
+--%>
+
+<%@page import="edu.uta.tsrh.model.Role"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="edu.uta.tsrh.db.MySQLDBServices"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Create User</title>
+        <link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/layout.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/style.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/buttonCSS.css" type="text/css" media="all">
+         
+        <!-- Javascript -->
+        <script>
+            function validateForm()
+            {
+                var userNameError=document.forms["createUserForm"]["userName"].value;
+                var emailIdError = document.forms["createUserForm"]["emailId"].value;
+                var firstNameError = document.forms["createUserForm"]["firstName"].value;
+                var lastNameError = document.forms["createUserForm"]["lastName"].value;
+                
+                if (userNameError==null || userNameError=="" || 
+                    emailIdError ==null || emailIdError == "" || firstNameError==null ||firstNameError=="" 
+                    || lastNameError == null || lastNameError == "")
+                {
+                    alert("All the fields are required");
+                    return false;
+                 }
+                 
+                 return true;
+                
+            }
+            
+                       
+        </script>
+    </head>
+    
+    <body onLoad="new ElementMaxHeight();">
+    <div class="wrap">
+    <!-- header -->
+    <%@include file="AdminHeader.jsp" %>
+    <!-- Page Content -->
+    <form name="createUserForm" method="POST" onsubmit="return validateForm()" action="userCreationNav.jsp">
+    <section id="content">
+        <div class="container">
+            <div class="inside">
+                    <h2>User Creation</h2> 
+		    <p>
+                    <table width="700">
+                        <tr>
+                            <td style="padding: 5px">
+                                <h3>User Name </h3> 
+                            </td>
+                            <td style="padding: 5px">
+                                <input class="textbox" type="text" name=userName>
+                            </td>
+                            <td style="padding: 5px">
+                                
+                                <font color="red"> </font>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px">
+                                <h3>First Name </h3> 
+                            </td>
+                            <td style="padding: 5px">
+                                <input class="textbox" type="text" name="firstName">
+                            </td>
+                            <td>
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px">
+                                <h3>Last Name </h3> 
+                            </td>
+                            <td style="padding: 5px">
+                                <input class="textbox" type="text" name="lastName">
+                            </td>
+                            <td>
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px">
+                                <h3>Email Id </h3> 
+                            </td>
+                            <td style="padding: 5px">
+                                <input class="textbox" type="text" name="emailId">
+                            </td>
+                            <td>
+                                
+                            </td>
+                        </tr>
+                         <tr>
+                            <td style="padding: 5px">
+                                <h3>Role </h3> 
+                            </td>
+                           
+                            <td style="padding: 5px">
+                                
+                                <select class="selectColor" name="role" id="role">
+                                     <% 
+                                        MySQLDBServices dbServices = new MySQLDBServices();
+                                        ArrayList<Role> roleList = dbServices.getRoleList();
+
+                                        for(int i = 0; i<roleList.size();i++)
+                                        {                              
+                                    %>
+                                    <option value="<%=roleList.get(i).getRoleId()%>"><%=roleList.get(i).getRoleName() %></option>
+                                    <% } 
+                                    %>
+                                </select>
+                            </td>
+                            <td>
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px">    
+                            </td>
+                            <td style="padding: 5px">
+                                <input class="blue button" type="submit" name="Create" >
+                            </td>
+                            <td>
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                 <%
+                                    String created = request.getParameter("created");
+                                    if(created != null){
+                                    boolean created_bol = Boolean.parseBoolean(request.getParameter("created"));
+                                       if(created_bol){
+                                  %>
+                                  <h4 class="successMessage"> User Created Successfully</h4>
+                            </td>
+                            <td class="errorMessage">
+                                <%}else{ 
+                                        if(session.getAttribute("isDup")!= null){
+                                        
+                                    
+                                %>
+                                <h4 class="errorMessage"> <%= session.getAttribute("isDup") %></h4>
+                                  <%}
+                                        session.removeAttribute("isDup");
+                                        if(session.getAttribute("creationIssue") != null){
+                                            %>
+                                <h4 class="errorMessage"> <%= session.getAttribute("creationIssue") %></h4>         
+                                  <%
+                                        }
+                                        session.removeAttribute("creationIssue");
+                                    } }%>
+                            </td>
+                            <td>
+                                
+                            </td>
+                        </tr>
+                    </table>
+            </div>
+        </div>
+    </section>
+    </form>
+    </div>
+    <!-- footer -->
+    <%@include file="footer.jsp" %>
+    </body>
+</html>

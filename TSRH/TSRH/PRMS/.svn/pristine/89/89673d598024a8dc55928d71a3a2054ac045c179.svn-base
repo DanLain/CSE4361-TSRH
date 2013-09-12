@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<%
+    String pageName = request.getParameter("page");
+
+    String pagePath = null;
+    if (pageName != null) {
+        pagePath = "/" + pageName + ".jsp";
+    }
+%>
+<html lang="en">
+    <head>
+        <title>Home - Home Page |</title>
+        <meta charset="utf-8">
+     
+        <meta name="description" content="Place your description here">
+        <meta name="keywords" content="put, your, keyword, here">
+        <meta name="author" content="Templates.com - website templates provider">
+        <link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/layout.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/style.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/basic.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/buttonCSS.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/tableCSS.css" type="text/css" media="all">
+        <link href="DatePicker/kendo.common.min.css" rel="stylesheet">
+        <link href="DatePicker/kendo.blueopal.min.css" rel="stylesheet">
+        <script src="DatePicker/jquery.min.js"></script>
+        <script src="DatePicker/kendo.web.min.js"></script>
+        <script type="text/javascript" src="js/cufon-yui.js"></script>
+        <script type="text/javascript" src="js/cufon-replace.js"></script>
+        <script type="text/javascript" src="js/Myriad_Pro_400.font.js"></script>        
+        <script type="text/javascript">
+            
+            function upgardepicker() {
+                
+                $("#DOB").kendoDatePicker();                
+            }
+        </script>
+    </head>
+    <body id="page1" onload="upgardepicker()">
+        <div class="wrap">
+            <%@ include file="headers.jsp" %>           
+            <section id="content">
+                <div class="container">
+                    <div class="inside">
+                        <div class="wrapper indent">
+                            <div id="content_main">
+                                <% if (pagePath == null) {%>
+                                <article class="col-1">
+                                    <h2>We Do a Lot To Make the World Better!</h2>
+                                    <p><strong>TS<span class="img-box"><img src="images/icon1.jpg"></span>RHC </strong>treats children with orthopedic conditions, as well as certain related neurological disorders.Established in 1921, when a group of Texas Masons approached Dallas's first orthopedic surgeon Dr. W. B. Carrell about caring for children with polio regardless of the family's ability to pay.</p>
+                                </article>
+                            </div>
+                            <ul class="banners col-2">
+                                <li>
+                                    <p><%@ include file="Displayalert.jsp" %></p>
+                                </li>
+                            </ul>
+
+                            <%} else {%>
+                            <jsp:include page='<%= pagePath%>' />
+                        </div>
+                        <%}%>
+                    </div>
+                    <ul class="articles">
+                        <li>
+                            <div class="box">
+                                <span class="icon">
+                                    <img src="images/icon2.png"></span>
+                                <div class="inner">
+                                    <h3>Lab Test</h3>
+                                    <p>Sed ut perspiciatis ungomnis iste natus error sit volup tiatem lautium, totam rem aperiam.<br>& nbsp;<br></p>
+                                    <div>
+                                        <a href="#http://www.tsrhc.org/" class="link1"><span><span><strong>Main Page</strong></span></span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="box">
+                                <span class="icon">
+                                    <img src="images/icon3.png"></span>      
+                                <div class="inner">
+                                    <h3>Consultation</h3>
+                                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium vo- luptatum deleniti.</p>
+                                    <div>
+                                        <a href="#" class="link1"><span><span><strong>Read More</strong></span></span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="box">
+                                <span class="icon">
+                                    <img src="images/icon4.png"></span>           
+                                <div class="inner">
+                                    <h3>Track File</h3>
+                                    <p>Temporibus autem quibusdam et aut officiis <a href="#">debitis aut rerum</a> necessitatibus saepe eveniet ut et voluptates.</p>
+                                    <div>
+                                        <a href="#" class="link1"><span><span><strong>Read More</strong></span></span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+        <!-- footer -->
+        <%@ include file="footers.jsp" %>
+        <script type="text/javascript">Cufon.now();</script>
+    </body>
+</html>

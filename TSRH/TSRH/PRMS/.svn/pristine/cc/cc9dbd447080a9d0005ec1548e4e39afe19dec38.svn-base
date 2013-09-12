@@ -1,0 +1,133 @@
+<%-- 
+    Document   : header
+    Created on : Jan 28, 2012, 2:47:19 PM
+    Author     : Yogi
+--%>
+
+<%@page import="edu.uta.tsrh.model.User"%>
+<%@page import="edu.uta.tsrh.model.Resources"%>
+<%@page import="java.util.*"%>
+<%@page import="edu.uta.tsrh.db.commandpattern.Component"%>
+
+
+<script type="text/javascript">
+    
+    function showForm(){
+        document.getElementById("#login_prompt").style.visibility = 'hidden';
+        document.getElementById("#login_form").style.visibility = 'visible';
+        document.getElementById("#login_error").style.visibility = 'hidden';
+    }
+    
+    $(document).ready(function(){
+        
+        $("#login_link").click(function(e){
+            $("#login_prompt").hide(125);
+            $("#login_form").show(125);
+            $("#login_error").hide(125);
+            
+            e.preventDefault();
+        });
+        
+        $("#login_cancel_link").click(function(e){
+            $("#login_form").hide(125);
+            $("#login_prompt").show(125);
+            $("#login_error").hide(125)
+            
+            e.preventDefault();
+        });
+    });
+
+    
+</script>
+
+<header>    
+    <div id="user_status">
+        <%
+
+            String user = (String) session.getAttribute("user");
+            if (user != null && user != "") {                
+        %>
+        Welcome <%= session.getAttribute("user")%>!
+        <table>
+            <tr>
+                <td><a href="/TSRH/changePassword.jsp">Change Password</a></td><td></td>
+                <td><a href="/TSRH/logout.jsp">Logout</a></td>
+            </tr>
+        </table>
+
+
+        <% } else {%>
+
+       
+        
+        
+        
+        <table>
+            <tr>
+                <td><span id="login_prompt">Welcome Guest! &nbsp;&nbsp; <a id="login_link" href="">Login</a></span> &nbsp;&nbsp;</td><td></td>
+                <td><a href="emailUser.jsp"> Forgot Password?</a></td>
+            </tr>
+        </table>
+
+        <span id="login_form" style="display:none">
+            <form action="/TSRH/login.jsp" method="post">
+                <label for="login_username">Username:</label>
+                <input class="textbox" type="text" name="login_username" id="login_username" />
+
+                <br />
+
+                <label for="login_password">Password:</label>
+                <input class="textbox" type="password" name="login_password" id="login_password" />
+
+                <br />
+
+                <input class="blue button" type="submit" id="login_submit_link" value="Login" />
+
+                <input class="blue button" type="reset" id="login_cancel_link" value="Cancel" />
+            </form>
+        </span>
+
+        <%
+            String fail = (String) session.getAttribute("login_error");
+            if (fail != null && fail != "") {
+
+                session.removeAttribute("login_error");
+        %>
+        <br /><br /><span id="login_error" class="error">Bad login!</span> 
+        <% }%>
+
+        <% }%>
+    </div> 
+    
+
+    <div class="container">
+        <h1><a href="index.jsp">Hope Center</a></h1>
+        <nav>
+            <% Component component = new Component();
+                ArrayList resourceList = component.getResourceListForUser(user);               
+                if(resourceList.size() > 0){
+                    %> 
+                    <ul>
+                    <li class="current"><a href="index.jsp"><strong>Home</strong></a></li>  
+                    <%for (int i = 0; i < resourceList.size(); i++) {
+                        Resources resource = (Resources)resourceList.get(i); %>                   
+                        <li><a href="<%=resource.getResourceURL()%>"><strong><%=resource.getResourceName()%></strong></a></li>                                                                       
+                    <% } %>
+                    </ul>
+                <% }%> 
+            
+<!--                <li><a href="Admin.jsp"><strong>Admin</strong></a></li>
+                <li><a href="test.jsp"><strong>Test</strong></a></li>
+                <li><a href="consult.jsp"><strong>Consult</strong></a></li>
+                <li><a href="FileTracking">File Tracking</a></li>
+                <li><a href="notification.jsp"><strong>Set Alert</strong></a></li>
+                <li><a href="/TSRH/phone.jsp"><strong>Phone Record</strong></a></li>
+                <li><a href=PatientSearch><strong>Patient Search</strong></a></li>
+                <li><a href=ReportSelection.jsp><strong>Reports</strong></a></li>
+                
+            </ul>-->
+        </nav>
+        <div id="slogan"></div>
+    </div>
+
+</header>

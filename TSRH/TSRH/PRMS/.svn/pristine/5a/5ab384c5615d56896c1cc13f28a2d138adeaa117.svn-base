@@ -1,0 +1,121 @@
+<%-- 
+    Document   : SaveNewPatient.jsp
+    Created on : Oct 22, 2012, 11:27:15 PM
+    Author     : Asha
+--%>
+<%@page import="java.io.File"%>
+<%@page import="org.apache.tomcat.util.http.fileupload.FileItem"%>
+<%@page import="java.util.Iterator"%>
+<%@page import="org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload"%>
+<%@page import="org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory"%>
+<%@page import="java.util.List"%>
+<%@page import="org.apache.tomcat.util.http.fileupload.FileItemFactory"%>
+<%@page import="org.apache.tomcat.util.http.fileupload.FileUploadException"%>
+<%@page import="java.io.DataInputStream"%>
+<%@page import="java.io.FileOutputStream"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="edu.uta.tsrh.specialnotes.controllers.RecordController"%>
+<%@page import="edu.uta.tsrh.specialnotes.misc.PatientPhoneCall"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="edu.uta.tsrh.specialnotes.misc.PatientRecord"%>
+<%@page import="edu.uta.tsrh.specialnotes.misc.Address"%>
+<%@page import="java.sql.*"%> 
+<%
+    String saveFile = "";
+    String patientID = null;
+    PatientRecord patientRecord = new PatientRecord();
+
+    FileItemFactory factory = new DiskFileItemFactory();
+    ServletFileUpload upload = new ServletFileUpload(factory);
+    List items = null;
+
+    try {
+        items = upload.parseRequest(request);
+    } catch (FileUploadException e) {
+        e.printStackTrace();
+    }
+    Iterator itr = items.iterator();
+    String name;
+    String value;
+    while (itr.hasNext()) {
+        FileItem item = (FileItem) itr.next();
+        if (item.isFormField()) {
+            name = item.getFieldName();
+            value = item.getString();
+            if (name.equals("firstName")) {
+                patientRecord.setFirstName(value);
+            } else if (name.equals("lastName")) {
+                patientRecord.setLastName(value);
+            } else if (name.equals("patientID")){
+                patientID = value;
+                patientRecord.setPatientId(value);
+            } else if (name.equals("DOB")) {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                java.util.Date parsedDate = dateFormat.parse(value);
+                java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());
+                patientRecord.setDob(sqlDate);
+            } else if (name.equals("contactPhone")) {
+                patientRecord.setContactPhone(value);
+            } else if (name.equals("address")) {
+                patientRecord.setAddress(value);
+            } else if (name.equals("mothersName")) {
+                patientRecord.setMothersName(value);
+            }
+        } else {
+            String itemName = new File(item.getName()).getName();
+
+
+            File savedFile = new File(config.getServletContext().getRealPath("/")+ "\\"+itemName);
+
+            //saveFile = new File(".").getCanonicalPath() + "\\"+ new File(itemName).getName();
+            //File savedFile = new File(saveFile);
+            item.write(savedFile);
+            saveFile = itemName;
+        }
+    }
+    System.out.println("first name" + patientRecord.getFirstName());
+    System.out.println("last name" + patientRecord.getLastName());
+    System.out.println("patient Id" + patientRecord.getId());
+    System.out.println("DOB" + patientRecord.getDOB());
+    System.out.println("contact phone" + patientRecord.getContactPhone());
+    System.out.println("address" + patientRecord.getAddress());
+    System.out.println("mothers name" + patientRecord.getMothersName());
+    patientRecord.setURL(saveFile);
+    int storedValue=RecordController.setNewPatientRecord(patientRecord);
+        RecordController.setPhysicalRecord(patientRecord);
+        
+       System.out.println("Stored Value  "+ storedValue);
+%>
+
+<div class="box" style="width:500px;background-color: #F0F0F0;">
+
+    <table>
+        <tr>
+            <td style="width:400px">
+                <h3><%if(storedValue==0)
+                                       {
+                    out.println("Record Storage failed. Duplicate Record!!!");
+                    
+                                       }%></h3>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:400px">
+                <h3 style="color: green"><%if(storedValue==1){
+                    out.println("Patient Record Successfully Inserted with Patient ID :"+ patientID);}%></h3>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <form name="PManagement" method="POST" action="PatientManagement">
+                    <input type="submit" value="Patient Management" class="blue button" style="width: 160px"/>
+                </form>
+            </td>
+            <td>
+                <form name="AddPatient" method="POST" action="AddNewPatient">
+                    <input type="submit" value="Add New Patient" class="blue button" style="width: 160px"/>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>

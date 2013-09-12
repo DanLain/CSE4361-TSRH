@@ -1,0 +1,22 @@
+package edu.uta.tsrh;
+
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+public class FileTrackingController extends ScottishRiteHospital
+{
+    private static final long serialVersionUID = 2977306093641973155L;
+
+    public String handle(HttpServletRequest request, HttpServletResponse response)
+    {
+        request.getSession().setAttribute("selectedLink","File Tracking");
+        String redirectURL = "/index.jsp";
+        String currentUser = (String) request.getSession().getAttribute("user");        
+        if(currentUser != null){  
+            redirectURL = "/?page=FileTracking";
+        }
+        return redirectURL;
+    }
+}

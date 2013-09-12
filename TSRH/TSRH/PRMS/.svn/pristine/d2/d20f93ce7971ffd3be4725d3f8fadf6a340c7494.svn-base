@@ -1,0 +1,207 @@
+<%@page import="javax.swing.text.Document"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@page import="java.sql.*"%> 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Seminars - Seminars | Charity - Free Website Template from Templates.com</title>
+<meta charset="utf-8">
+<meta name="description" content="Place your description here">
+<meta name="keywords" content="put, your, keyword, here">
+<meta name="author" content="Templates.com - website templates provider">
+<link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/layout.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/style.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/buttonCSS.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/tableCSS.css" type="text/css" media="all">
+<script type="text/javascript" src="js/maxheight.js"></script>
+<script type="text/javascript" src="js/jquery-1.4.2.min.js" ></script>
+<script type="text/javascript" src="js/cufon-yui.js"></script>
+<script type="text/javascript" src="js/cufon-replace.js"></script>
+<script type="text/javascript" src="js/Myriad_Pro_400.font.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+<SCRIPT TYPE="text/javascript">
+
+function openMoreInfo(){
+var checked = false, radios = document.getElementsByName('radios');
+for (var i = 0, radio; radio = radios[i]; i++) {
+    if (radio.checked) {
+        checked = true;
+        window.location = '/TSRH/moreinfoontestrequest.jsp?test_requestid='+radios[i].id;
+        break;
+    }
+}
+  
+}
+function openUpdate(){
+var checked = false, radios = document.getElementsByName('radios');
+for (var i = 0, radio; radio = radios[i]; i++) {
+    if (radio.checked) {
+        checked = true;
+        window.location = '/TSRH/updatetestrequest.jsp?test_requestid='+radios[i].id;
+        break;
+    }
+}
+  
+}
+function openTest(){
+var checked = false, radios = document.getElementsByName('radios');
+for (var i = 0, radio; radio = radios[i]; i++) {
+    if (radio.checked) {
+        checked = true;
+        window.location = '/TSRH/testresult.jsp?test_requestid='+radios[i].id;
+        break;
+    }
+}
+  
+}
+
+
+</SCRIPT>
+<!--[if lt IE 7]>
+	<link rel="stylesheet" href="css/ie/ie6.css" type="text/css" media="screen">
+	<script type="text/javascript" src="js/ie_png.js"></script>
+	<script type="text/javascript">
+		ie_png.fix('.png, #slogan, header nav ul li a, .icon img, .link1, .link1 span');
+	</script>
+<![endif]-->
+<!--[if lt IE 9]>
+	<script type="text/javascript" src="js/html5.js"></script>
+<![endif]--></head>
+<jsp:useBean id="Controller" class="controller.Controller" scope="session" />
+
+<body id="page5" onLoad="new ElementMaxHeight();">
+<div class="wrap">
+<%@ include file="headers.jsp" %>
+	
+	<%
+String patient_idnumber = request.getParameter("pid");
+//String patient_idnumber = (String)session.getAttribute("patient_idnumber");
+//String patient_idnumber = Controller.getCurrentPatient().getPatientId();
+Integer id = 0;
+try{
+    
+
+//if(Controller.getCurrentPatient().getPatientId()!=null)
+      // {
+    
+
+
+	Class.forName("com.mysql.jdbc.Driver");
+	Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/alertsystem", "root", "");
+    Statement stmt=conn.createStatement();
+    ResultSet res = null;
+    res= stmt.executeQuery("select * from test_request_record"+ " where patientid_testrequest = "+patient_idnumber);
+    int count = 0;
+    while(res.next())
+    {
+     count = 1;
+    }
+    if(count==1)
+               {
+%>
+   
+   
+          
+<h3>&nbsp;</h3>
+<section id="content">
+    <div class="inside">
+  
+      <tr>
+          <td>
+            <h2> Test Requests   </h2> 
+          </td>
+      </tr>    
+      
+      <table  class="bordered ">
+			<tr>			
+                        <th align='center'>Test Request ID</th></t>
+			<th align='center'>Patient ID  </th></t>
+			<th align='center'>Test Name  </th>	</t>
+			<th align='center'>Test Requester Name</th></t>		
+			<th align='center'>Test Request Date  </th></t>
+			<th align='center'>Expected Result Date  </th></t>
+			<th align='center'>Expected Result  </th></t>
+			<th align='center'>Is Test Taken  </th></t>				
+			</tr>
+                        
+                       
+<%
+res= stmt.executeQuery("select * from test_request_record"+ " where patientid_testrequest = "+patient_idnumber);
+ while(res.next()){
+%>
+
+				<tr>
+                                <td>
+                                <INPUT TYPE="radio" NAME="radios" id="<%=res.getInt(1)%>"><%=res.getInt(1)%></td>
+                                <td align='center'><%=res.getInt(2)%></td>
+				<td align='center'><%=res.getString(3)%></td> 
+				<td align='center'><%=res.getString(4)%></td>  
+				<td align='center'><%=res.getDate(5)%></td>  
+				<td align='center'><%=res.getDate(6)%></td> 
+				<td align='center'><%=res.getString(7)%></td>  	
+				<td align='center'><%=res.getString(8)%></td>   
+
+</tr>
+
+
+<% 
+}%>
+</table>
+<input type="button" class="blue button" onclick="openMoreInfo();" value="View">
+<input type="button" class="blue button" onclick="openUpdate();" value="Update">
+<input type="button" class="blue button" onclick="openTest();" value="Test Result">
+<br>
+<br>
+  <%     }
+//else
+  //     {
+    //out.println("NO RESULTS FOUND");
+//}
+  // Controller.getDBManager().closeConnection();
+//}      
+else
+       {
+        out.println("NO RECORDS FOUND");
+    
+}
+       }
+catch(Exception e){
+    System.out.print(e);
+    e.printStackTrace();
+    }
+
+%>
+
+
+<br>
+
+<br>
+
+<input type="button" class="blue button" onclick="window.location = '/TSRH/test.jsp'" value="Back">
+<Button class="blue button" onclick="window.location = '/TSRH/recordtestrequest.jsp'">New Test Request</Button>
+<Button class="blue button" onclick="window.location = '/TSRH/recordtestresult.jsp'">New Test Result</Button>
+
+    </div>	
+</section>
+  </div>
+
+
+	 </form>
+	</p>
+	</div>
+	
+
+
+
+	<%@ include file="footers.jsp" %>
+
+</tr>
+
+
+
+<script type="text/javascript">Cufon.now();</script>
+</body>
+</html>

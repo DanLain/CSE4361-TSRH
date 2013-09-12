@@ -1,0 +1,128 @@
+<%@page import="edu.uta.tsrh.model.SearchResult"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="edu.uta.tsrh.model.FileDetail"%>
+<div>
+<h2>Files Available for Check Out</h2>
+</div>
+    <form name="filterResults" action="SearchResult" method="post">
+        <table style="border: 1;">
+            <tr>
+                <td width="310" style="border: 0px none;">
+                    <h3>File ID:</h3> 
+                </td>
+                <td style="border: 0px none;">
+                    <input type="text" class="textbox" name="fileId"/>
+                </td>
+            </tr>
+            <tr>			
+                <td style="border: 0px none;">
+                    <h3>Patient Name:(LastName,FirstName)</h3>
+                </td>
+                <td style="border: 0px none;">
+                    <input type="text" class="textbox" name="patientName"/>
+                </td>
+            </tr>
+            <tr>			
+                <td>
+                    <input type="hidden" value="IN" name="filecheckedoutorin"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 0px none;">
+                    <h3>Date of Birth:</h3> 
+                </td>
+                <td style="border: 0px none;">
+                    <div id="example" class="k-content">
+                        <input id="DOB" name ="DOB" value="" style="width:165px;" />
+                    </div>
+                </td>
+            </tr>
+         <tr>
+            <td>
+        <div align="center">
+        <input type="reset" class="blue button" value="Reset"  />       
+        <input type="submit" class="blue button" value="Filter Results" />
+        </div>
+      </table>  
+         </td>
+            </tr>
+    </form>
+<table class="bordered">
+    <thead>
+        <tr>
+            <th>File ID</th>
+            <th>Patient Name</th>
+            <th>Location</th>
+        </tr>
+    </thead>
+    <tbody>
+        <%
+            FileDetail fileDetail = (FileDetail) request.getAttribute("fileDetail");
+            ArrayList<SearchResult> searchResult = (ArrayList<SearchResult>) request.getAttribute("searchResult");
+            String url;
+            int id = 0;
+            String idString = null;
+            String patientName = null;
+            String checkout = "disabled=\"disabled\"";
+            String checkin = "disabled=\"disabled\"";
+            String transfer = "disabled=\"disabled\"";
+            for (int i = 0; i < searchResult.size(); i++) {
+                url = "FileTrackingResult?fileID=";
+                SearchResult searchResultElement = (SearchResult) searchResult.get(i);
+                id = (int) searchResultElement.getFileID();
+                idString = Integer.toString(id);
+                url = url + idString;
+                String checkinUrl = "/TSRH/filetracking/file/checkinpage.org?fileId=" + idString;
+                patientName = searchResultElement.getPatientFirstName() + " " + searchResultElement.getPatientLastName();
+                if (searchResultElement.getFileState().equals("OUT")) {
+                    checkin = "enabled=\"enabled\"";
+                    transfer = "enabled=\"enabled\"";
+                    checkout = "disabled=\"disabled\"";
+                } else {
+                    checkout = "enabled=\"enabled\"";
+                    checkin = "disabled=\"disabled\"";
+                    transfer = "disabled=\"disabled\"";
+                }
+
+        %>
+        <tr>
+            <td>
+                <h3 class="active">
+                    <%=searchResultElement.getFileID()%><br />
+                </h3>
+                <div class="sliding" style="display: none;">
+                    <table cellspacing="3">
+                        <tr>
+                            <td>	
+                                    <input type="submit" value="checkout"<%=checkout%>/> 	
+                            </td>
+                            <td>
+                                    <input type="submit" value="checkin" <%=checkin%> /> 
+                            </td>
+                            <td>
+                                    <input type="submit" value="transfer" <%=transfer%> />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </td>
+            <td class="patname">
+                <a href="<%=url%>"><%=patientName%></a>
+            </td>
+            <td class="location">
+                <%=searchResultElement.getLocation()%>
+            </td>
+        </tr>
+        <%}%>
+    </tbody>
+</table>
+<table style="border: 1;">
+    <tr>
+     <td>  
+   <form action="FileTrackingCheckOut" method="post">
+        <input type="submit" class="blue button" align="center" style="width:150px" value="File Check Out" />
+    </form>
+    </td>
+    </tr> 
+</table>

@@ -1,0 +1,69 @@
+
+  #pageslide {
+    /* These styles MUST be included. Do not change. */
+    display: none;
+    position: absolute;
+    position: fixed;
+    top: 0;
+    height: 100%;
+    z-index: 999999;
+    
+    /* Specify the width of your pageslide here */
+    width: 260px;
+    padding: 20px;
+    
+    /* These styles are optional, and describe how the pageslide will look */
+    background-color: #FFFFFF;
+    color: #FFF;
+    -webkit-box-shadow: inset 0 0 2px 2px #222;
+    -moz-shadow: inset 0 0 2px 2px #222;
+    box-shadow: inset 0 0 2px 2px #222;
+}
+
+
+.first{
+position: fixed;
+text-decoration: none;
+top: 80px; left: 0;
+font-size: 16px;
+letter-spacing:-1px;
+font-family: verdana, helvetica, arial, sans-serif;
+color:#1FCAEC;
+padding: 20px 40px 20px 15px;
+font-weight: 700;
+background:#ffffff url(../images/plus.png) 85% 55% no-repeat;
+border:1px solid #444444;
+-moz-border-radius-topright: 20px;
+-webkit-border-top-right-radius: 20px;
+-moz-border-radius-bottomright: 20px;
+-webkit-border-bottom-right-radius: 20px;
+-moz-border-radius-bottomleft: 0px;
+-webkit-border-bottom-left-radius: 0px;
+display: block;
+}
+
+.first:hover{
+position: absolute;
+text-decoration: none;
+top: 80px; left: 0;
+font-size: 16px;
+letter-spacing:-1px;
+font-family: verdana, helvetica, arial, sans-serif;
+color:#1FCAEC;
+padding: 20px 40px 20px 20px;
+font-weight: 700;
+background:#ffffff url(../images/plus.png) 85% 55% no-repeat;
+border:1px solid #444444;
+-moz-border-radius-topright: 20px;
+-webkit-border-top-right-radius: 20px;
+-moz-border-radius-bottomright: 20px;
+-webkit-border-bottom-right-radius: 20px;
+-moz-border-radius-bottomleft: 0px;
+-webkit-border-bottom-left-radius: 0px;
+display: block;
+}
+
+.first.active {
+background:#222222 url(images/minus.png) 85% 55% no-repeat;
+}
+

@@ -1,0 +1,427 @@
+    <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@page import="java.sql.*"%> 
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="Place your description here">
+<meta name="keywords" content="put, your, keyword, here">
+<meta name="author" content="Templates.com - website templates provider">
+<link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/layout.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/style.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/buttonCSS.css" type="text/css" media="all">
+<link href="css/calendar.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="css/help.css" type="text/css" media="all">        
+<script type="text/javascript" src="js/jquery.pageslide.min.js"></script>
+<script language="javaScript" type="text/javascript" src="js/calendar.js"></script>
+<script type="text/javascript" src="js/maxheight.js"></script>
+<script type="text/javascript" src="js/jquery-1.4.2.min.js" ></script>
+<script type="text/javascript" src="js/cufon-yui.js"></script>
+<script type="text/javascript" src="js/cufon-replace.js"></script>
+<script type="text/javascript" src="js/Myriad_Pro_400.font.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+<link href="DatePicker/kendo.common.min.css" rel="stylesheet">
+        <link href="DatePicker/kendo.blueopal.min.css" rel="stylesheet">
+        <script src="DatePicker/jquery.min.js"></script>
+        <script src="DatePicker/kendo.web.min.js"></script>
+
+<SCRIPT TYPE="text/javascript">
+
+function upgradepicker() {
+                var date= new Date();
+                date.toString('yyyy-MM-dd');
+                $("#DOB").kendoDatePicker({
+                    format: "yyyy-MM-dd"
+                });
+                $("#DOB1").kendoDatePicker({
+                    format: "yyyy-MM-dd"
+                });
+                $("#DOB2").kendoDatePicker({
+                    format: "yyyy-MM-dd"
+                });
+                $("#DOB3").kendoDatePicker({
+                    format: "yyyy-MM-dd"
+                });
+}
+
+function IsNumeric(input)
+{
+    if((input - 0) == input && input.length > 0)
+        return false;
+    else 
+        return true;
+}
+
+function validateForm()
+          {  
+               var testname =document.forms["test_request_record"]["testname"].value;
+               var testrequestername =document.forms["test_request_record"]["testrequestername"].value;
+               var testrequestdate =document.forms["test_request_record"]["testrequestdate"].value;
+               var expectedresultdate =document.forms["test_request_record"]["expectedresultdate"].value;
+               var stafftobeinformed =document.forms["test_request_record"]["stafftobeinformed"].value;
+               var datetoinformstaff =document.forms["test_request_record"]["datetoinformstaff"].value;
+               var otherstobeinformed =document.forms["test_request_record"]["otherstobeinformed"].value;
+               var datetoinformothers=document.forms["test_request_record"] ["datetoinformothers"].value;
+               var comments =document.forms["test_request_record"]["comments"].value;
+               var userid =document.forms["test_request_record"]["userid"].value;
+               
+               
+               if (testname==null || testname=="")
+               { 
+                   document.getElementById('msg1').color = "red";
+                   document.getElementById('msg1').innerHTML = 'Enter test name!';
+                   return false;
+               }
+               else if(testrequestername==null||testrequestername=="")
+               {
+                   document.getElementById('msg1').color = "white";
+                   document.getElementById('msg2').color = "red";
+                   document.getElementById('msg2').innerHTML = 'Enter test requester name!';
+                   return false;
+               }
+               else if(testrequestdate==null||testrequestdate=="")
+               {
+                   document.getElementById('msg1').color = "white";
+                   document.getElementById('msg2').color = "white";
+                   document.getElementById('msg3').color = "red";
+                   document.getElementById('msg3').innerHTML = 'Enter test request date!';
+                   return false;
+               }
+               else if(expectedresultdate==null||expectedresultdate=="")
+               {
+                   document.getElementById('msg1').color = "white";
+                   document.getElementById('msg2').color = "white";
+                   document.getElementById('msg3').color = "white";
+                   document.getElementById('msg4').color = "red";
+                   document.getElementById('msg4').innerHTML = 'Enter expected result date!';
+                   return false;
+               }
+               else if(stafftobeinformed==null||stafftobeinformed=="")
+               {
+                   document.getElementById('msg1').color = "white";
+                   document.getElementById('msg2').color = "white";
+                   document.getElementById('msg3').color = "white";
+                   document.getElementById('msg4').color = "white";
+                   document.getElementById('msg5').color = "red";
+                   document.getElementById('msg5').innerHTML = 'Enter staff to be informed!';
+                   return false;
+               }
+               else if(datetoinformstaff==null||datetoinformstaff=="")
+               {
+                   document.getElementById('msg1').color = "white";
+                   document.getElementById('msg2').color = "white";
+                   document.getElementById('msg3').color = "white";
+                   document.getElementById('msg4').color = "white";
+                   document.getElementById('msg5').color = "white";
+                   document.getElementById('msg6').color = "red";
+                   document.getElementById('msg6').innerHTML = 'Enter date to inform staff!';
+                   return false;
+               }
+               else if(otherstobeinformed==null||otherstobeinformed=="")
+               {
+                   document.getElementById('msg1').color = "white";
+                   document.getElementById('msg2').color = "white";
+                   document.getElementById('msg3').color = "white";
+                   document.getElementById('msg4').color = "white";
+                   document.getElementById('msg5').color = "white";
+                   document.getElementById('msg6').color = "white";
+                   document.getElementById('msg7').color = "red";
+                   document.getElementById('msg7').innerHTML = 'Enter others to be informed!';
+                   return false;
+               }      
+                else if(datetoinformothers==null||datetoinformothers=="")
+               {
+                   document.getElementById('msg1').color = "white";
+                   document.getElementById('msg2').color = "white";
+                   document.getElementById('msg3').color = "white";
+                   document.getElementById('msg4').color = "white";
+                   document.getElementById('msg5').color = "white";
+                   document.getElementById('msg6').color = "white";
+                   document.getElementById('msg7').color = "white";
+                   document.getElementById('msg8').color = "red";
+                   document.getElementById('msg8').innerHTML = 'Enter date to inform others!';
+                   return false;
+               }      
+               
+                else if(comments==null||comments=="")
+               {
+                    document.getElementById('msg1').color = "white";
+                   document.getElementById('msg2').color = "white";
+                   document.getElementById('msg3').color = "white";
+                   document.getElementById('msg4').color = "white";
+                   document.getElementById('msg5').color = "white";
+                   document.getElementById('msg6').color = "white";
+                   document.getElementById('msg7').color = "white";
+                   document.getElementById('msg8').color = "white";
+                   document.getElementById('msg10').color = "red";
+                   document.getElementById('msg10').innerHTML = 'Enter comments!';
+                   return false;
+               }
+               else if(userid==null||userid=="")
+               {
+                    document.getElementById('msg1').color = "white";
+                   document.getElementById('msg2').color = "white";
+                   document.getElementById('msg3').color = "white";
+                   document.getElementById('msg4').color = "white";
+                   document.getElementById('msg5').color = "white";
+                   document.getElementById('msg6').color = "white";
+                   document.getElementById('msg7').color = "white";
+                   document.getElementById('msg8').color = "white";
+                   document.getElementById('msg10').color = "white";
+                   document.getElementById('msg11').color = "red";
+                   document.getElementById('msg11').innerHTML = 'Enter user id!';
+                   return false;
+               }
+               else
+                   {
+                       document.getElementById('msg1').color = "white";
+                       document.getElementById('msg2').color = "white";
+                       document.getElementById('msg3').color = "white";
+                   document.getElementById('msg4').color = "white";
+                   document.getElementById('msg5').color = "white";
+                   document.getElementById('msg6').color = "white";
+                   document.getElementById('msg7').color = "white";  
+                   document.getElementById('msg8').color = "white"; 
+                   document.getElementById('msg10').color = "white";
+                   document.getElementById('msg11').color = "white";
+                   }
+          }
+
+</SCRIPT>
+
+</head>
+<jsp:useBean id="Controller" class="controller.Controller" scope="session" />
+<body id="page1" onLoad="new upgradepicker();">
+            <a href="javascript:$.pageslide({ direction: 'right', href: 'help/Test.html' })" class="first">Help</a>
+<div class="wrap">
+<!-- header -->
+	
+	      
+
+ <%@ include file="headers.jsp" %>
+ <section id="content">
+    <div class="inside">
+        <div class="container">
+                        <div class="wrapper indent">
+                          <article class="col-0">
+                  <%
+        //check if a user has logged in. If not redirect to home page
+      String currentUser = (String) session.getAttribute("user");        
+        if(currentUser == null){            
+            String redirectURL = "index.jsp";
+            response.sendRedirect(redirectURL);
+        } 
+        %>		
+
+        <br>
+        <br>
+        
+
+        
+        <FORM name="test_request_record" method="post" onSubmit="return validateForm()" action="inserttestrequest.jsp">
+<%
+String pid = request.getParameter("pid");
+String testname =" ";
+String testrequestername = " ";
+String testrequestdate = " ";
+String expectedresultdate = " ";
+String stafftobeinformed = " ";
+String datetoinformstaff = " ";
+String otherstobeinformed = " ";
+String datetoinformothers = " ";
+String comments = " ";
+String userid = " ";
+String bttn_value = "Save";
+try
+{
+    Class.forName("com.mysql.jdbc.Driver");
+    
+    Connection conne = DriverManager.getConnection(Controller.getDBManager().getDBAccess().getConStr(), Controller.getDBManager().getDBAccess().getUserName(), Controller.getDBManager().getDBAccess().getPwd());
+    Statement st=conne.createStatement();
+    ResultSet res = null;
+    res= st.executeQuery("select lastName,firstName from user");
+
+
+%>
+</header>
+<!-- content -->
+
+
+                       
+  <h3>&nbsp;</h3>
+ 
+  
+  <h2>Create New Test Request </h2> 
+  <br>
+  
+  <table>
+          
+     
+<tr>
+            <td width = "220"> 
+                <h3>*Test Name     </h3>
+               
+            </td>
+          <td>              
+          <input name="testname" type="text" class ="textbox" size="20"  id="testname"></td>
+          <td><font width = "250" size="5" color="white" id="msg1">Enter test name!</font></td>
+                     
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          <td width = "220"> 
+              <h3>*Test Requester Name</h3> 
+          </td>
+          <td> 
+             
+                <input name="testrequestername"  type="text" class ="textbox" id ="testrequestername" size="20"><td>
+                <td><font size="5" color="white" id="msg2">Enter test requester name!</font></td>
+          
+</tr>      
+  
+  <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+  
+           
+         <tr>
+          <td width = "220"> 
+              <h3> *Test Request Date     </h3></td>
+          <td>
+                  <input type="text" id="DOB1" name="testrequestdate" class ="textbox" size="20" readonly="readonly"/></td>
+          <td> <font size="5" width = "250" color="white" id="msg3">Enter test request date!</font></td>
+         
+          
+          
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+         
+          <td width = "220"> <h3> *Expected Result Date</h3></td>
+          <td>
+             <input name="expectedresultdate" type="text" id="DOB" class ="textbox" size="20" readonly="readonly"></td>
+          <td><font size="5" color="white" id="msg4">Enter expected result date!</font></td>
+          
+         
+</tr>
+ <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+ 
+ 
+
+<tr>
+          <td width = "220"> <h3> *Staff to be Informed  </h3></td>
+          <td>
+              <select name="stafftobeinformed" size=4 multiple>
+                  <%
+                  while(res.next())
+                  {
+                     
+                  
+                  %>
+<option><%=res.getString(1)%>,<%=res.getString(2)%></option>
+<%
+                  }
+
+  }
+catch(Exception e){
+    System.out.println("Exception:"+e);
+    e.printStackTrace();
+}
+
+    %> </select>
+          </td>     
+<td> <font size="5" width = "250" color="white" id="msg5">Enter Staff to be Informed!</font></td>
+          
+
+
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+          <td width = "220" > <h3>*Date to Inform Staff</h3></td>
+          <td>
+             <input name="datetoinformstaff" type="text" class ="textbox" id ="DOB2" size="20" readonly="readonly"></td>
+             <td> <font size="5" color="white" id="msg6">Enter Date to Inform Staff!</font></td>
+          
+           
+           
+</tr>
+
+  
+ <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+ 
+      
+<tr>
+          <td width = "220"> <h3>*Others to be Informed     </h3></td>
+          <td>
+              <input name="otherstobeinformed" type="text" class ="textbox" id ="otherstobeinformed" size="20"></td>
+             <td> <font size="5" color="white" id="msg7">Enter Others to be Informed!</font></td>
+             
+       
+           <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+          <td width = "220"> <h3> * Date to Inform Others     </h3></td>
+          <td>
+             <input name="datetoinformothers" type="text" class ="textbox" id ="DOB3" size="20" readonly="readonly" ></td>
+             <td> <font size="5" color="white" id="msg8">Enter Date to Inform Others!</font></td>
+         
+          
+</tr>
+ 
+
+
+   <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+ 
+<tr>         
+    <td width = "220"> <h3> * Comments     </h3></td>
+          <td>
+             <input name="comments" type="text" class ="textbox" id ="comments" size="20"></td>
+             <td> <font size="5" color="white" id="msg10">Enter comments!</font></td>
+         
+ <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          <td width = "220"> <h3> User Name    </h3></td>
+          <td>
+              <input name="userid" type="text" class ="textbox" id ="userid" size="20" value="<%=(String) session.getAttribute("user") %> " readonly="readonly"></td>
+             <td> <font size="5" color="white" id="msg11"></font></td>
+         
+          
+</tr>
+          <tr> </tr>
+          <tr> </tr>
+          <tr> </tr>
+          <tr> </tr>
+          <tr> </tr>
+          <tr> </tr>          
+          
+  </table>
+             <br>
+             <br
+<table align="center">
+<tr>
+    
+   <tr>
+    
+          <td colspan=2><input type="submit" name = "submit" class="blue button"  value="<%=bttn_value%>" >          
+          <td colspan=2>&nbsp;</td>
+          <td colspan=2> <input type="Button" onclick="window.location='/TSRH/testrequest.jsp?pid=<%=pid%>'" class="blue button"  value="Cancel" >  </td>
+     
+          </tr>
+         
+        
+       </table>
+                         </form>
+                          </article>
+                        </div>
+          
+  
+                        </div></div>
+          <br>
+          <br>
+          
+ </section>
+ 
+
+        
+        
+         <%@ include file="footers.jsp" %>
+</tr>
+<script type="text/javascript">Cufon.now();</script>
+<script src="js/jquery.pageslide.min.js"></script>
+</body>
+</html>

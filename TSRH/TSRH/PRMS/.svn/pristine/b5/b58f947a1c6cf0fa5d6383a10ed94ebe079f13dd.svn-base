@@ -1,0 +1,57 @@
+<%-- 
+    Document   : PatientProfile
+    Created on : Apr 1, 2012, 12:41:45 PM
+    Author     : David
+--%>
+
+<%@page import="edu.uta.tsrh.specialnotes.controllers.NoteController"%>
+<%@page import="edu.uta.tsrh.specialnotes.controllers.RecordController"%>
+<%@page import="edu.uta.tsrh.specialnotes.misc.PatientRecord"%>
+<%@page import="edu.uta.tsrh.specialnotes.misc.PatientNote"%>
+<%
+    String patientId = request.getParameter("patient");
+    String patientName = request.getParameter("patientName");
+    String DOB = request.getParameter("DOB");
+    PatientRecord pRecord = RecordController.getPatientRecord(patientId, patientName, DOB);
+
+    int noteId = Integer.parseInt(request.getParameter("id"));
+    PatientNote note = NoteController.getPatientNote(noteId);
+%>
+
+<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+         pageEncoding="ISO-8859-1"%>
+
+<div class="mainPanel">   
+    <div class="panel">
+
+        <form method="post" action="EditNote">
+            <h2>Add Note for <%= pRecord.getFirstName()%> <%= pRecord.getLastName()%>
+                <input type='submit' class="blue button" value="Save" />
+            </h2>
+            <ul class="infoPanel">
+                <li>
+                    <div class='name'>Date/Time:</div> 
+                    <div class='value'><%= note.getDate()%></div>
+                </li>
+                <li>
+                    <div class='name'>Source:</div> 
+                    <div class='value'><%= note.getSource()%></div>
+                </li>
+                <li>
+                    <div class='name'>Subject/Title:</div> 
+                    <div class='value'><input value='<%= note.getTitle().replaceAll("[^\\']'", "\\'")%>' type='text' name='title' class="textbox"/></div>
+                </li>
+                <li>
+                    <div class='name'>Content of Note:</div> 
+                    <div class='value'><textarea name='content' class='textarea'><%= note.getContent().replaceAll("<", "&lt;")%></textarea></div>
+                </li>
+                <li>
+                    <input type="hidden" name='patient' value="<%= patientId%>" />
+                    <input type="hidden" name='id' value="<%= noteId%>" />
+                </li>
+            </ul>
+
+        </form>
+    </div>
+</div>

@@ -1,0 +1,207 @@
+<%-- 
+    Document   : AddNewPatient
+    Created on : Oct 21, 2012, 5:13:23 PM
+    Author     : Asha
+--%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="edu.uta.tsrh.specialnotes.controllers.RecordController"%>
+<%@page import="edu.uta.tsrh.specialnotes.misc.PatientPhoneCall"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="edu.uta.tsrh.specialnotes.misc.PatientRecord"%>
+<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+         pageEncoding="ISO-8859-1"%>
+<%@page import="java.sql.*"%> 
+<%@page import="model.PatientInfo" %>
+<script>
+    function checkAvailibity()
+    {
+        $("#status").css("color", "red");
+
+        var patientId = $("#patientId").val();
+
+        if(patientId.length == 0) {
+            $("#status").html("Please enter TSRH Id");
+             } else { 
+        
+            $.ajax({
+                type: "POST",
+                url: "checkAvailibity.jsp",
+                data: {patientId:patientId},
+                success:(function(data) {
+                    //console.log(data);
+                    
+                    var status = data.split("\n")[1];
+                    console.log(status);
+                    if (status=="true"){ 
+                        $("#status").html("Available");
+                        $("#status").css("color", "green");
+                        $('#submit_handler').removeAttr('disabled');}
+                    else{$("#status").html("Record Already Present");
+                        $('#submit_handler').attr('disabled', 'disabled');}
+                })
+            });
+        }
+    }
+    function validateForm()
+    {
+        var errorSpan = document.getElementById("errorspan");
+        errorSpan.innerHTML="";
+        var namePattern = /^[a-zA-Z]+([\s]?[\']?[\.]?[a-zA-Z]+)*$/;
+        
+        var errorString = "";
+        
+        var firstNameError=document.forms["addPatientForm"]["firstName"];
+        
+        if(firstNameError.value == null || firstNameError.value=="" || namePattern.test(firstNameError.value)==false)
+        {
+            errorString +="First Name, ";
+        }
+        
+        var lastNameError = document.forms["addPatientForm"]["lastName"];
+                             
+        if (lastNameError.value ==null || lastNameError.value == ""|| namePattern.test(lastNameError.value)==false)
+        {
+            errorString+="Last Name, ";
+        }
+        
+        var dob = document.forms["addPatientForm"]["DOB"];
+                             
+        if (dob.value ==null || dob.value == "")
+        {
+            errorString+="Date of Birth, ";
+        }
+        
+        var phone = document.forms["addPatientForm"]["contactPhone"];
+        var phoneNumberPattern = /^\d\d\d-?\d\d\d-?\d\d\d\d$/; 
+                    
+        if (phone.value ==null || phone.value == ""|| phone.value == "000-000-0000"||phoneNumberPattern.test(phone.value)==false)
+        {
+            errorString+="Contact Phone, ";
+        }
+        
+        var address = document.forms["addPatientForm"]["address"];
+                             
+        if (address.value ==null || address.value == "")
+        {
+            errorString+="Address, ";
+        }
+        
+        var mname = document.forms["addPatientForm"]["mothersName"];
+                             
+        if (mname.value ==null || mname.value == ""|| namePattern.test(mname.value)==false)
+        {
+            errorString+="Mother\'s Name, ";
+        }
+        
+        var imgPat= /\.(jpg|jpeg|bmp|png)$/i;
+        var image = document.forms["addPatientForm"]["imageLink"];
+ 
+        if (image.value ==null || image.value == ""||imgPat.test(image.value)== false)
+        {
+            errorString+="Image, ";
+        }
+        
+        var patientID= document.forms["addPatientForm"]["patientId"];
+        var patientIDPattern= /^TSRH\d\d\d\d\d\d$/;
+        if (patientID.value == null||patientID.value =="" || patientIDPattern.test(patientID.value)==false)
+        {
+            errorString+="Patient ID, ";
+        }
+          
+        if(errorString == "") {
+            return true;
+        }        
+        else {
+            errorSpan.innerHTML = "Please Check " + errorString.substring(0, errorString.length - 2);
+            return false;
+        }
+      
+    }
+ 
+</script>
+<a href="javascript:$.pageslide({ direction: 'right', href: 'help/helpPatientinfo.html' })" class="first">help</a>
+<div class="box" style="width:600px;background-color: #F0F0F0;">
+    <form name="addPatientForm" method="POST" onsubmit="return validateForm()" action="SaveNewPatient" enctype="multipart/form-data">
+
+        <h2>Please Enter Patient Information</h2>
+        <table>
+            <tr>			
+                <td style="border: 0px none;">
+                    <h3>TSRH ID: <span style="color:red">*</span></h3>
+                </td>
+                <td style="border: 0px none">
+                    <input type="text" class="textbox" name="patientID" id="patientId"/>
+                    <div id="status"></div></td>
+                <td><input type="button" class="blue button" style="width:150px" value="Check Availibility" onclick="checkAvailibity()"/></td>
+            </tr>
+            <tr>
+                <td width="160" style="border: 0px none;">
+                    <h3>First Name: <span style="color:red">*</span></h3> 
+                </td>
+                <td style="border: 0px none;">
+                    <input type="text" class="textbox" name="firstName"/>
+                </td>
+            </tr>
+            <tr>			
+                <td style="border: 0px none;">
+                    <h3>Last Name: <span style="color:red">*</span></h3>
+                </td>
+                <td style="border: 0px none;">
+                    <input type="text" class="textbox" name="lastName"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 0px none;">
+                    <h3>Date of Birth: <span style="color:red">*</span></h3> 
+                </td>
+                <td style="border: 0px none;">                        
+                    <input type="text" readonly id="DOB" name ="DOB" value="" style="width:165px"/>
+                </td>
+            </tr>
+            <tr>			
+                <td style="border: 0px none;">
+                    <h3>Contact Phone: <span style="color:red">*</span></h3>
+                </td>
+                <td style="border: 0px none;">
+                    <input type="text" class="textbox" name="contactPhone" value="000-000-0000" onfocus="if(this.value == '000-000-0000') { this.value = ''; }" onblur="if(this.value == '') { this.value = '000-000-0000'; }"/>
+                </td>
+            </tr>
+            <tr>			
+                <td style="border: 0px none;">
+                    <h3>Address : <span style="color:red">*</span></h3>
+                </td>
+                <td colspan="2" style="border: 0px none;">
+                    <div>
+                        <textarea class="textarea" name="address" style="width: 300px"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>			
+                <td style="border: 0px none;">
+                    <h3>Mother's Name : <span style="color:red">*</span></h3>
+                </td>
+                <td style="border: 0px none;">
+                    <input type="text" class="textbox" name="mothersName"/>
+                </td>
+            </tr>
+            <tr>			
+                <td style="border: 0px none;">
+                    <h3>Select Image <span style="color:red">*</span></h3>
+                </td>
+                <td style="border: 0px none;">
+                    <input type="file" name="imageLink"/>
+                </td>
+            </tr>
+            <tr>			
+                <td id ="error" style="border: 0px none;text-align: center" colspan="2">
+                    <br>
+                    <h4><span id="errorspan" style="color:#FF0000;"></span></h4>
+                </td>
+            </tr>
+        </table>
+        <input type="submit" id="submit_handler" value="Submit" class="blue button" />
+    </form>
+</div>
+
+

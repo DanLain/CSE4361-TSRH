@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            font: 14px/18px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            color: #000000;
+        }
+        
+        h2 { color: #4DB8FF; }
+    .auto-style2 {
+		font-family: Arial;
+	}
+	.auto-style5 {
+		font-size: medium;
+		font-family: "Times New Roman";
+		color: #4DB8FF;
+	}
+	.auto-style6 {
+		font-size: small;
+		font-family: "Times New Roman";
+	}
+	.auto-style7 {
+		color: #4DB8FF;
+	}
+	.auto-style8 {
+		text-decoration: none;
+	}
+    </style>
+	
+	    <script type="text/javascript">
+     
+    function toggle(id) {
+      var e = document.getElementById(id);
+     
+      if (e.style.display == '')
+        e.style.display = 'none';
+      else
+        e.style.display = '';
+    }
+     
+    </script>
+
+</head>
+<body style="height: 344px">
+<div id="secondary">
+    <h2 class="auto-style2">File Tracking Help!</h2>
+    
+    <p class="auto-style6">Their are five types of operations for file tracking namely File Check In, File Check Out, Pending Files, History and Transfer.
+        User can select the type of operation  and  get the details of the each file.
+        </p>
+	<ul>
+		<li>
+		<p class="auto-style5">
+		<a href="#" onclick="toggle('node1')" class="auto-style8">
+		<span class="auto-style7">File Check In</span></a></p>
+		<dl id="node1" style="display:none">
+			
+			<p class="auto-style6"> Click on "File Check In"- shows the list of 
+			 files which are checked in. </p>
+		
+		</dl>
+		</li>
+		<li>
+		<p class="auto-style5">
+		<a href="#" onclick="toggle('node2')" class="auto-style8">
+		<span class="auto-style7">File Check Out</span></a></p>
+		<dl  id="node2" style="display:none">
+		
+			<p class="auto-style6">Click on "File Check Out"- shows the list of 
+			 files which are checked out. </p>
+		</dl>
+		</li>
+		<li>
+		
+		<p class="auto-style5">
+		<a href="#" onclick="toggle('node3')" class="auto-style8">
+		<span class="auto-style7">Pending Files</span></a></p>
+		
+		<dl id="node3" style="display:none">
+		
+			<p class="auto-style6"> Pending Files- shows the list of files which are pending i.e, files that are not check out on the day which they are suppose to be. </p>
+		</dl>
+        </li>
+        
+        <li>
+		
+		<p class="auto-style5">
+		<a href="#" onclick="toggle('node4')" class="auto-style8">
+		<span class="auto-style7">History</span></a></p>
+		
+		<dl id="node4" style="display:none">
+		
+			<p class="auto-style6"> History- Display's the history for a given file. </p>
+		</dl>
+        </li>
+        
+        <li>
+		
+		<p class="auto-style5">
+		<a href="#" onclick="toggle('node5')" class="auto-style8">
+		<span class="auto-style7">Transfer</span></a></p>
+		
+		<dl id="node5" style="display:none">
+		
+			<p class="auto-style6"> Transfer- Display's the files which are transfered from one user to another user. </p>
+		</dl>
+        </li>
+               
+               
+	</ul>
+    
+</div>
+    
+</body>
+</html>

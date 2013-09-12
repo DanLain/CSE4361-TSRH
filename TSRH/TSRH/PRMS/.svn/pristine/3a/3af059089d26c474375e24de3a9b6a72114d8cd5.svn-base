@@ -1,0 +1,69 @@
+package dbmanager;
+
+import java.sql.*;
+
+public abstract class SQLCommand {
+	private String connectStr = "jdbc:mysql://localhost:3306/alertsystem";
+	private String userName = "root";
+	private String passWord = "";
+	protected Connection myConnection;
+	protected ResultSet rs;
+	//public abstract void openCon();
+	public abstract String composeQuery();
+	//public abstract String composeQuery(String s1, String s2, String s3, String s4, String s5, String s6, String s7, String s8, String s9, String s10, String s11, String s12);
+	//public abstract ResultSet executeQuery(String queryString);
+	
+        public void openCon() 
+	{
+		try{
+		Class.forName("com.mysql.jdbc.Driver");
+		myConnection = DriverManager.getConnection(connectStr, userName, passWord);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			//throw new Exception("open connection failed");
+		}
+	}
+	
+	public void closeCon() 
+	{
+		try{
+		myConnection.close();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			//throw new Exception("close connection failed");
+		}
+	}
+	
+	public ResultSet getResultSet()
+	{
+		return rs;
+	}
+	
+	public ResultSet executeQuery(String query)
+	{
+		ResultSet rs = null;
+		try{
+			Statement myStatement = myConnection.createStatement();		    
+		    rs = myStatement.executeQuery(query);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return rs;
+		
+	}
+	
+	public ResultSet execute()
+	{
+		openCon();
+		String query = composeQuery();		
+		ResultSet rs = executeQuery(query);
+		return rs;
+	}
+
+}

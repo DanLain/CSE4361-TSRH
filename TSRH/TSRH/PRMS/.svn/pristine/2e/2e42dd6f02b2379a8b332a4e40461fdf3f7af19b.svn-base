@@ -1,0 +1,81 @@
+<%-- 
+    Document   : sendMail
+    Created on : Nov 5, 2012, 3:07:19 PM
+    Author     : Amal
+--%>
+
+<%@page import="edu.uta.tsrh.db.MySQLDBServices"%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<body>
+<%@ page import="java.util.*" %>
+<%@ page import="javax.mail.*" %>
+<%@ page import="javax.mail.internet.*" %>
+
+<%
+	String to = request.getParameter("email");
+	String password = request.getParameter("password");
+        String username = request.getParameter("username");
+	System.out.println(password);
+
+	String smtpHost = "smtp.gmail.com";
+	int smtpPort = 587;
+	String from = "tsrh.test";
+	String urPasswd = "admin_tsrh";
+	java.util.Properties props = new java.util.Properties();
+	props = System.getProperties();
+	props.put("mail.smtp.host", smtpHost);
+	props.put("mail.smtp.starttls.enable", "true");
+	props.put("mail.smtps.auth", "true");
+	Session mailSession = Session.getDefaultInstance(props,null);
+	mailSession.setDebug(false);
+	Message msg = new MimeMessage(mailSession);
+	//String to = emi
+	msg.setFrom(new InternetAddress(from));
+	InternetAddress[] address = { new InternetAddress(to) };
+	msg.setRecipients(Message.RecipientType.TO, address);
+	String subject = "Auto Generated Password for TSRH";
+	msg.setSubject(subject);
+	msg.setSentDate(new Date());
+	String content = "This is your new password \n "
+			 + "Password: " + password;
+	msg.setText(content);
+	//Send the message
+
+	//System.out.println("Printed!");
+	Transport transport = mailSession.getTransport("smtp");
+	transport.connect(smtpHost, smtpPort, from, urPasswd);
+	
+        
+        //forgotPassword ob1 = new forgotPassword();
+        
+        MySQLDBServices dbservices = new MySQLDBServices();
+        int flag = dbservices.forgotPassword(username,to,password);
+        
+        HttpSession session1 = request.getSession();
+        
+        if(flag==0)
+        {
+        session1.setAttribute("forgot", "False");
+                     
+        response.sendRedirect("emailUser.jsp");
+        }
+        
+        else
+       {
+        transport.sendMessage(msg, msg.getAllRecipients());
+	transport.close();
+         
+        session1.setAttribute("forgot", "True");
+         
+        response.sendRedirect("emailUser.jsp");
+       }
+	//out.println("done my man!!");
+	
+        
+%>
+<b><font color="green">Check your E-mail for the password</font></b>
+</body>
+</html>

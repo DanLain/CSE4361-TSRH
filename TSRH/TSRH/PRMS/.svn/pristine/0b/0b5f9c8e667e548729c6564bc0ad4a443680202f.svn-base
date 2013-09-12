@@ -1,0 +1,376 @@
+<%@page import="java.sql.DriverManager"%>
+<%@page import="com.mysql.jdbc.Connection"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<meta http-equiv="X-UA-Compatible" content="IE=8" />
+
+
+<html lang="en">
+
+    <%@page contentType="text/html" pageEncoding="UTF-8" %>
+    <%@page import="controller.Controller" import="dbmanager.DBConfig"%>
+    <%@page import ="java.util.*" import="PRMSalert.*"%> <%--import="PRMSAlertDatabase.*" --%>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Set Alert| Notifications</title>
+        <meta charset="utf-8">
+        <meta name="description" content="Place your description here">
+        <meta name="keywords" content="put, your, keyword, here">
+        <meta name="author" content="Templates.com - website templates provider">
+        <link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/layout.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/style.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/buttonCSS.css" type="text/css" media="all">
+
+                    <!-- Help files -->
+
+            <link rel="stylesheet" href="css/help.css" type="text/css" media="all">
+        <script type="text/javascript" src="js/jquery.pageslide.min.js"></script>
+
+        <script type="text/javascript" src="js/maxheight.js"></script>
+        <script type="text/javascript" src="js/jquery-1.4.2.min.js" ></script>
+        <script type="text/javascript" src="js/cufon-yui.js"></script>
+        <script type="text/javascript" src="js/cufon-replace.js"></script>
+        <script type="text/javascript" src="js/Myriad_Pro_400.font.js"></script>
+        <script type="text/javascript" src="js/script.js"></script>
+
+        <!-- Loading Theme file(s) -->
+        <link rel="stylesheet" href="themes/forest.css" />
+        <link rel="stylesheet" href="themes/layouts/small.css" />
+        <link href="DatePicker/kendo.common.min.css" rel="stylesheet">
+        <link href="DatePicker/kendo.blueopal.min.css" rel="stylesheet">
+        <script src="DatePicker/jquery.min.js"></script>
+        <script src="DatePicker/kendo.web.min.js"></script>
+
+
+
+
+
+        <script type="text/javascript">
+
+            function upgradepicker() {
+                var date= new Date();
+                $("#alertdate").kendoDatePicker({
+                    min:date
+                });
+            }
+        </script>
+
+        <!--[if lt IE 7]>
+                <link rel="stylesheet" href="css/ie/ie6.css" type="text/css" media="screen">
+                <script type="text/javascript" src="js/ie_png.js"></script>
+                <script type="text/javascript">
+                        ie_png.fix('.png, #slogan, header nav ul li a, .icon img, .link1, .link1 span');
+                </script>
+        <![endif]-->
+        <!--[if lt IE 9]>
+                <script type="text/javascript" src="js/html5.js"></script>
+        <![endif]-->
+<script>
+           function validateForm()
+           {
+
+               var x=document.forms["form1"]["alertTitle"].value;
+               var y=document.forms["form1"]["alertMessage"].value;
+               var z=document.forms["form1"]["alertdate"].value;
+           var a=document.forms["form1"]["to"].value;
+               var b=document.forms["form1"]["priority"].value;
+               if (b=="0")
+                   {
+                   document.getElementById('priormsg').style.visibility ='visible';
+                   document.getElementById('priormsg').color = "red";
+                   document.getElementById('priormsg').innerHTML = 'Please Select Priority !';
+
+                   return false;
+                   }
+              else if (a==null || a=="")
+        {
+                    document.getElementById('dropdownmsg').style.visibility ='visible';
+                   document.getElementById('dropdownmsg').color = "red";
+                   document.getElementById('dropdownmsg').innerHTML = 'Please Select User !';
+
+                   document.getElementById('priormsg').style.visibility='hidden';
+
+
+
+
+                   return false;
+                }
+               else if (x==null || x=="" )
+               {
+                  document.getElementById('msg1').style.visibility ='visible';
+                   document.getElementById('msg1').color = "red";
+                   document.getElementById('msg1').innerHTML = 'Enter Alert Title !';
+
+                   document.getElementById('dropdownmsg').style.visibility='hidden';
+                   document.getElementById('priormsg').style.visibility='hidden';
+
+
+
+                   return false;
+               }
+
+
+               else if(y==null || y=="")
+               {document.getElementById('msg2').style.visibility ='visible';
+                   document.getElementById('msg2').color = "red";
+                   document.getElementById('msg2').innerHTML = 'Enter Alert Message';
+                   document.getElementById('msg1').style.visibility='hidden';
+                   document.getElementById('dropdownmsg').style.visibility='hidden';
+                   document.getElementById('priormsg').style.visibility='hidden';
+
+                   return false;
+               }
+               else if(z==null || z=="")
+               {document.getElementById('msg3').style.visibility ='visible';
+                   document.getElementById('msg3').color = "red";
+                   document.getElementById('msg3').innerHTML = 'Select Date';
+                   document.getElementById('msg1').style.visibility='hidden';
+                   document.getElementById('msg2').style.visibility='hidden';
+                   document.getElementById('dropdownmsg').style.visibility='hidden';
+                   document.getElementById('priormsg').style.visibility='hidden';
+
+                   return false;
+               }
+               else
+               {
+                   document.getElementById('msg1').style.visibility='hidden';
+                   document.getElementById('msg2').style.visibility='hidden';
+                   document.getElementById('msg3').style.visibility='hidden';
+                   document.getElementById('dropdownmsg').style.visibility='hidden';
+                   document.getElementById('priormsg').style.visibility='hidden';
+
+               }
+
+           }
+
+       </script>
+
+        </head>
+     <%
+     if(session.getAttribute("user") == null){
+         response.sendRedirect("/TSRH/index.jsp");
+     }
+    %>
+    <jsp:useBean id="Controller" class="controller.Controller" scope="session" />
+    <body id="page1" onLoad="upgradepicker()">
+        <a href="javascript:$.pageslide({ direction: 'right', href: 'help/SetAlert.html' })" class="first">help</a>
+        <div class="wrap">
+            <!-- header -->
+                 <%@ include file="headers.jsp" %>
+
+            <!-- content -->
+            <section id="content">
+                <div class="container"><div class="ic">More Website Templates at TemplateMonster.com!</div>
+                    <div class="inside">
+                        <div class="wrapper indent">
+                               <div id="content_main">
+                            <article class="col-1">
+                                <div class="box"  style="width:500px;background-color: #F0F0F0;" align="center">
+                                    <h2>Enter Alert Details</h2>
+                                <p>
+                                <form name="form1" method="post" onSubmit="return validateForm()" action="setAlert.jsp">
+                                    <table width="500">
+                                        <tr>
+                                            <td width = "100"> <h3>*Priority:</h3></td>
+                                            <td>
+                                                <label for="priority"></label>
+                                                <select name="priority" id="priority">
+                                                    <option id="0" value="0">Select</option>
+                                                    <option id="3" value="3">High</option>
+                                                    <option id="2" value="2">Medium</option>
+                                                    <option id="1" value="1">Low</option>
+                                                </select>
+                                            </td>
+                                            <td><font size="5" color="white" id="priormsg"></font></td>
+                                            <tr>
+                                            <td><h3>*Alert To:</h3></td>
+                                            <td width="200">
+                                                    <table><td>
+                                                    <select multiple="multiple" name="to"  size="4" style="width:200px; height:100px" >
+                                                                <%
+
+                                                                java.sql.Connection con;
+                                                                java.sql.Statement s;
+                                                                java.sql.ResultSet rs;
+
+                                                                con = null;
+                                                                s = null;
+                                                                rs = null;
+                                                           /*
+                                                                String url1 = "jdbc:mysql://localhost:3306/alertsystem";
+                                                                //String id = "root";
+                                                                //String pass = "1234";
+
+                                                                String id1=Controller.getDBManager().getDBAccess().getUserName();
+                                                                String pass1=Controller.getDBManager().getDBAccess().getPwd();
+                                                                pass1="1234";
+                                                                try {
+
+                                                                    Class.forName("com.mysql.jdbc.Driver");
+                                                                    con = java.sql.DriverManager.getConnection(url1, id1, pass1);
+
+                                                                } catch (ClassNotFoundException cnfex) {
+                                                                    cnfex.printStackTrace();
+
+                                                                }//end*/
+                                                  //               Controller dba = new Controller();
+                                                //     con = dba.getConnection();
+                                                     
+                                                       DBConfig cfg = new DBConfig();
+                            String ipAddress = cfg.getProperty("ipAddress");
+                String dbPort = cfg.getProperty("mDbPort");
+                String dbName = cfg.getProperty("mDbName");
+                String dbUserName = cfg.getProperty("mDbUser");
+                String dbPassword = cfg.getProperty("mDbPwds");
+                
+// creating connection string
+                String dbUrl = "jdbc:mysql://"+ipAddress+":"+dbPort+"/"+dbName;                
+                
+                Class.forName(cfg.getProperty("dbConnect"));
+                
+                con = (Connection) DriverManager.getConnection(dbUrl,dbUserName,dbPassword);
+            
+                                                     
+                                                                String usernamee= (String)session.getAttribute("user");
+                                                                String sqlq = "SELECT firstName,lastname,userId FROM user where userName != 'Admin' and userName !='"+usernamee+"' ";
+                                                                try {
+
+                                                                    s = con.createStatement();
+                                                                    rs = s.executeQuery(sqlq);
+                                                                    String names = null;
+                                                                   // String id1= rs.getString(3);
+
+                                                                    while (rs.next()) {
+                                                                        String idq= rs.getString(3);
+                                                                        names = rs.getString(2)+","+rs.getString(1);
+                                                                        out.println("<option value=");
+                                                                        out.println(idq);
+
+                                                                        out.println(">");
+                                                                        out.println(names);
+                                                                        out.println("</option>");
+
+                                                                    }//end of while
+
+                                                                }//end of try
+                                                                catch (Exception e) {
+                                                                    e.printStackTrace();
+                                                                } finally {
+                                                                    if (rs != null) {
+                                                                        rs.close();
+                                                                    }
+                                                                    if (s != null) {
+                                                                        s.close();
+                                                                    }
+                                                                    if (con != null) {
+                                                                        con.close();
+                                                                    }
+                                                                }//end of catch
+
+                                                            %>
+                                                    </select>
+                                                            <%--</td><td> --%>
+                                                </td><td>Press the 'Ctrl' key to select multiple users</td></table></td>
+                                            <td> <font size="5" color="white" id="dropdownmsg"></font></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td><h3>*Alert Title:</h3></td>
+                                            <td width="200"><p>
+                                                    <input type="text" class="textbox" name="alertTitle" maxlength="50" id="alertTitle" style="height:25px;width:250px ">
+                                               <td> <font size="5" color="white" id="msg1"></font></td>
+                                                </p>
+                                                <p>
+                                                    <label for="alertTitle"></label>
+                                                </p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><h3>*Message:</h3></td>
+                                            <td width="200"><p>
+                                                    <textarea name="alertMessage" class="textbox" maxlength="500" cols="30" rows="6" style="height:100px;width:250px;resize:none"></textarea>
+                                                <td> <font size="5" color="white" id="msg2"></font></td>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                           <%-- <td><h3>Frequency:</h3></td>
+                                            <td width="200"><p>
+                                                    <select name="freq" id="freq">
+                                                        <option id="1" value="1">Alert Once</option>
+                                                        <option id="2" value="2">Two days</option>
+                                                        <option id="3" value="3">Three days</option>
+                                                        <option id="7" value="7">One week</option>
+                                                    </select>
+
+                                                </p>
+
+                                                <label for="freq"></label> --%>
+
+                                            </td>
+                                        </tr>
+
+                                            <tr>
+                                                <td><h3>*Alert Date:</h3></td>
+                                                <td><p>
+                                                        <input type="text" readonly id="alertdate" name="alertdate" />
+                                                        <td>
+                                                            <font size="5" color="white" id="msg3"></font>
+                                                        </td>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        <tr>
+
+                                        </tr>
+                                    </table>
+                                           <div style="color: red;font:italic"> &nbsp;Fields Marked in * are Mandatory</div>
+                                    <table>
+                                        <br>
+                                        <tr>
+                                            <td>&nbsp;</td>
+                                            <td  colspan="2"><h3><input type="submit" align="right" class="blue button"  value="Set Alert">   </h3>       </tr>
+  <%
+String CreatedBy =(String) session.getAttribute("setalert");
+if(CreatedBy=="sucess")
+       {
+   //out.println("<h3 color='red'>Alert has been set successfully</h3>");
+      }
+
+
+%>
+                                    </table>
+                                </form>
+                                </p>
+                            </article>
+  </div>
+                          <%--  <ul class="banners col-2">
+                                <p>&nbsp;</p>
+                                <p><%@ include file="Displayalert.jsp" %><p>&nbsp;</p>
+                                <p>&nbsp;</p>
+
+                                <p>&nbsp;</p>
+                                <p>&nbsp;</p>
+
+                            </ul>--%>
+                           <ul class="banners col-2">
+                                <li>
+                                    <p><%@ include file="Displayalert.jsp" %></p>
+                                </li>
+                            </ul>
+                        </div>
+                        <ul class="articles">
+                            <li class="maxheight"></li>
+                            <li class="maxheight"></li>
+                            <li class="maxheight last"></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!-- footer -->
+             <%@ include file="footers.jsp" %>
+    <script type="text/javascript">Cufon.now();</script>
+    <script src="js/jquery.pageslide.min.js"></script>
+
+    </body>
+</html>

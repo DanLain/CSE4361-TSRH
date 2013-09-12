@@ -1,0 +1,210 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@page import="java.sql.*"%> 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="Place your description here">
+<meta name="keywords" content="put, your, keyword, here">
+<meta name="author" content="Templates.com - website templates provider">
+<link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/layout.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/style.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/buttonCSS.css" type="text/css" media="all">
+<link href="css/calendar.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="css/help.css" type="text/css" media="all">        
+<script type="text/javascript" src="js/jquery.pageslide.min.js"></script>
+<script type="text/javascript" src="js/cufon-yui.js"></script>
+<script type="text/javascript" src="js/cufon-replace.js"></script>
+<script language="javaScript" type="text/javascript" src="js/calendar.js"></script>
+<script type="text/javascript" src="js/maxheight.js"></script>
+<script type="text/javascript" src="js/jquery-1.4.2.min.js" ></script>
+<script type="text/javascript" src="js/cufon-yui.js"></script>
+<script type="text/javascript" src="js/cufon-replace.js"></script>
+<script type="text/javascript" src="js/Myriad_Pro_400.font.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+<SCRIPT TYPE="text/javascript">
+<!--
+function popup(mylink, windowname)
+{
+if (! window.focus)return true;
+var href;
+if (typeof(mylink) == 'string')
+   href=mylink;
+else
+   href=mylink.href;
+window.open(href, windowname, 'width=600,height=1000,scrollbars=yes');
+return false;
+}
+
+</SCRIPT>
+</head>
+<jsp:useBean id="Controller" class="controller.Controller" scope="session" />
+<body id="page1" onLoad="new ElementMaxHeight();">
+    <a href="javascript:$.pageslide({ direction: 'right', href: 'help/Test.html' })" class="first">Help</a>
+<div class="wrap">
+ <%@ include file="headers.jsp" %>
+                 <%
+       String currentUser = (String) session.getAttribute("user");        
+        if(currentUser == null){            
+           String redirectURL = "index.jsp";
+            response.sendRedirect(redirectURL);
+        }
+      %>			
+	<%
+String mtestrequestid = " ";
+String mpatientid_testrequest = " ";
+String mtestname = " ";
+String mtestrequestername = " ";
+String mtestrequestdate = " ";
+String mexpectedresultdate = " ";
+String mstafftobeinformed = " ";
+String mdatetoinformstaff= " ";
+String motherstobeinformed = " ";
+String mdatetoinformothers = " ";
+String mcomments = " ";
+String muserid = " ";
+String test_requestid1="";
+try
+{
+	Class.forName("com.mysql.jdbc.Driver");
+	Connection conne = DriverManager.getConnection(Controller.getDBManager().getDBAccess().getConStr(), Controller.getDBManager().getDBAccess().getUserName(), Controller.getDBManager().getDBAccess().getPwd());
+    Statement st=conne.createStatement();
+    ResultSet res = null;
+    test_requestid1=request.getParameter("test_requestid");
+    int test_requestid=Integer.parseInt(test_requestid1);
+    res= st.executeQuery("select * from test_request_record"+ " where testrequestid="+test_requestid);
+    
+if(res.next())
+{
+	mtestrequestid = res.getString(1);
+	mpatientid_testrequest = res.getString(2);
+	mtestname = res.getString(3);
+	mtestrequestername = res.getString(4);
+	mtestrequestdate = res.getString(5);
+	mexpectedresultdate = res.getString(6);
+	mstafftobeinformed = res.getString(7);
+	mdatetoinformstaff = res.getString(8);
+	motherstobeinformed = res.getString(9);
+        mdatetoinformothers = res.getString(10);
+	mcomments = res.getString(11);
+	muserid = res.getString(12);
+}   
+   res.close();
+   st.close();
+   conne.close();
+}
+catch(Exception e){
+    System.out.print(e);
+    e.printStackTrace();
+    }
+	
+%>
+<section id="content">
+    <div class="inside">
+        <div class="container">
+                        <div class="wrapper indent">
+                          <article class="col-0"> 
+
+<table>
+<h3>&nbsp;</h3>
+
+  <table><tr><td>
+            <h2> Information On Test Request </h2> </td></tr>    &nbsp; &nbsp;&nbsp;        <br/> <br/>       
+ <table>
+  
+
+<tr>
+          <td width = "200"> <h3>Test Name</h3></td>
+          <td><p>
+                  <input readonly="readonly" name="mtestname" type="text"  class ="textbox" value ="<%=mtestname%>" size="20">
+          </p>
+           <p>&nbsp; </p></td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          <td width = "200"> <h3> Test Requester Name</h3></td>
+          <td><p>
+             <input readonly="readonly" name="mtestrequestername" type="text" class ="textbox" value ="<%=mtestrequestername%>" size="20">
+          </p>
+           <p>&nbsp; </p></td>
+          <tr></tr>
+<tr>
+          <td width = "200"> <h3> Test Request Date</h3></td>
+          <td><p>
+             <input readonly="readonly" name="mtestrequestdate" type="text" class ="textbox" value ="<%=mtestrequestdate%>" size="20">
+          </p>
+           <p>&nbsp; </p></td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          <td width = "200"> <h3> Expected Result Date</h3></td>
+          <td><p>
+             <input readonly="readonly" name="mexpectedresultdate" type="text" class ="textbox" value ="<%=mexpectedresultdate%>" size="20">
+          </p>
+           <p>&nbsp; </p></td>
+          <tr></tr>
+<tr>
+          <td width = "200"> <h3> Staff to be Informed </h3></td>
+          <td><p>
+                  <select disabled="true" name="stafftobeinformed" size=4 multiple>
+              <%
+              String[] split = mstafftobeinformed.split(";");
+              for(int i=0;i<split.length;i++)
+                                   {
+    %>
+                  <option><%=split[i]%></option>
+              <%}%>
+          </select>   
+          </p>
+           <p>&nbsp; </p></td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          <td width = "200"> <h3> Date to Inform Staff </h3></td>
+          <td><p>
+             <input readonly="readonly" name="mdatetoinformstaff" type="text" class ="textbox" value ="<%=mdatetoinformstaff%>" size="20">
+          </p>
+           <p>&nbsp; </p></td>
+          <tr></tr>
+<tr>
+          <td width = "200"> <h3> Others to be Informed </h3></td>
+          <td><p>
+             <input readonly="readonly" name="motherstobeinformed" type="text" class ="textbox" value ="<%=motherstobeinformed%>" size="20">
+          </p>
+           <p>&nbsp; </p></td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          <td width = "200"> <h3> Date to Inform Others </h3></td>
+          <td><p>
+             <input readonly="readonly" name="mdatetoinformothers" type="text" class ="textbox" value ="<%=mdatetoinformothers%>" size="20">
+          </p>
+           <p>&nbsp; </p></td>
+          <tr></tr>
+          
+ <tr>
+      <td width = "200"> <h3> Comments</h3></td>
+          <td><p>
+             <input readonly="readonly" name="mcomments" type="text" class ="textbox" value ="<%=mcomments%>" size="20">
+          </p>
+           <p>&nbsp; </p></td>
+         
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+          <td width = "200"> <h3> User Name</h3></td>
+          <td><p>
+             <input readonly="readonly" name="muserid" type="text" class ="textbox" value ="<%=(String) session.getAttribute("user")%>" size="20" >
+          </p>
+           <p>&nbsp; </p>
+          </td>
+          <tr></tr><table>
+
+              <input type="button" class="blue button" onclick="window.location = '/TSRH/testrequest.jsp?pid=<%=mpatientid_testrequest%>'" value="OK">
+</table></article>
+</div>
+        </div> </div>
+                    <br>
+      <br>
+      </section>
+<%@ include file="footers.jsp" %>
+
+</tr>
+<script type="text/javascript">Cufon.now();</script>
+<script src="js/jquery.pageslide.min.js"></script>
+</body>
+</html>

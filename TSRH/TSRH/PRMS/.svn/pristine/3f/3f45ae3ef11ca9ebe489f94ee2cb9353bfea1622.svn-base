@@ -1,0 +1,81 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package edu.uta.tsrh.db.commandpattern;
+
+import com.mysql.jdbc.Connection;
+import edu.uta.tsrh.RoleManagement.Helper.MailHelper;
+import edu.uta.tsrh.RoleManagement.Helper.RandomPasswordHelper;
+import edu.uta.tsrh.db.DAO;
+import edu.uta.tsrh.db.DBQueryExecuter;
+import edu.uta.tsrh.model.User;
+
+/**
+ *
+ * @author Bugs
+ */
+public class CreateUser implements MySQLCmd {
+
+    private User user;
+    
+    public CreateUser(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public Object execute() {
+        
+        //Generate a random password
+        String newPassword = RandomPasswordHelper.createRandomPassword();
+        user.setPassword(newPassword);
+    
+        //Hash the apssword
+        user.setPassword(user.getHashedPW());
+        
+        String sqlQuery = buildQuery();
+        System.out.println("query is " + sqlQuery);      
+
+        Connection connection = DAO.getConnection();
+
+        DBQueryExecuter queryExecuter = new DBQueryExecuter();
+        int success = queryExecuter.modify(sqlQuery, connection);
+
+        DAO.closeConnection();
+        
+        //Send a mail
+        String mailBody = createMailBody(newPassword);
+        MailHelper mailHelper = new MailHelper(user.getEmailId(), "Welcome to TSRH", mailBody);
+        boolean mailSent = mailHelper.sendMail();
+        
+        if (success == 1 && mailSent) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private String buildQuery() {
+
+        return "Insert into user(userName,firstName,lastName,password,email,roleId,flag) values('" + this.user.getUserName() + "','" + this.user.getFirstName() + "','" + this.user.getLastName() + "','" + user.getHashedPW() + "','" + this.user.getEmailId() + "'," + user.getRoleId()+ "," + user.getFirstLogin() + ")";
+    }
+    
+    private String createMailBody(String newPassword){
+        
+        String mailBody = "Hi "+ user.getFirstName() + " " + user.getLastName() + "\n\tWelcome to Texas Scottish Rite Hospital's Patient Management System.\n";
+        mailBody = mailBody + "\nYou can now use the system with the following credentials:\n"+ "\t USER NAME: "+ user.getUserName() + "\n\t PASSWORD: " + newPassword;
+        mailBody = mailBody + " \n\n Thanks,\n TSRH Admin";
+        
+        return mailBody;
+    }
+
+    @Override
+    public boolean isReversible() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void undo() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+}

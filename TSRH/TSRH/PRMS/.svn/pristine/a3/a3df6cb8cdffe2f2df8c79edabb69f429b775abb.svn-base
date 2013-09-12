@@ -1,0 +1,97 @@
+<%-- 
+    Document   : AddNewPatient
+    Created on : Oct 21, 2012, 5:13:23 PM
+    Author     : Asha
+--%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="edu.uta.tsrh.specialnotes.controllers.RecordController"%>
+<%@page import="edu.uta.tsrh.specialnotes.misc.PatientPhoneCall"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="edu.uta.tsrh.specialnotes.misc.PatientRecord"%>
+<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+         pageEncoding="ISO-8859-1"%>
+<%@page import="java.sql.*"%> 
+<%@page import="model.PatientInfo" %>
+<script>
+    function validateForm()
+    {
+        var firstNameError=document.forms["addPatientForm"]["firstName"].value;
+        var lastNameError = document.forms["addPatientForm"]["lastName"].value;
+                             
+                
+        if (firstNameError==null || firstNameError=="" || 
+            lastNameError ==null || lastNameError == "")
+        {
+            alert("All the fields are required");
+            return false;
+        }
+    }
+</script>
+<div class="box" style="width:500px;background-color: #F0F0F0;">
+    <form name="addPatientForm" method="POST" onsubmit="return validateForm()" action="SaveNewPatient" enctype="multipart/form-data">
+
+        <h2>Please Enter Patient Information</h2>
+        <table style="border: 0;">
+            <tr>
+                <td width="310" style="border: 0px none;">
+                    <h3>First Name:</h3> 
+                </td>
+                <td style="border: 0px none;">
+                    <input type="text" class="textbox" name="firstName"/>
+                </td>
+            </tr>
+            <tr>			
+                <td style="border: 0px none;">
+                    <h3>Last Name:</h3>
+                </td>
+                <td style="border: 0px none;">
+                    <input type="text" class="textbox" name="lastName"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 0px none;">
+                    <h3>Date of Birth:</h3> 
+                </td>
+                <td style="border: 0px none;">                        
+                    <input type="text" id="DOB" name ="DOB" value="" style="width:165px"/>
+                </td>
+            </tr>
+            <tr>			
+                <td style="border: 0px none;">
+                    <h3>Contact Phone:</h3>
+                </td>
+                <td style="border: 0px none;">
+                    <input type="text" class="textbox" name="contactPhone"/>
+                </td>
+            </tr>
+            <tr>			
+                <td style="border: 0px none;">
+                    <h3>Address :</h3>
+                </td>
+                <td style="border: 0px none;">
+                    <input type="text" class="textarea" name="address" size="50"/>
+                </td>
+            </tr>
+            <tr>			
+                <td style="border: 0px none;">
+                    <h3>Mother's Name :</h3>
+                </td>
+                <td style="border: 0px none;">
+                    <input type="text" class="textbox" name="mothersName"/>
+                </td>
+            </tr>
+            <tr>			
+                <td style="border: 0px none;">
+                    <h3>Select Image</h3>
+                </td>
+                <td style="border: 0px none;">
+                    <input type="file" name="imageLink"/>
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="Submit" class="blue button" />
+    </form>
+</div>
+
+

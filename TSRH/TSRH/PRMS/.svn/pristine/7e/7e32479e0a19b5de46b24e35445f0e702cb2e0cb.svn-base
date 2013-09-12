@@ -1,0 +1,106 @@
+<%-- 
+    Document   : Admin
+    Created on : Oct 14, 2012, 1:11:05 PM
+    Author     : soyab
+--%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="edu.uta.tsrh.model.Resources"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="edu.uta.tsrh.db.MySQLDBServices" %>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Admin| Add Role </title>
+        <meta charset="utf-8">
+
+        <link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/layout.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/style.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/tableCSS.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/buttonCSS.css" type="text/css" media="all">
+    </head>
+
+    <!-- Variable Declarations-->
+    <%! MySQLDBServices dbservices = new MySQLDBServices();
+        ArrayList<Resources> list = dbservices.getResourceList();
+        int maxId;
+    %>
+
+
+    <!-- Body -->
+    <body id="page1" onLoad="new ElementMaxHeight();">
+
+        <div class="wrap">
+            <header>
+                <div class="container">
+                    <h1><a href="index.jsp">Hope Center</a></h1>
+                    <nav>
+                        <ul>
+                            <li><a href="/TSRH/Admin.jsp"><strong>Admin Home</strong></a></li>
+                            <li><a href="/TSRH/userCreation.jsp"><strong>Create User</strong></a></li>
+                            <li class="current"><a href="/TSRH/CreateRole.jsp"><strong>Create Role</strong></a></li>
+                            <li><a href="/TSRH/EditRole.jsp"><strong>Edit Role</strong></a></li>
+                        </ul>
+                    </nav>
+                    <div id="slogan"></div>
+                </div>
+            </header>
+
+
+
+            
+                <section id="content">
+                    <div class="container">
+                        <div class="inside">
+                            <form name="createRole" method="POST"  action="CreateRoleController"> 
+                            <h2>Create Role</h2>
+                            <b>Role Name: </b> &nbsp; &nbsp;
+                            <input type="text" name="role" class="textbox">
+                            <br>
+                            <br>
+                            <br>
+
+                            <b>Select rights for each of resources below: </b> 
+                            <table class="bordered">
+                                <thead>
+                                    <tr> 
+                                        <th>Resource Id</td>
+                                        <th>Resource Name</td>
+                                        <th>Resource URL</td>
+                                        <th>Rights</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%
+                                        for (int i = 0; i < list.size(); i++) {
+                                            maxId = list.get(i).getResourceId();
+                                    %>
+
+                                    <tr>
+                                        <td> <%= list.get(i).getResourceId()%> </td>
+                                        <td> <%= list.get(i).getResourceName()%> </td>
+                                        <td> <%= list.get(i).getResourceURL()%> </td>
+                                        <td>
+                                            <select name="<%= list.get(i).getResourceId()%>" id="rights" class="selectColor">
+                                                <option value="-1">None</option>
+                                                <option value="0">Read</option>
+                                                <option value="1">Write</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+
+                                    <% }%>
+                                </tbody>
+                            </table>
+                            <br>
+                            <input type="hidden" name="size" value="<%= maxId%>">
+                            <input type="submit" name="Create" class="blue button">
+                        </div>
+                    </div>
+                </section>
+            </form>
+        </div>
+        <%@ include file="footers.jsp" %>
+        <script type="text/javascript">Cufon.now();</script>
+    </body>
+</html>

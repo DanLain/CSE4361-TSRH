@@ -1,0 +1,120 @@
+<%-- 
+    Document   : ChangePassword
+    Created on : Oct 16, 2012, 10:38:28 PM
+    Author     : Amal
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+
+
+<html>
+   <head>
+        <title>Change Default Password</title>
+        <meta charset="utf-8">
+        <meta name="description" content="Place your description here">
+        <meta name="keywords" content="put, your, keyword, here">
+        <meta name="author" content="Templates.com - website templates provider">
+        <link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/layout.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/style.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/buttonCSS.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/style.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/help.css" type="text/css" media="all">
+        <script type="text/javascript" src="js/maxheight.js"></script>
+        <script type="text/javascript" src="js/jquery-1.4.2.min.js" ></script>
+        <script type="text/javascript" src="js/jquery.pageslide.min.js"></script>
+        <script type="text/javascript" src="js/cufon-yui.js"></script>
+        <script type="text/javascript" src="js/cufon-replace.js"></script>
+        <script type="text/javascript" src="js/Myriad_Pro_400.font.js"></script>
+        <script type="text/javascript" src="js/script.js"></script>
+   </head>
+   
+    <body id="page1" onLoad="new ElementMaxHeight();">
+      <a href="javascript:$.pageslide({ direction: 'right', href: 'help/changeDefaultPassword.html' })" class="first">help</a>
+  
+        <div class="wrap">
+            <header>
+                <%@include file="loginHeader.jsp"%>
+                <div class="container">
+                    <h1><a>Hope Center</a></h1>
+                   
+                    <div id="slogan"></div>
+                </div>
+            </header>
+            
+            <section id="content">
+                <div class="container">
+                    <div class="inside">
+                        <div class="wrapper indent">
+                            <article class="col-1">
+                                <table><tr><td>
+            <h2> Change Default Password   </h2> </td></tr>    &nbsp; &nbsp;&nbsp;
+      </table>
+         <%
+            if(session.getAttribute("user") == null){
+                response.sendRedirect("/TSRH/index.jsp");
+            }
+         %>
+         <% 
+            HttpSession session2 = request.getSession();
+            String f=(String)session.getAttribute("flag1");
+            if(f == "False")
+              {
+              %>
+              
+              <h4 align="center"><font color="red">Incorrect Password Format or Password Mismatch</font></h4>
+              <% 
+              }
+            if (f == "True")
+              {
+              %>  
+              <h4 align="center"><font color="green">Password Changed Successfully</font></h4>
+               <% 
+              session2.setAttribute("flag1",null);
+              response.sendRedirect("/TSRH/nav.jsp");
+              } 
+              session2.setAttribute("flag1",null);
+                                               
+               %>
+      
+      <form id="form" name="form" method="post" action="/TSRH/changedefaultpassword.org">
+      <table align="center" border='0'>
+ <tr>
+          <td width = "200"> <h3>  Enter New Password*   </h3></td>
+          <td>
+          <p>
+             <input type="password" name="NewPassword" id="NewPassword"  class ="textbox"  size="20">
+          </p>
+          </td>
+          
+</tr>
+          <tr><td width = "200"> <h3>  Re-Enter the New Password*   </h3></td>
+          <td><p>
+             <input type="password" name="NewPassword1" id="NewPassword1"  class ="textbox"  size="20">
+          </p>
+          </td>
+          </td>
+</tr>
+                                     
+<tr>      <tr><td width = "200"></td> 
+          <td colspan=2><input type="submit" name = "submit" value="submit" class="blue button" >
+</table>
+           <p>Password Must contain :</p>
+            <p>1. at least one digit from 0-9,lowercase characters,uppercase characters</p>
+            <p>2. one special symbols in the list @,# etc</p>
+            <p>3. length at least 8 characters and maximum of 20</p>
+            
+</form>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+        </div>
+        <%@ include file="footers.jsp" %>
+        <script type="text/javascript">Cufon.now();</script>
+        <script src="js/jquery.pageslide.min.js"></script>
+    </body>
+</html>

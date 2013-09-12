@@ -1,0 +1,129 @@
+<%-- 
+    Document   : update
+    Created on : Oct 26, 2011, 9:41:27 PM
+    Author     : Yogi
+--%>
+
+
+<!DOCTYPE html>
+<html>
+    <%@page contentType="text/html" pageEncoding="UTF-8"%>
+    <%@page import="java.util.*"  import="alertsystemdatabase.*" import="java.sql.Timestamp" import="java.text.*" %>
+    <%
+     if(session.getAttribute("user") == null){
+         response.sendRedirect("/TSRH/index.jsp");
+     }
+    %>
+
+    <body>
+
+        <%
+        //copying the values to local variables.
+            session.setAttribute("setalert", "fail");
+            byte priority = Byte.parseByte(request.getParameter("priority"));
+            String CreatedBy = (String) session.getAttribute("user");
+            String title = request.getParameter("alertTitle");
+            String msg = request.getParameter("alertMessage");
+            SimpleDateFormat dateFormats = new SimpleDateFormat("MM/dd/yyyy");
+            String date = request.getParameter("alertdate");
+            Date date1 = dateFormats.parse(date);
+            //java.sql.Timestamp  sqlDate = new java.sql.Timestamp(new java.util.Date().getTime());
+            java.sql.Timestamp sqlDate = new java.sql.Timestamp(date1.getTime());
+            // String da=(String)request.getParameter("DOB");
+            //int freq = Integer.parseInt(request.getParameter("freq"));
+            int freq = 0;
+            Date currentDate = new Timestamp(date1.getTime());
+            String userid = request.getParameter("to");
+            String[] useriddd = request.getParameterValues("to");
+            //int k=useriddd.length;
+            String AlertCreatedBy;
+
+
+
+            java.sql.Connection con;
+            java.sql.Statement s, s1;
+            java.sql.ResultSet rs;
+
+            con = null;
+            s = null;
+            rs = null;
+
+            String url = "jdbc:mysql://localhost:3306/alertsystem";
+            String id = "root";
+            String pass = "1234";
+            try {
+
+                Class.forName("com.mysql.jdbc.Driver");
+                con = java.sql.DriverManager.getConnection(url, id, pass);
+
+            } catch (ClassNotFoundException cnfex) {
+                cnfex.printStackTrace();
+
+            }//end
+            for (int i = 0; i < useriddd.length; i++) {
+                String id1 = useriddd[i];
+                // }
+                // String sql = "SELECT username FROM user where userId="+"'"+userid+"'";
+                String sql = "SELECT username FROM user where userId=" + "'" + id1 + "'";
+                try {
+
+                    s = con.createStatement();
+                    rs = s.executeQuery(sql);
+                    String names = null;
+                    // String id1= rs.getString(3);
+                    AlertCreatedBy = (String)session.getAttribute("user");
+                    while (rs.next()) {
+                        AlertCreatedBy = rs.getString(1);
+                    }
+                    String sql2 = "insert  into alert(`alertCreatedTime`,`alertTime`,`alertCreatedBy`,`userId`,`alertText`,`alertSourceType`,`alertSourceId`,`alertState`,`repeating`,`repeat_frequency`,`severity`) values (NOW(),'" + sqlDate + "','" + CreatedBy + "','" + AlertCreatedBy + "','" + msg + "',0,'" + title + "','Set',0," + freq + "," + priority + ")";
+                    //s = con.createStatement();
+                    s.executeUpdate(sql2);
+                    session.setAttribute("setalert", "sucess");
+                }//end of try
+                catch (Exception e) {
+                    e.printStackTrace();
+                } //      }//end of for loop
+                finally {
+                    if (rs != null) {
+                        rs.close();
+                    }
+                    if (s != null) {
+                        s.close();
+                        //   s1.close();
+                    }
+                }
+            }
+            if (con != null) {
+                con.close();
+            }
+            //end of catch
+
+            /*
+             Alert newAlert = new Alert();    
+             newAlert.setSeverity(Byte.parseByte(request.getParameter("priority")));
+             newAlert.setAlertCreatedBy((String) session.getAttribute("user"));
+             Date today = new Date();
+             newAlert.setAlertCreatedTime(new Timestamp(today.getTime()));
+             newAlert.setAlertSourceId(request.getParameter("alertTitle"));
+             newAlert.setAlertSourceType(0);
+             newAlert.setAlertState("Set");
+             newAlert.setAlertText(request.getParameter("alertMessage"));
+             SimpleDateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
+             Date date = dateFormat.parse(request.getParameter("calendar"));
+             newAlert.setAlertTime(new Timestamp(date.getTime()));
+             newAlert.setRepeatFrequency(Integer.parseInt(request.getParameter("freq")));
+             newAlert.setRepeating((byte) 0);
+    
+             DBGetUserInfoCommand getUserInfoCommand = new DBGetUserInfoCommand(request.getParameter("to"));
+             DBCommandInvoker dbCommandInvoker = new DBCommandInvoker(getUserInfoCommand);
+             dbCommandInvoker.execute();        
+             Userinfo userInfo = getUserInfoCommand.getResult();
+    
+             newAlert.setUserinfo(userInfo);
+    
+             newAlert.setAlert();*/
+        %>
+        <jsp:forward page="setAlertConfirmmessage.jsp"/>
+
+    </body>
+</html>

@@ -1,0 +1,129 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+  <%@page import="java.util.*"  import="alertsystemdatabase.*" import="java.sql.Timestamp" import="java.text.*" %>
+
+<SCRIPT TYPE="text/javascript">
+    function popup(mylink, windowname)
+    {
+        if (! window.focus)return true;
+        var href;
+        if (typeof(mylink) == 'string')
+            href=mylink;
+        else
+            href=mylink.href;
+        window.open(href, windowname, 'width=800,height=450,scrollbars=no');
+        return false;
+    }
+</SCRIPT>
+<% 
+ java.sql.Connection con1;
+ java.sql.Statement s1;
+ java.sql.ResultSet rs1;
+  con1 = null;
+  s1 = null;
+  rs1 = null;
+   String url = "jdbc:mysql://localhost:3306/alertsystem";
+                                                                //String id = "root";
+                                                                //String pass = "1234";
+                                                                
+ String id;//=Controller.getDBManager().getDBAccess().getUserName();
+ String pass;//=Controller.getDBManager().getDBAccess().getPwd();
+ pass="1234";
+ id="root";
+ 
+ String AlertCreatedby,userId,alertText,alertSourceId,alertState,status="fail";
+ int alertSourcetype,alertid, repeating,repeat_freq,seviarity;
+  SimpleDateFormat dateFormat1 = new SimpleDateFormat("mm/dd/yyyy");
+  Date alertCreateTime,alertTime;
+  
+  //Date date1 = dateFormat1.parse(request.getParameter("alertdate"));
+            //java.sql.Timestamp  sqlDate = new java.sql.Timestamp(new java.util.Date().getTime());
+           // java.sql.Timestamp sqlDate = new java.sql.Timestamp(date1.getTime());
+ 
+ 
+                                                                try {
+                                                                    
+                                                                    Class.forName("com.mysql.jdbc.Driver");
+                                                                    con1 = java.sql.DriverManager.getConnection(url, id, pass);
+                                                                        
+                                                                } catch (ClassNotFoundException cnfex) {
+                                                                    cnfex.printStackTrace();
+                                                                        
+                                                                }//end
+                                                              //  String usernamee= (String)session.getAttribute("user");
+                                                              //  String alertIdd=(String)session.getAttribute("alertId");
+                                                                
+                                                                //String sql = "SELECT * FROM `alert` where alertTime < NOW()";
+                                                                String sql="select * from alert where alertTime< CURDATE()  ";
+                                                                try {
+                                                                    
+                                                               
+                                                                        s1 = con1.createStatement();
+                                                                    rs1 = s1.executeQuery(sql);
+                                                                    String names = null;
+                                                                   // String id1= rs.getString(3);
+                                                                        
+                                                                    while (rs1.next()) {
+                                                                        //String id1= rs.getString(3);
+                                                                        
+                                                                      //   SimpleDateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");
+                                                                      //   Date date1 = dateFormat1.parse(request.getParameter("alertdate"));
+                                                                      //   java.sql.Timestamp sqlDate = new java.sql.Timestamp(date1.getTime());
+            
+                                                                       alertid=Integer.parseInt(rs1.getString(1));
+                                                                       String alertctime=rs1.getString(2);
+                                                                      // alertCreateTime=dateFormat1.parse(alertctime);
+                                                                      // java.sql.Timestamp alertCreatetimeSQL = new java.sql.Timestamp(alertCreateTime.getTime());
+                                                                      // alertTime=dateFormat1.parse(rs.getString(3));
+                                                                       String alerttim=rs1.getString(3);
+                                                                       AlertCreatedby = rs1.getString(4);
+                                                                       userId=rs1.getString(5);
+                                                                       alertState=rs1.getString(9);
+                                                                       alertText=rs1.getString(6);
+                                                                       alertSourcetype=Integer.parseInt(rs1.getString(7));
+                                                                       alertSourceId=rs1.getString(8);
+                                                                       repeating=Integer.parseInt(rs1.getString(10));
+                                                                       repeat_freq=Integer.parseInt(rs1.getString(11));
+                                                                       seviarity=Integer.parseInt(rs1.getString(12));
+                                                                       
+                                                                       String sql2="INSERT INTO alertarchive(`alertId`,`alertCreatedTime`,`alertTime`,`alertArchivedTime`,`alertCreatedBy`,`userId`,`alertText`,`alertSourceType`,`alertSourceId`,`alertState`,`repeating`,`repeat_frequency`,`severity`) VALUES ("+alertid+",'"+alertctime+"','"+alerttim+"',NOW(),'"+AlertCreatedby+"','"+userId+"','"+alertText+"',"+alertSourcetype+",'"+alertSourceId+"','"+alertState+"',"+repeating+","+repeat_freq+","+seviarity+")";
+                                                                       
+                                                                       s1.executeUpdate(sql2);
+                                                                       
+                                                                       String sql3="DELETE FROM ALERT WHERE alertId="+alertid;
+                                                                       s1.executeUpdate(sql3);
+                                                                      status="sucess";
+                                                                       
+                                                                    }//end of while
+                                                                        
+                                                                }//end of try
+                                                                catch (Exception e) {
+                                                                    e.printStackTrace();
+                                                                } finally {
+                                                                    if (rs1 != null) {
+                                                                        rs1.close();
+                                                                    }
+                                                                    if (s1 != null) {
+                                                                        s1.close();
+                                                                    }
+                                                                    if (con1 != null) {
+                                                                        con1.close();
+                                                                    }
+                                                                }//end of catch
+                                                               
+
+%>
+<div class="box">
+    <span class="icon"><img src="images/icon2.png"></span>  
+    <div class="inner">                           
+        <h3 align="center">Notifications</h3>
+        
+        <marquee direction="up" onMouseOver="this.setAttribute('scrollamount', 0, 0);" onMouseOut="this.setAttribute('scrollamount', 6, 0);">
+                                        
+            <p><%@ include file="Retrievealerts.jsp" %><p>&nbsp;</p>   
+        </marquee>
+                                        
+        <a  href="notification.jsp" class="link1" ><span><span ><strong><h4 align="center">Set Notification</h4></strong></span></span></a>
+                                        
+    </div>
+</div>

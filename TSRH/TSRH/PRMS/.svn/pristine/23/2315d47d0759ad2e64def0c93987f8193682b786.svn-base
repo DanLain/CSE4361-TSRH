@@ -1,0 +1,17 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package edu.uta.tsrh.filetracking.transfer;
+
+import edu.uta.tsrh.ScottishRiteHospital;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class FileTrackingTransferController extends ScottishRiteHospital {
+       public String handle(HttpServletRequest request, HttpServletResponse response)
+    {
+        System.out.println("in file tracking transfer controller");
+        return "/?page=FileTrackingTransfer";
+    }
+}
