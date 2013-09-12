@@ -1,7 +1,0 @@
-ipAddress = localhost
-dbConnect = com.mysql.jdbc.Driver
-mDbUser = root
-mDbPwds = 1234
-mDbName = alertsystem
-mDbPort = 3306
-
