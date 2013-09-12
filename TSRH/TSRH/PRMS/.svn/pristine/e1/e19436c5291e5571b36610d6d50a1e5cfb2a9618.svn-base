@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>Report Generation</title>
+        <meta charset="utf-8">
+
+        <meta name="description" content="Place your description here">
+        <meta name="keywords" content="put, your, keyword, here">
+        <meta name="author" content="Templates.com - website templates provider">
+
+        <link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/layout.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/style.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/help.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/basic.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/buttonCSS.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/tableCSS.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/comboCSS.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/radioCSS.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/help.css" type="text/css" media="all">
+        <link href="DatePicker/kendo.common.min.css" rel="stylesheet">
+        <link href="DatePicker/kendo.blueopal.min.css" rel="stylesheet">
+
+        <script type="text/javascript" src="js/jquery.pageslide.min.js"></script>
+        <script src="DatePicker/jquery.min.js"></script>
+        <script src="DatePicker/kendo.web.min.js"></script>
+        <script type="text/javascript" src="js/cufon-yui.js"></script>
+        <script type="text/javascript" src="js/jquery.pageslide.min.js"></script>
+        <script type="text/javascript" src="js/cufon-replace.js"></script>
+        <script type="text/javascript" src="js/Myriad_Pro_400.font.js"></script>   
+
+        <script type="text/javascript">            
+            
+            jQuery(document).ready(function () 
+            {               
+                var date= new Date();
+                $("#alertdate1").kendoDatePicker();
+                $("#alertdate2").kendoDatePicker();                
+                
+                //hiding required elemesnys and resetting values on page load
+                $('.message-custom').hide();
+                $('.from').val("");
+                $('.to').val("");
+                $('.week-value').val() == "";
+                $('.error').hide();
+
+                $('.report-type').click(function(event){
+                    var reportType = $(event.currentTarget).attr("class");
+                    $(event.currentTarget).css('background-color', '#E3E4FA');
+                    if( $(event.currentTarget).hasClass('GetReportPendingFiles')){
+                        $('.container').find('.GetReportConsults').removeAttr('style');
+                        $('.container').find('.GetReportTests').removeAttr('style');
+                    }
+                    if( $(event.currentTarget).hasClass('GetReportConsults')){
+                        $('.container').find('.GetReportPendingFiles').removeAttr('style');
+                        $('.container').find('.GetReportTests').removeAttr('style');
+                    }
+                    if( $(event.currentTarget).hasClass('GetReportTests')){
+                        $('.container').find('.GetReportConsults').removeAttr('style');
+                        $('.container').find('.GetReportPendingFiles').removeAttr('style');
+                    }
+                    //console.log(reportType.substring(20));
+                    $('.type-of-report').val(reportType.substring(20));
+                    return false;
+                });
+
+
+                $(".condition").click(function(event) {
+
+                    //the code below hides relavent divs and display the required one.
+                    //it also resets the values accroding to the selections made
+                    //  so that the submit gets valid inputs
+                    $(event.currentTarget).focus();
+
+                    var targetClass = $(event.currentTarget).attr("class");
+                    if(targetClass.indexOf("today") != -1){
+                        $('.message-custom').hide();                       
+                        $('.from').val("");
+                        $('.to').val("");
+                        $('.week-value').val("");
+                        $('.month-value').val("");
+                        $('.today-value').val("today");                                
+                        $('#reportPage').submit();                        
+                    }
+                    if(targetClass.indexOf("week") != -1){
+                        $('.message-custom').hide();                        
+                        $('.from').val("");
+                        $('.to').val("");
+                        $('.month-value').val("");
+                        $('.week-value').val("week");
+                        $('.today-value').val("");
+                        //console.log('about to submit week');
+                        $('#reportPage').submit();
+                    }
+                    if(targetClass.indexOf("month") != -1){
+                        $('.message-custom').hide();
+                        $('.from').val("");
+                        $('.to').val("");
+                        $('.week-value').val("");
+                        $('.month-value').val("month");
+                        $('.today-value').val("");                        
+                        $('#reportPage').submit();
+                    }
+                    if(targetClass.indexOf("custom") != -1){
+                        $('.error').hide();
+                        $('.message-custom').show();
+                        $('.week-value').val("");
+                        $('.today-value').val("");
+                        $('.month-value').val("");
+                    }
+                    
+
+                    return false;
+                });
+                
+                
+                //set min date
+                $('#alertdate1').blur(function(){                    
+                    var string = $('#alertdate1').val();
+                    var e = string.split("/");                    
+                    var datePicker = $("#alertdate2").data("kendoDatePicker");
+                    var year = parseInt(e[2]);
+                    var day = parseInt(e[1])+1;
+                    var month = parseInt(e[0])-1;                            
+                    if(string.length > 0){
+                        datePicker.min(new Date(year, month, day));
+                    }
+                });
+                
+                //set max date
+                $('#alertdate2').blur(function(){                    
+                    var string = $('#alertdate2').val();
+                    var e = string.split("/");                    
+                    var datePicker = $("#alertdate1").data("kendoDatePicker");
+                    var year = parseInt(e[2]);
+                    var day = parseInt(e[1])-1;
+                    var month = parseInt(e[0])-1;
+                    if(string.length > 0){                    
+                        datePicker.max(new Date(year, month, day));
+                    }
+                });
+                
+                $("#display").click(function(event) {
+                    if($('.week-value').val() == "" && $('.today-value').val() == "")
+                    {
+                        if($('.to').val().length < 1 || $('.from').val().length  < 1){
+                            $('.error').show();
+                            return false;
+                        }
+                    }                    
+                    $('#reportPage').submit();
+                });
+              
+
+
+                //validation on the submit form
+                $('#pending-files-form').submit(function(){
+                    if($('.week-value').val() == "" && $('.today-value').val() == "")
+                    {
+                        if($('.to').val().length < 1 || $('.from').val().length  < 1){
+                            $('.error').show();
+                            return false;
+                        }
+                    }
+                    return true;
+                });
+
+            });
+
+        </script>
+    </head>
+
+    <body id="page1" onload="upgardepicker() new ElementMaxHeight()">
+        <%         
+            Component component1 = new Component();
+            //check if a user has logged in. If not redirect to home page
+            String currentUser = (String) session.getAttribute("user");
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+currentUser);
+            if (currentUser == null) 
+            {
+                String redirectURL = "index.jsp";
+                response.sendRedirect(redirectURL);
+            }
+            if(component1.isResourceread(currentUser,"Reports")== false && component1.isResourcewrite(currentUser,"Reports")== false  )
+            {                                           
+                String redirectURL = "index.jsp";
+                response.sendRedirect(redirectURL);              
+            }
+
+        %>
+        <a href="javascript:$.pageslide({ direction: 'right', href: 'help/helpReport.html' })" class="first">help</a>       
+        <div class="wrap">
+            <!-- header -->
+            <%@ include file="headers.jsp" %> 
+
+            <!-- content -->
+            <section id="content">                
+                <div class="container"><div class="ic">More Website Templates at TemplateMonster.com!</div>
+
+                    <div class="inside" style="height: 400px">
+                        <form action="reportgeneration.org" id="reportPage" name="reportPage" method="post">
+                            <div class="sidebar">
+                                <div style="width:300px; height:300px; float: left">
+                                    <h2>Select Report Type</h2>
+                                    <% String report = "";%>
+                                    <table>
+                                        <tr>
+                                            <td><a href="#" class="button1 report-type GetReportPendingFiles" style="background: #E3E4FA" ><h6>Pending files</h6></a></td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="#" class="button1 report-type GetReportTests"><h6>Tests</h6></a></td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="#" class="button1 report-type GetReportConsults"><h6>Consultations</h6></a></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div style="width:300px; float: right">
+                                    <h2>Select Duration</h2>
+                                    <table>
+                                        <tr>
+                                            <td><a href="#"  class="condition today  button1"><h6>Today</h6></a></td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="#" class="condition week button1"><h6>This Week</h6></a></td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="#" class="condition month button1"><h6>This Month</h6></a></td>
+                                        </tr>
+                                        <tr>
+                                            <td><a href="#" class="condition custom button1"><h6>Custom Date</h6></a></td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                                <div class="message-custom" style="width:300px; float: right">
+                                    <table>
+                                        <tr>
+                                            <td><h3>From:</h3></td>
+                                            <td><p><!--<input name="Sdate" type="text" value="yyyy-mm-dd" id="date1" readonly='true' class="three from" /> -->
+                                                    <input name="Sdate"  type="text" id="alertdate1" name="alertdate" class="three from" /></p></td>
+                                        </tr>
+                                        <tr>
+                                            <td><h3>To:</h3></td>
+                                            <td><p><!--<input name="Edate" value="yyyy-mm-dd" type="text" id="date2" readonly='true' class="three to " /> -->
+                                                    <input name="Edate"  type="text" id="alertdate2" name="alertdate" class="three to" /></p></td> 
+                                        </tr>
+                                    </table>
+                                    <div class="error">Please fill in both Dates</div>
+                                    <input type="button" class="blue button" id="display" value="Display Report" />
+                                </div>
+
+                            </div>
+
+                            <div>                               
+                                </br>                                    
+                                <div class="message-today">                                        
+                                    <input type="hidden" class="today-value" value="today" name="today" />
+                                    <input type="hidden" class="type-of-report" value="GetReportPendingFiles" name="ReportType"/>
+                                    </br>
+                                </div>
+                                <div class="message-week">                                       
+                                    <input type="hidden" class="week-value" value="week"  name="week"/></br>
+                                </div>
+                                <div class="message-month"> 
+                                    <input type="hidden" class="month-value" value="month" name="month" /></br>                                    
+                                </div>
+                            </div>
+                            <ul class="banners col-2">
+                                <p>&nbsp;</p>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- footer -->
+            <%@ include file="footers.jsp" %>
+        </div>
+        <script type="text/javascript">Cufon.now();</script>
+        <script src="js/jquery.pageslide.min.js"></script>
+    </body>
+</html>

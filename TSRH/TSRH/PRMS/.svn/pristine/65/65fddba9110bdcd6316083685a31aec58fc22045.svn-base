@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<%@page import="edu.uta.tsrh.db.*"
+        import="edu.uta.tsrh.model.Patient"
+        import="java.util.ArrayList"%> 
+    <head>
+	<title>TSRHC - Phone Management - Select</title>
+	<meta charset="utf-8">
+	<meta name="description" content="Place your description here">
+	<meta name="keywords" content="put, your, keyword, here">
+	<meta name="author" content="Templates.com - website templates provider">
+	<link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
+	<link rel="stylesheet" href="css/layout.css" type="text/css" media="all">
+	<link rel="stylesheet" href="css/style.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/buttonCSS.css" type="text/css" media="all">
+	<script type="text/javascript" src="/TSRH/js/head.min.js"></script>
+	
+         <!-- Help files -->
+            
+            <link rel="stylesheet" href="css/help.css" type="text/css" media="all">
+        <script type="text/javascript" src="js/jquery.pageslide.min.js"></script>
+            
+        <script type="text/javascript" src="js/maxheight.js"></script>
+        <script type="text/javascript" src="js/jquery-1.4.2.min.js" ></script>
+        <script type="text/javascript" src="js/cufon-yui.js"></script>
+        <script type="text/javascript" src="js/cufon-replace.js"></script>
+        <script type="text/javascript" src="js/Myriad_Pro_400.font.js"></script>
+        <script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript">
+	     
+	</script>
+
+	<SCRIPT LANGUAGE=JavaScript>
+	    /* intImage = 2;
+	function swapImage() {
+	switch (intImage) {
+	 case 1:
+	   IMG1.src = "index.jsp"
+	   intImage = 2
+	   return(false);
+	case 2:
+	   IMG1.src = "Displayalert.jsp"
+	   intImage = 1
+	   return(false);
+	 }
+	} */
+	</SCRIPT>
+        <script>
+           function validateForm()
+           {
+               
+               var x=document.forms["selectpatientform"]["patient"].value;
+               
+               if (x=="-1")
+                   {
+                       
+                   document.getElementById('msg').color = "red";
+                   document.getElementById('msg').innerHTML = '&nbsp;&nbsp;&nbsp;Please Select a Patient !';
+                   return false; 
+                   }   
+           }
+           
+       </script>
+        
+	<!--[if lt IE 7]>
+		<link rel="stylesheet" href="css/ie/ie6.css" type="text/css" media="screen">
+		<script type="text/javascript" src="js/ie_png.js"></script>
+		<script type="text/javascript">
+			ie_png.fix('.png, #slogan, header nav ul li a, .icon img, .link1, .link1 span');
+		</script>
+	<![endif]-
+ ->
+	<!--[if lt IE 9]>
+		<script type="text/javascript" src="js/html5.js"></script>
+	<![endif]-->
+    </head>
+         <%
+     if(session.getAttribute("user") == null){
+         response.sendRedirect("/TSRH/index.jsp");
+     }
+    %>
+    
+    <body id="page1" onLoad="new ElementMaxHeight();">
+        <a href="javascript:$.pageslide({ direction: 'right', href: 'help/phoneeditselector.html' })" class="first">help</a>
+        
+	  <div class="wrap">	    
+	    <!-- header -->
+	    <%@ include file="headers.jsp" %>
+            
+	    <!-- content -->
+	    <section id="content">
+		<div class="container"><div class="ic">More Website Templates at TemplateMonster.com!</div>
+		    <div class="inside">
+			<div class="wrapper indent">
+			    <article class="col-1">
+                                <div class="box"  style="width:350px;background-color: #F0F0F0;" align="center">
+                                
+				<h2>Select a Patient</h2>				
+				<form name="selectpatientform" method="post" onSubmit="return validateForm()" action="phoneChooseNote.jsp" >
+                                      <select name ="patient" >
+                                       <%
+                                            MySQLDBServices dbservices = new MySQLDBServices();
+                                            ArrayList<Patient> patientList = dbservices.getPatients();                                              
+                                          
+                                       %><option id="vForm" name="select" value="-1" style="width: 150px ">Select Patient</option><%
+                                            for(Patient p: patientList){
+                                       %><option value =<%=(p.getPatientid())%>><%=(p.getLastname() +", "+p.getFirstname())%></option><%
+                                            }
+                                       %>
+                                      </select>		                                   
+                                    <font size="5" color="white" id="msg"></font>
+				      <br /><br />
+				      
+				    <input type="submit" class="blue button"  value="Submit"/>
+				</form>                              
+			    </article>
+                                      
+                            
+			</div>
+			
+		    </div>
+		</div>
+	    </section>
+	</div>
+	<!-- footer -->
+	<jsp:include page="footer.jsp" />
+	<script type="text/javascript">Cufon.now();</script>
+        <script src="js/jquery.pageslide.min.js"></script>
+    </body>
+</html>

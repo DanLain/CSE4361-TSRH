@@ -1,0 +1,9 @@
+<%-- 
+    Document   : checkAvailibity
+    Created on : Nov 25, 2012, 5:48:03 PM
+    Author     : Asha
+--%>
+<%@page import="edu.uta.tsrh.specialnotes.controllers.RecordController"%><%
+out.print(RecordController.checkAvailibity(Integer.parseInt(request.getParameter("patientId"))));
+out.flush();
+%>

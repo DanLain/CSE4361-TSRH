@@ -1,0 +1,281 @@
+<%-- 
+    Document   : userCreation
+    Created on : 13 Oct, 2012, 10:50:15 AM
+    Author     : Shwetha
+--%>
+
+<%@page import="edu.uta.tsrh.model.Role"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="edu.uta.tsrh.db.MySQLDBServices"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Create User</title>
+        <link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/layout.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/style.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/buttonCSS.css" type="text/css" media="all">
+        <link rel="stylesheet" href="css/help.css" type="text/css" media="all">
+        <!-- Help link-->
+        <script type="text/javascript" src="js/jquery.pageslide.min.js"></script>
+        <script type="text/javascript" src="/TSRH/js/maxheight.js"></script>
+        <script type="text/javascript" src="/TSRH/js/jquery-1.4.2.min.js" ></script>
+        <script type="text/javascript" src="/TSRH/js/cufon-yui.js"></script>
+        <script type="text/javascript" src="/TSRH/js/cufon-replace.js"></script>
+        <script type="text/javascript" src="/TSRH/js/Myriad_Pro_400.font.js"></script>
+        <script type="text/javascript" src="/TSRH/js/script.js"></script>
+       
+        <link rel="stylesheet" href="css/help.css" type="text/css" media="all">
+         
+        <!-- Javascript -->
+        <script>
+            function validateForm()
+            {
+                var userNameError=document.forms["createUserForm"]["userName"].value;
+                var emailIdError = document.forms["createUserForm"]["emailId"].value;
+                var firstNameError = document.forms["createUserForm"]["firstName"].value;
+                var lastNameError = document.forms["createUserForm"]["lastName"].value;
+                var roleId = document.forms["createUserForm"]["role"].value
+                var fieldEmpty = false;
+                var error = false;
+                
+                if (userNameError==null || userNameError=="" || 
+                    emailIdError ==null || emailIdError == "" || firstNameError==null ||firstNameError=="" 
+                    || lastNameError == null || lastNameError == "")
+                {
+                    document.getElementById("generalError").style.display = 'block';
+                    fieldEmpty = true;    
+                 }else{
+                     document.getElementById("generalError").style.display = 'none';
+                 }
+                 
+                 if(roleId == -1){
+                     document.getElementById("roleError").style.display = 'block';
+                     error = true;
+                 }else{
+                     document.getElementById("roleError").style.display = 'none';
+                 }
+                 
+                 //Check email Id                      
+                 var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;  
+                 if(!fieldEmpty && !emailPattern.test(emailIdError)){
+                     document.getElementById("emailError").style.display = 'block';
+                     error = true;   
+                 }else{
+                      document.getElementById("emailError").style.display = 'none';
+                 }
+                 //Check User Name
+                 if(userNameError != null && userNameError != ""){
+                     if(/[^A-Za-z\d]/.test(userNameError)){
+                         document.getElementById("userNameError").style.display = 'block';
+                         error = true;                        
+                     }else{
+                        document.getElementById("userNameError").style.display = 'none';
+                    }
+                 }
+                 //Check First Name
+                 if(firstNameError != null && firstNameError != ""){
+                     if(/[^A-Za-z]/.test(firstNameError)){
+                         document.getElementById("firstNameError").style.display = 'block';
+                         error = true;                        
+                     }else{
+                        document.getElementById("firstNameError").style.display = 'none';
+                    }
+                 }
+                 
+                 //Check Last Name
+                 if(lastNameError != null && lastNameError != ""){
+                     if(/[^A-Za-z]/.test(lastNameError)){
+                         document.getElementById("lastNameError").style.display = 'block';
+                         error = true;                        
+                     }else{
+                        document.getElementById("lastNameError").style.display = 'none';
+                    }
+                 }
+                                               
+                 
+                 if(error || fieldEmpty)
+                    return false;
+                else
+                    return true;
+                
+            }
+            
+                       
+        </script>
+    </head>
+    
+    <%
+     if(session.getAttribute("user") == null){
+         response.sendRedirect("/TSRH/index.jsp");
+     }
+    %>
+    
+    <body onLoad="new ElementMaxHeight();">
+    <a href="javascript:$.pageslide({ direction: 'right', href: 'help/userCreation.html' })" class="first">help</a>
+    <div class="wrap">
+    <!-- header -->
+    <%@include file="AdminHeader.jsp" %>
+    <!-- Page Content -->
+    <form name="createUserForm" method="POST" onsubmit="return validateForm()" action="userCreationNav.jsp">
+    <section id="content">
+        <div class="container">
+            <div class="inside">
+                    <h2>User Creation</h2> 
+		    <p>
+                    <table width="700">
+                        <tr>
+                            <td style="padding: 5px">
+                                <h3>User Name* </h3> 
+                            </td>
+                            <td style="padding: 5px">
+                                <input class="textbox" type="text" name=userName>
+                            </td>
+                            <td style="padding: 5px">
+                                <div id="userNameError" style="display: none">
+                                <h5 class="errorMessage"> User Name can have only alphabets and numerals</h5>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px">
+                                <h3>First Name* </h3> 
+                            </td>
+                            <td style="padding: 5px">
+                                <input class="textbox" type="text" name="firstName">
+                            </td>
+                            <td>
+                               <div id="firstNameError" style="display: none">
+                                <h5 class="errorMessage"> First Name can have only alphabets</h5>
+                               </div>   
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px">
+                                <h3>Last Name* </h3> 
+                            </td>
+                            <td style="padding: 5px">
+                                <input class="textbox" type="text" name="lastName">
+                            </td>
+                            <td>
+                                <div id="lastNameError" style="display: none">
+                                <h5 class="errorMessage"> Last Name can have only alphabets</h5>
+                               </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px">
+                                <h3>Email Id* </h3> 
+                            </td>
+                            <td style="padding: 5px">
+                                <input class="textbox" type="text" name="emailId">
+                            </td>
+                            <td style="padding: 5px">
+                                <div id="emailError" style="display: none">
+                                <h5 class="errorMessage"> Incorrect Email format</h5>
+                                </div>
+                            </td>
+                        </tr>
+                         <tr>
+                            <td style="padding: 5px">
+                                <h3>Role* </h3> 
+                            </td>
+                           
+                            <td style="padding: 5px">
+                                
+                                <select class="selectColor" name="role" id="role">
+                                     <% 
+                                        MySQLDBServices dbServices = new MySQLDBServices();
+                                        ArrayList<Role> roleList = dbServices.getRoleList();
+                                        Role role = new Role();
+                                        role.setRoleId(-1);
+                                        role.setRoleName("None");
+                                        
+                                        ArrayList<Role> newRoleList = new ArrayList<Role>();
+                                        newRoleList.add(role);
+                                        
+                                        for(int j= 0 ; j<roleList.size();j++){
+                                            
+                                               
+                                                newRoleList.add(roleList.get(j));
+                                        }
+                                                
+
+                                        for(int i = 0; i<newRoleList.size();i++)
+                                        {  
+                                          if(!(newRoleList.get(i).getRoleName().equals("Admin"))){  
+                                                                                                                                                             
+                                    %>
+                                    <option value="<%=newRoleList.get(i).getRoleId()%>"><%=newRoleList.get(i).getRoleName() %></option>
+                                    <% } }
+                                    %>
+                                </select>
+                            </td>
+                            <td>
+                              <div id="roleError" style="display: none">
+                              <h5 class="errorMessage"> Please select a role.</h5>
+                              </div>  
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px">    
+                            </td>
+                            <td style="padding: 5px">
+                                <input class="blue button" type="submit" name="Create" >
+                            </td>
+                            <td>
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                 <%
+                                    String created = request.getParameter("created");
+                                    if(created != null){
+                                    boolean created_bol = Boolean.parseBoolean(request.getParameter("created"));
+                                       if(created_bol){
+                                  %>
+                                  <h4 class="successMessage"> User Created. An e-mail is sent with User Name and Password.</h4>
+                            </td>
+                            <td>
+                                <%}else{ 
+                                        if(session.getAttribute("isDup")!= null){
+                                        
+                                    
+                                %>
+                                <h4 class="errorMessage"> <%= session.getAttribute("isDup") %></h4>
+                                <%}
+                                        session.removeAttribute("isDup");
+                                        if(session.getAttribute("isEmailDup")!= null){
+                                %>
+                                <h4 class="errorMessage"> <%= session.getAttribute("isEmailDup") %></h4>          
+                                <% }
+                                        session.removeAttribute("isEmailDup");
+                                        if(session.getAttribute("creationIssue") != null){
+                                            %>
+                                <h4 class="errorMessage"> <%= session.getAttribute("creationIssue") %></h4>         
+                                  <%
+                                        }
+                                        session.removeAttribute("creationIssue");
+                                    } }%>
+                            </td>
+                            <td>
+                                <div id="generalError" style="display: none">
+                                    <h5 class="errorMessage"> All fields with * are required.</h5>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+            </div>
+        </div>
+    </section>
+    </form>
+    </div>
+    <!-- footer -->
+    <%@include file="footer.jsp" %>
+    <script type="text/javascript">Cufon.now();</script>
+    <script src="js/jquery.pageslide.min.js"></script>
+    </body>
+</html>

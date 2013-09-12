@@ -1,0 +1,94 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package edu.uta.tsrh.specialnotes.controllers;
+
+import edu.uta.tsrh.specialnotes.misc.DBMgrProxy;
+import edu.uta.tsrh.specialnotes.misc.PatientRecord;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author David
+ */
+public class RecordController {
+
+    public static ArrayList<PatientRecord> getPatientRecordList(String fpatientId, String fpatientName, String fDOB) {
+        ArrayList<PatientRecord> record;
+        String patientID = "";
+        if (fpatientId != null) {
+            if (!fpatientId.isEmpty()) {
+                patientID = fpatientId;
+            }
+        } else {
+            patientID = "";
+        }
+
+        String patientFirstName = " ";
+        String patientLastName = " "; 
+        String[] names = null;
+        if (fpatientName != null) {
+            if (!fpatientName.isEmpty()) {
+                if (fpatientName.contains(",")) {
+                    names = fpatientName.split(",");
+                } else if (fpatientName.contains(" ")) {
+                    names = fpatientName.split(",");
+                } else {
+                    names = new String[2];
+                    names[0] = "";
+                    names[1] = fpatientName;
+                }
+            }
+        }
+        if (names != null) {
+                patientLastName = names[0];
+                patientFirstName = names[1];
+        }
+
+        Date patientDateOfBirth = null;
+        if (fDOB != null) {
+            if (!fDOB.isEmpty()) {
+                DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                try {
+                    patientDateOfBirth = new Date(dateFormat.parse(fDOB).getTime());
+                } catch (ParseException ex) {
+                    Logger.getLogger(RecordController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                patientDateOfBirth = null;
+            }
+        }
+        record = DBMgrProxy.getInstance().getPatientRecordList(patientID, patientFirstName, patientLastName, patientDateOfBirth);
+        
+        return record;
+    }
+    
+    
+    public static PatientRecord getPatientRecord(String fpatientId) {
+        return DBMgrProxy.getInstance().getPatientRecord(fpatientId);
+    }
+    
+    /**
+     *
+     * @param pRecord
+     */
+    public static void setNewPatientRecord(PatientRecord pRecord){
+       DBMgrProxy.getInstance().addNewPatientRecord(pRecord);
+     }     
+   
+    public static boolean checkAvailibity(int patientId)
+    {
+        boolean status;
+        System.out.println("patient id in Record controller "+ patientId);
+        status = DBMgrProxy.getInstance().checkPatientAvailibity(patientId);
+        System.out.println("status in Record controller "+ status);
+        return status;
+    }
+}

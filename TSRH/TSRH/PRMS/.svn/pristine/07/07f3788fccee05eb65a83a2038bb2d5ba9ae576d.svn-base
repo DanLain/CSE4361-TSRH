@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            font: 14px/18px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            color: #000000;
+        }
+        
+        h2 { color: #4DB8FF; }
+    .auto-style2 {
+		font-family: Arial;
+	}
+	.auto-style5 {
+		font-size: medium;
+		font-family: "Times New Roman";
+		color: #4DB8FF;
+	}
+	.auto-style6 {
+		font-size: small;
+		font-family: "Times New Roman";
+	}
+	.auto-style7 {
+		color: #4DB8FF;
+	}
+	.auto-style8 {
+		text-decoration: none;
+	}
+    </style>
+	
+	    <script type="text/javascript">
+     
+    function toggle(id) {
+      var e = document.getElementById(id);
+     
+      if (e.style.display == '')
+        e.style.display = 'none';
+      else
+        e.style.display = '';
+    }
+     
+    </script>
+
+</head>
+<body style="height: 344px">
+<div id="secondary">
+    <h2 class="auto-style2">Test Help!</h2>
+    
+    <p class="auto-style6">The Test page helps you create and find the test details of a patient. It has both the test request and the test results fucntionality under it. For a Patient a test request must be first created only after which you can associate a test result with it. You can begin with searching a patient for whom test requests are to be created.</p>
+	<ul>
+		<li>
+		<p class="auto-style5">
+		<a href="#" onclick="toggle('node1')" class="auto-style8">
+		<span class="auto-style7">Patient Search</span></a></p>
+		<dl id="node1" style="display:none">
+			
+			<p class="auto-style6">Patient search has three fields in which you can enter the input for any or all or combination of the three fields to search for a patient record.<ul class="auto-style6"><li>Enter a patient number.</li> <li>And /Or enter the patient name - remember to enter it as (lastname,firstname).</li><li>And /Or enter Date of birth, select a date using the date picker, you cannot enter. In the date picker you can click on the month-year displayed between the left and right arrows for more options to select, to enter.</li><li> In case you make any mistakes you can reset the fields by using the 'reset' button.</li><li>you can now click on the 'submit' button and retrieve your patient record.</li></ul></p>
+		
+		</dl>
+		</li>
+		
+		<li>
+		<p class="auto-style5">
+		<a href="#" onclick="toggle('node2')" class="auto-style8">
+		<span class="auto-style7">Patient Details</span></a></p>
+		<dl  id="node2" style="display:none">
+		
+			<p class="auto-style6">This page displays the patient details of the patient you searched for. <ul class="auto-style6"><li>You can click on 'Test Request' and find out if the patient has any test requests.</li> <li>You can click 'Back' button to return back and search for a new patient.</li></ul></p>
+		
+		</dl>
+		</li>
+		
+		<li>
+			<p class="auto-style5">
+			<a href="#" onclick="toggle('node3')" class="auto-style8">
+			<span class="auto-style7">Test Requests</span></a></p>
+		</li>
+		<dl id="node3" style="display:none">
+		
+			<p class="auto-style6">This page gives all the patient test requests that exists for the particular patient, in a table. You can choose any of the records and perform more operations on it like - viewing more information about the test request, viewing the associated test result, creating a new test result or alerting for the test request. 
+				<ul class="auto-style6">                                                
+						<li>If a test request exists for the patient: a table is displayed, else the page has just two buttons i.e. 'New test request' button to create a new test request for the patient and a 'Back' button to go back to the patient details page.</li>
+						<li>In the table associated with each test request is a radio button which upon choosing you may perform the operations listed.</li> 
+                                                <li>There is a search option above the table. By entering the search keyword you could filter the list of records being displayed to match the entered criteria</li>
+						<li>'View' button displays more information about the test request and is readonly. You cannot modify its content.</li>
+						<li>'View Test Result' button can be used to check the details of the test result, if there are any associated with the Test request.</li>
+						<li>'New Test Result' button can be used to create a test result, associated with the Test request.</li>
+						<li>The 'Alert' button lets you set an alert for the test request and intimate the required people.</li>
+						<li>You also have two buttons at the bottom of the page which are not associated with any test requests i.e. 'New test request' button and a 'Back' button.</li>
+				</ul>
+			</p>
+		
+		</dl>
+		
+		<li>
+			<p class="auto-style5">
+			<a href="#" onclick="toggle('node5')" class="auto-style8">
+			<span class="auto-style7">Test Results</span></a></p>
+		</li>
+		<dl id="node5" style="display:none">
+		
+			<p class="auto-style6">This page gives all the patient test results that exists for the particular patient, in a table. 
+			You can choose any of the records and perform more operations on it like - viewing more information about the test result 
+			and alerting for the test result.
+				<ul class="auto-style6">
+						<li>If a test result exists for the patient: a table is displayed, else the page has just one button i.e. a 'Back' button to go back to the patient details page.</li> 
+						<li>In the table associated with each test result is a radio button which upon choosing you may perform the operations listed.</li>
+                                                <li>There is a search option above the table. By entering the search keyword you could filter the list of records being displayed to match the entered criteria</li>
+						<li>'View' button displays more information about the test result and is readonly. You cannot modify its content.</li>
+						<li>The 'Alert' button lets you set an alert for the test result and intimate the required people.</li>
+				</ul>
+			</p>		
+		</dl>		
+		
+
+		<li>
+			<p class="auto-style5">
+			<a href="#" onclick="toggle('node7')" class="auto-style8">
+			<span class="auto-style7">Create New Test Request</span></a></p>
+		</li>
+		<dl id="node7" style="display:none">
+		
+			<p class="auto-style6">This page upon successfully completing adds a new Test Request to the patient 
+				<ul class="auto-style6">
+						<li>You have a list of fields and its corresponding values for the patient test request that are to be filled up.</li>
+						<li> Any of the date fields can only be picked from the date picker and cannot be manually entered.</li>
+						<li> All filed names preceeding with a '*' mark are required to be filled, others can be left blank.</li>
+						<li> The 'User Name' field gets auto filled and the user cannot edit this field.</li>
+						<li>In the end of the page you have an 'Save' button which when clicked takes you to the earlier Test Requests page.</li> 
+				</ul>
+			</p>		
+		</dl>
+		
+		<li>
+			<p class="auto-style5">
+			<a href="#" onclick="toggle('node7')" class="auto-style8">
+			<span class="auto-style7">Create New Test Result</span></a></p>
+		</li>
+		<dl id="node7" style="display:none">
+		
+			<p class="auto-style6">This page upon successfully completing adds a new Test Result to the patient 
+				<ul class="auto-style6">
+						<li>You have a list of fields and its corresponding values for the patient test result that are to be filled up.</li>
+						<li> Any of the date fields can only be picked from the date picker and cannot be manually entered.</li>
+						<li> All filed names preceeding with a '*' mark are required to be filled, others can be left blank.</li>
+						<li> The 'User Name' and 'Test Result Number' fields gets auto filled and the user cannot edit these fields.</li>
+						<li>In the end of the page you have an 'Save' button which when clicked takes you to the earlier Test Requests page.</li> 
+				</ul>
+			</p>		
+		</dl>
+		
+		<li>
+			<p class="auto-style5">
+			<a href="#" onclick="toggle('node4')" class="auto-style8">
+			<span class="auto-style7">Information Of Test Request </span></a></p>
+		</li>
+		<dl id="node4" style="display:none">
+		
+			<p class="auto-style6">This is just an informational page on the patient's test request and no fields can be modified here. 
+				<ul class="auto-style6">
+						<li>You have a list of fields and its corresponding values for the patient test request.</li>
+						<li>In the end of the page you have an 'Ok' button which when clicked takes you to the earlier Test Requests page.</li> 
+				</ul>
+			</p>
+		
+		</dl>			
+		
+		<li>
+			<p class="auto-style5">
+			<a href="#" onclick="toggle('node6')" class="auto-style8">
+			<span class="auto-style7">Information Of Test Result </span></a></p>
+		</li>
+		<dl id="node6" style="display:none">
+		
+			<p class="auto-style6">This is just an informational page on the patient's test result and no fields can be modified here. 
+				<ul class="auto-style6">
+						<li>You have a list of fields and its corresponding values for the patient test result.</li>
+						<li>In the end of the page you have an 'Ok' button which when clicked takes you to the earlier Test Requests page.</li> 
+				</ul>
+			</p>		
+		</dl>
+		
+	</ul>
+    
+</div>
+    
+</body>
+</html>

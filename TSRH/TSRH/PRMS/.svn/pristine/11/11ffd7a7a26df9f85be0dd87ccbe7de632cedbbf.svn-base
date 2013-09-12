@@ -1,0 +1,436 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@page import="java.sql.*"%> 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Seminars - Seminars | Charity - Free Website Template from Templates.com</title>
+<meta charset="utf-8">
+<meta name="description" content="Place your description here">
+<meta name="keywords" content="put, your, keyword, here">
+<meta name="author" content="Templates.com - website templates provider">
+<link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/layout.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/style.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/buttonCSS.css" type="text/css" media="all">
+<link href="css/calendar.css" rel="stylesheet" type="text/css">
+<script language="javaScript" type="text/javascript" src="js/calendar.js"></script>
+<script type="text/javascript" src="js/maxheight.js"></script>
+<script type="text/javascript" src="js/jquery-1.4.2.min.js" ></script>
+<script type="text/javascript" src="js/cufon-yui.js"></script>
+<script type="text/javascript" src="js/cufon-replace.js"></script>
+<script type="text/javascript" src="js/Myriad_Pro_400.font.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+<link href="DatePicker/kendo.common.min.css" rel="stylesheet">
+        <link href="DatePicker/kendo.blueopal.min.css" rel="stylesheet">
+        <script src="DatePicker/jquery.min.js"></script>
+        <script src="DatePicker/kendo.web.min.js"></script>
+<SCRIPT TYPE="text/javascript">
+<!--
+function popup(mylink, windowname)
+{
+if (! window.focus)return true;
+var href;
+if (typeof(mylink) == 'string')
+   href=mylink;
+else
+   href=mylink.href;
+window.open(href, windowname, 'width=600,height=1000,scrollbars=yes');
+return false;
+}
+
+function upgradepicker() {
+                var date= new Date();
+                date.toString('yyyy-MM-dd');
+                $("#DOB").kendoDatePicker({
+                    format: "yyyy-MM-dd"
+                });
+                $("#DOB1").kendoDatePicker({
+                    format: "yyyy-MM-dd"
+                });
+                $("#DOB2").kendoDatePicker({
+                    format: "yyyy-MM-dd"
+                });
+}
+function gotoParent()
+{
+	
+	//var form = document.getElementById( 'test_request_record' );
+	//form.submit();
+	var parentRef = window.opener;
+	$.post("edittestrequest.jsp", $('test_request_update').serialize(),function(data){
+		parentRef.location.reload();
+		close();
+	});
+	
+	//window.opener.location.reload();
+	//close();
+}
+
+function IsNumeric(input)
+{
+    if((input - 0) == input && input.length > 0)
+        return false;
+    else 
+        return true;
+}
+
+function validateForm()
+{
+               var utestrequestid = document.forms["test_request_update"]["utestrequestid"].value;
+               var utestname =document.forms["test_request_update"]["utestname"].value;
+               var utestrequestername =document.forms["test_request_update"]["utestrequestername"].value;
+               var utestrequestdate =document.forms["test_request_update"]["utestrequestdate"].value;
+               var uexpectedresultdate =document.forms["test_request_update"]["uexpectedresultdate"].value;
+               var uexpectedresult =document.forms["test_request_update"]["uexpectedresult"].value;
+               var uistesttaken =document.forms["test_request_update"]["uistesttaken"].value;
+               var uistestresultsubmitted =document.forms["test_request_update"]["uistestresultsubmitted"].value;
+              
+               var ucomments =document.forms["test_request_update"]["ucomments"].value;
+               var uuserid =document.forms["test_request_update"]["uuserid"].value;
+
+            if (utestrequestid==null || utestrequestid=="")
+               { 
+                   document.getElementById('msg0').color = "red";
+                   document.getElementById('msg0').innerHTML = 'Enter test request ID!';
+                   return false;
+               }
+             else if(IsNumeric(utestrequestid))
+              {
+                   document.getElementById('msg0').color = "red";
+                   document.getElementById('msg0').innerHTML = 'Enter a number';
+                   return false;
+              }
+              else if (utestname==null || utestname=="")
+               { 
+                   document.getElementById('msg0').color = "white";
+                   document.getElementById('msg1').color = "red";
+                   document.getElementById('msg1').innerHTML = 'Enter test name!';
+                   return false;
+               }
+               else if(utestrequestername==null||utestrequestername=="")
+               {
+                   document.getElementById('msg0').color = "white";
+                   document.getElementById('msg1').color = "white";
+                   document.getElementById('msg2').color = "red";
+                   document.getElementById('msg2').innerHTML = 'Enter test requester name!';
+                   return false;
+               }
+               else if(utestrequestdate==null||utestrequestdate=="")
+               {
+                   document.getElementById('msg0').color = "white";
+                   document.getElementById('msg1').color = "white";
+                   document.getElementById('msg2').color = "white";
+                   document.getElementById('msg3').color = "red";
+                   document.getElementById('msg3').innerHTML = 'Enter test request date!';
+                   return false;
+               }
+               else if(uexpectedresultdate==null||uexpectedresultdate=="")
+               {
+                   document.getElementById('msg0').color = "white";
+                   document.getElementById('msg1').color = "white";
+                   document.getElementById('msg2').color = "white";
+                   document.getElementById('msg3').color = "white";
+                   document.getElementById('msg4').color = "red";
+                   document.getElementById('msg4').innerHTML = 'Enter expected result date!';
+                   return false;
+               }
+               else if(uexpectedresult==null||uexpectedresult=="")
+               {
+                   document.getElementById('msg0').color = "white";
+                   document.getElementById('msg1').color = "white";
+                   document.getElementById('msg2').color = "white";
+                   document.getElementById('msg3').color = "white";
+                   document.getElementById('msg4').color = "white";
+                   document.getElementById('msg5').color = "red";
+                   document.getElementById('msg5').innerHTML = 'Enter expected result!';
+                   return false;
+               }
+               else if(uistesttaken==null||uistesttaken=="")
+               {
+                   document.getElementById('msg0').color = "white";
+                   document.getElementById('msg1').color = "white";
+                   document.getElementById('msg2').color = "white";
+                   document.getElementById('msg3').color = "white";
+                   document.getElementById('msg4').color = "white";
+                   document.getElementById('msg5').color = "white";
+                   document.getElementById('msg6').color = "red";
+                   document.getElementById('msg6').innerHTML = 'Enter is test taken!';
+                   return false;
+               }
+               else if(uistestresultsubmitted==null||uistestresultsubmitted=="")
+               {
+                   document.getElementById('msg0').color = "white";
+                   document.getElementById('msg1').color = "white";
+                   document.getElementById('msg2').color = "white";
+                   document.getElementById('msg3').color = "white";
+                   document.getElementById('msg4').color = "white";
+                   document.getElementById('msg5').color = "white";
+                   document.getElementById('msg6').color = "white";
+                   document.getElementById('msg7').color = "red";
+                   document.getElementById('msg7').innerHTML = 'Enter is test result submitted!';
+                   return false;
+               }
+              
+                else if(ucomments==null||ucomments=="")
+               {
+                   document.getElementById('msg0').color = "white";
+                   document.getElementById('msg1').color = "white";
+                   document.getElementById('msg2').color = "white";
+                   document.getElementById('msg3').color = "white";
+                   document.getElementById('msg4').color = "white";
+                   document.getElementById('msg5').color = "white";
+                   document.getElementById('msg6').color = "white";
+                   document.getElementById('msg7').color = "white";
+                  
+                   document.getElementById('msg10').color = "red";
+                   document.getElementById('msg10').innerHTML = 'Enter comments!';
+                   return false;
+               }
+               else if(uuserid==null||uuserid=="")
+               {
+                   document.getElementById('msg0').color = "white";
+                   document.getElementById('msg1').color = "white";
+                   document.getElementById('msg2').color = "white";
+                   document.getElementById('msg3').color = "white";
+                   document.getElementById('msg4').color = "white";
+                   document.getElementById('msg5').color = "white";
+                   document.getElementById('msg6').color = "white";
+                   document.getElementById('msg7').color = "white";
+             
+                   document.getElementById('msg10').color = "white";
+                   document.getElementById('msg11').color = "red";
+                   document.getElementById('msg11').innerHTML = 'Enter user id!';
+                   return false;
+               }
+               else
+                   {
+                   document.getElementById('msg0').color = "white";    
+                   document.getElementById('msg1').color = "white";
+                   document.getElementById('msg2').color = "white";
+                   document.getElementById('msg3').color = "white";
+                   document.getElementById('msg4').color = "white";
+                   document.getElementById('msg5').color = "white";
+                   document.getElementById('msg6').color = "white";
+                   document.getElementById('msg7').color = "white";
+                  
+                   document.getElementById('msg10').color = "white";
+                   document.getElementById('msg11').color = "white";
+                   }
+}
+//-->
+</SCRIPT>
+<!--[if lt IE 7]>
+	<link rel="stylesheet" href="css/ie/ie6.css" type="text/css" media="screen">
+	<script type="text/javascript" src="js/ie_png.js"></script>
+	<script type="text/javascript">
+		ie_png.fix('.png, #slogan, header nav ul li a, .icon img, .link1, .link1 span');
+	</script>
+<![endif]-->
+<!--[if lt IE 9]>
+	<script type="text/javascript" src="js/html5.js"></script>
+<![endif]-->
+</head>
+<jsp:useBean id="Controller" class="controller.Controller" scope="session" />
+<body id="page1" onLoad="new upgradepicker();">
+
+<!-- header -->
+ <%@ include file="headers.jsp" %>
+ <section id="content">
+    <div class="inside">
+        <div class="container">
+                        <div class="wrapper indent">
+                          <article class="col-0"> 
+                   <%
+        //check if a user has logged in. If not redirect to home page
+     String currentUser = (String) session.getAttribute("user");        
+        if(currentUser == null){            
+            String redirectURL = "index.jsp";
+            response.sendRedirect(redirectURL);
+        } 
+       %>		
+<!-- content -->
+	
+        
+        
+        
+        <%
+String utestname =" ";
+String utestrequestername = " ";
+String utestrequestdate=" ";
+String uexpectedresultdate= " ";
+String uexpectedresult= " ";
+String uistesttaken= " ";
+String uistestresultsubmitted= " ";
+String uremindernote= " ";
+String ureminderdate= " ";
+String ucomments= " ";
+String uuserid= " ";
+int utestrequestid = 0;
+String bttn_value ="Save";
+String button_value= "cancel";
+//String test_requestid = (String)session.getAttribute("test_requestid");
+String test_requestid1="";
+String pid="";
+pid = request.getParameter("patient_idnumber");
+Connection conne = null;
+try
+{
+    Class.forName("com.mysql.jdbc.Driver");
+    conne = DriverManager.getConnection(Controller.getDBManager().getDBAccess().getConStr(), Controller.getDBManager().getDBAccess().getUserName(), Controller.getDBManager().getDBAccess().getPwd());
+    Statement st=conne.createStatement();
+    ResultSet res = null;
+    test_requestid1=request.getParameter("test_requestid");
+    int test_requestid=Integer.parseInt(test_requestid1);
+    res= st.executeQuery("select * from test_request_record"+ " where testrequestid="+test_requestid);
+    
+if(res.next())
+{
+	utestrequestid= res.getInt(1);
+	utestname = res.getString(3);
+	utestrequestername = res.getString(4);
+	utestrequestdate= res.getString(5);
+	uexpectedresultdate = res.getString(6);
+	uexpectedresult = res.getString(7);
+	uistesttaken =res.getString(8);
+	uistestresultsubmitted = res.getString(9);
+	//uremindernote = res.getString(10);
+	//ureminderdate = res.getString(11);
+	ucomments = res.getString(10);
+	uuserid = res.getString(11);
+}
+   res.close();
+   st.close();
+}
+catch(Exception e){
+    System.out.print(e);
+    e.printStackTrace();
+    }
+finally{
+    if(null!= conne)
+               {
+        conne.close();
+       }
+    }
+	
+%>
+
+        <form id ="test_request_update" method ="post" onSubmit="return validateForm()" action = edittestrequest.jsp >
+<h3>&nbsp;</h3>
+     <h2> Edit Test Request </h2>      
+ <table >
+ <tr>
+          <td width = "200"> <h3>*Test Request ID      </h3></td>
+          <td><p>
+                  <input name="utestrequestid" type="text" class ="textbox" value ="<%=utestrequestid%>" size="20" readonly>
+             <td> <font size="5" color="white" id="msg0">Enter test request ID!</font></td>
+          </p>
+           </td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          <td width = "200"> <h3>*Test Name      </h3></td>
+          <td><p>
+             <input name="utestname" type="text" class ="textbox" value ="<%=utestname%>" size="20">
+             <td> <font size="5" color="white" id="msg1"></font></td>
+          </p>
+           
+          <tr></tr>          
+ </table>
+        <table>
+<tr>
+          <td width = "200"> <h3> *Test Requester Name     </h3></td>
+          <td><p>
+             <input name="utestrequestername" type="text" class ="textbox" value ="<%=utestrequestername%>" size="20">
+             <td> <font size="5" color="white" id="msg2">Enter test requester name!</font></td>
+          </p>
+           
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>          
+<td width = "200"> <h3> *Test Request Date     </h3></td>
+          <td><p>
+             <input name="utestrequestdate" id="DOB" type="text" class ="textbox" value ="<%=utestrequestdate%>" size="20" readonly="readonly">
+             <td> <font size="5" color="white" id="msg3"></font></td>
+          </p>
+           
+          <tr></tr>
+        </table>
+        <table>
+<tr>
+          <td width = "200"> <h3> *Expected result Date     </h3></td>
+          <td><p>
+             <input name="uexpectedresultdate" id="DOB1" type="text" class ="textbox" value ="<%=uexpectedresultdate%>" size="20" readonly="readonly">
+             <td> <font size="5" color="white" id="msg4">Enter expected result date!</font></td>
+          </p>
+           
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          <td width = "200"> <h3> *Expected Result     </h3></td>
+          <td><p>
+             <input name="uexpectedresult" type="text" class ="textbox" value ="<%=uexpectedresult%>" size="20">
+             <td> <font size="5" color="white" id="msg5"></font></td>
+          </p>
+           
+          <tr></tr>
+        </table>
+        <table>
+<tr>
+          <td width = "200"> <h3> *Is Test Taken    </h3></td>
+          <td><p>
+             <input name="uistesttaken" type="text"class ="textbox" value ="<%=uistesttaken%>" size="20">
+             <td> <font size="5" color="white" id="msg6">Enter is test taken!</font></td>
+          </p>
+           
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          <td width = "200"> <h3> *Is Test Result Submitted     </h3></td>
+          <td><p>
+             <input name="uistestresultsubmitted" type="text" class ="textbox" value ="<%=uistestresultsubmitted%>" size="20">
+             <td> <font size="5" color="white" id="msg7"></font></td>
+          </p>
+          
+          <tr></tr>
+        </table>
+        
+        <table>
+<tr>
+          <td width = "200"> <h3> *Comments     </h3></td>
+          <td><p>
+             <input name="ucomments" type="text" class ="textbox" value ="<%=ucomments%>" size="20">
+             <td> <font size="5" color="white" id="msg10">Enter comments!</font></td>
+          </p>
+          
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          <td width = "200"> <h3> *User Name    </h3></td>
+          <td><p>
+             <input name="uuserid" type="text" class ="textbox" value ="<%=uuserid%>" size="20">
+             <td> <font size="5" color="white" id="msg11"></font></td>
+          </p>
+          
+          <tr></tr>
+        </table><table>
+<table align="center">
+<tr>
+    
+   <tr>
+         
+        
+       <td colspan=2><input type="submit" name = "submit" class="blue button"   value="<%=bttn_value%>" >  
+         
+          
+          <td colspan=2>&nbsp;</td>
+          
+       <td colspan=2>   <input type="button" name = "submit1" class="blue button" onclick="window.location='/TSRH/testrequest.jsp?pid=<%=Controller.getCurrentPatient().getPatientId() %>'" value="Cancel" ></td>
+          </tr>
+        
+        </table>
+          
+          </article>
+          </div>
+</div>
+	
+</div>
+       <br>
+       <br></div></div>
+       </section>
+<%@ include file="footers.jsp" %>
+</tr>
+<script type="text/javascript">Cufon.now();</script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            font: 14px/18px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            color: #000000;
+        }
+        
+        h2 { color: #4DB8FF; }
+    .auto-style2 {
+		font-family: Arial;
+	}
+	.auto-style5 {
+		font-size: medium;
+		font-family: "Times New Roman";
+		color: #4DB8FF;
+	}
+	.auto-style6 {
+		font-size: small;
+		font-family: "Times New Roman";
+	}
+	.auto-style7 {
+		color: #4DB8FF;
+	}
+	.auto-style8 {
+		text-decoration: none;
+	}
+    </style>
+	
+	    <script type="text/javascript">
+     
+    function toggle(id) {
+      var e = document.getElementById(id);
+     
+      if (e.style.display == '')
+        e.style.display = 'none';
+      else
+        e.style.display = '';
+    }
+     
+    </script>
+
+</head>
+<body style="height: 344px">
+<div id="secondary">
+    <h2 class="auto-style2"> Patient Profile Creation!</h2>
+    <p class="auto-style6">This page displays fields to be entered for a new Patient record.</p>
+    	
+	<ul>
+		<li>
+		<p class="auto-style5">
+		<a href="#" onclick="toggle('node1')" class="auto-style8">
+		<span class="auto-style7"> Patient Details </span></a></p>
+		<dl id="node1" style="display:none">
+                    
+			<p class="auto-style6">Guidelines to create a new Patient record.</p>
+                        <ul class="auto-style6"><li>To add a new patient all the fields must be entered.</li>
+                        <li>TSRH ID format should be 6 digits, it does not take greater than or less than six digits or any other special characters.
+                        Example:123456</li>
+                        <li> First Name, Last Name and Mother's Name cannot contain numbers or special characters. </li>
+                        <li>Enter the country code. Example: For United States +1</li>
+                        <li> Phone number should be 10 digits. Example: 8172722201 or 817-272-2201</li>
+                        <li> Image should be either of the following formats only jpg|jpeg|bmp|png. </li></ul>
+                        
+                        
+		</dl>
+		</li>
+       

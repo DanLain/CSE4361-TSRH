@@ -1,0 +1,48 @@
+.dropdown dd, .dropdown dt, .dropdown ul {
+    margin: 0px;
+    padding: 0px;
+}
+
+.dropdown dd {
+    position: relative;
+}
+
+
+.dropdown dt {
+    background: #FFF url(../images/arrow.png) no-repeat scroll right center;
+    display: inherit;
+    padding-right: 20px;
+    border: 2px solid #1FCAEC;
+    width: 160px;
+    padding: 5px;
+    border-bottom-left-radius:0.5em;
+    border-bottom-right-radius:0.5em;
+    border-top-left-radius:0.5em;
+    border-top-right-radius:0.5em;
+    border-radius: 4px 4px 4px 4px;
+}
+
+.dropdown dd ul {
+    background: #FFF none repeat scroll 0 0;
+    border: 1px solid #1FCAEC;
+    color: #1FCAEC;
+    display: none;
+    top: -5px;
+    padding: 5px 0px;
+    position: absolute;
+    width: auto;
+    min-width: 170px;
+    list-style: none;
+    height: 100px;
+    overflow: auto;
+}
+
+.dropdown dd ul li {
+    padding: 5px;
+    display: inherit;
+}
+
+.dropdown dd ul li:hover {
+    background-color: #1FCAEC;
+    color:#FFF;
+}

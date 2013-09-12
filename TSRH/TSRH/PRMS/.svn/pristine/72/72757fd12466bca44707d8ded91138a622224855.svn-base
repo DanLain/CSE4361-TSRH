@@ -1,0 +1,313 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+pageEncoding="ISO-8859-1"%>
+<%@page import="java.sql.*"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="Place your description here">
+<meta name="keywords" content="put, your, keyword, here">
+<meta name="author" content="Templates.com - website templates provider">
+<link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/layout.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/style.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/buttonCSS.css" type="text/css" media="all">
+<link href="css/calendar.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="css/help.css" type="text/css" media="all">        
+<script type="text/javascript" src="js/jquery.pageslide.min.js"></script>
+<script type="text/javascript" src="js/cufon-yui.js"></script>
+<script type="text/javascript" src="js/cufon-replace.js"></script>
+<script language="javaScript" type="text/javascript" src="js/calendar.js"></script>
+<script type="text/javascript" src="js/maxheight.js"></script>
+<script type="text/javascript" src="js/jquery-1.4.2.min.js" ></script>
+<script type="text/javascript" src="js/cufon-yui.js"></script>
+<script type="text/javascript" src="js/cufon-replace.js"></script>
+<script type="text/javascript" src="js/Myriad_Pro_400.font.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+<link href="DatePicker/kendo.common.min.css" rel="stylesheet">
+        <link href="DatePicker/kendo.blueopal.min.css" rel="stylesheet">
+        <script src="DatePicker/jquery.min.js"></script>
+        <script src="DatePicker/kendo.web.min.js"></script>
+<SCRIPT TYPE="text/javascript">
+<!--
+function upgradepicker() {
+                var date= new Date();
+                date.toString('yyyy-MM-dd');
+                $("#DOB").kendoDatePicker({
+                    format: "yyyy-MM-dd"
+                });
+                $("#DOB1").kendoDatePicker({
+                    format: "yyyy-MM-dd"
+                });
+}
+function gotoParent()
+{
+
+//var form = document.getElementById( 'test_request_record' );
+//form.submit();
+var parentRef = window.opener;
+$.post("inserttestconsultation.jsp", $('consultation_record').serialize(),function(data){
+parentRef.location.reload();
+close();
+});
+
+function IsNumeric(input)
+{
+    if((input - 0) == input && input.length > 0)
+        return false;
+    else 
+        return true;
+}
+
+//window.opener.location.reload();
+//close();
+}
+function validateForm()
+          {  
+               var dateofconsultation =document.forms["consultation_record"]["dateofconsultation"].value;
+               var whomconsulted =document.forms["consultation_record"]["whomconsulted"].value;
+               var consultedfor =document.forms["consultation_record"]["consultedfor"].value;
+               var prescription =document.forms["consultation_record"]["prescription"].value;
+               //var consultationremindernote =document.forms["consultation_record"]["consultationremindernote"].value;
+               //var consultationreminderdate =document.forms["consultation_record"]["consultationreminderdate"].value;
+               var consultationcomments =document.forms["consultation_record"]["consultationcomments"].value;
+               var userid =document.forms["consultation_record"]["userid"].value;
+               
+               
+               if (dateofconsultation==null || dateofconsultation=="")
+               { 
+                   
+                   document.getElementById('msg1').color = "red";
+                   document.getElementById('msg1').innerHTML = 'Enter date of consultation!';
+                   return false;
+               }
+               else if(whomconsulted==null||whomconsulted=="")
+               {
+                   document.getElementById('msg1').color = "white";
+                   document.getElementById('msg2').color = "red";
+                   document.getElementById('msg2').innerHTML = 'Enter whom consulted!';
+                   return false;
+               }
+               else if(consultedfor==null||consultedfor=="")
+               {
+                   document.getElementById('msg1').color = "white";
+                   document.getElementById('msg2').color = "white";
+                   document.getElementById('msg3').color = "red";
+                   document.getElementById('msg3').innerHTML = 'Enter consulted for!';
+                   return false;
+               }
+               else if(prescription==null||prescription=="")
+               {
+                   document.getElementById('msg1').color = "white";
+                   document.getElementById('msg2').color = "white";
+                   document.getElementById('msg3').color = "white";
+                   document.getElementById('msg4').color = "red";
+                   document.getElementById('msg4').innerHTML = 'Enter prescription!';
+                   return false;
+               }
+              /* else if(consultationremindernote==null||consultationremindernote=="")
+               {
+                   document.getElementById('msg1').color = "white";
+                   document.getElementById('msg2').color = "white";
+                   document.getElementById('msg3').color = "white";
+                   document.getElementById('msg4').color = "white";
+                   document.getElementById('msg5').color = "red";
+                   document.getElementById('msg5').innerHTML = 'Enter consultation reminder note!';
+                   return false;
+               }
+               else if(consultationreminderdate==null||consultationreminderdate=="")
+               {
+                   document.getElementById('msg1').color = "white";
+                   document.getElementById('msg2').color = "white";
+                   document.getElementById('msg3').color = "white";
+                   document.getElementById('msg4').color = "white";
+                   document.getElementById('msg5').color = "white";
+                   document.getElementById('msg6').color = "red";
+                   document.getElementById('msg6').innerHTML = 'Enter consultation reminder date!';
+                   return false;
+               }*/
+               else if(consultationcomments==null||consultationcomments=="")
+               {
+                   document.getElementById('msg1').color = "white";
+                   document.getElementById('msg2').color = "white";
+                   document.getElementById('msg3').color = "white";
+                   document.getElementById('msg4').color = "white";
+                   document.getElementById('msg5').color = "red";
+                  // document.getElementById('msg6').color = "white";
+                   //document.getElementById('msg7').color = "red";
+                   document.getElementById('msg5').innerHTML = 'Enter consultation comments!';
+                   return false;
+               }
+               else if(userid==null||userid=="")
+               {
+                   document.getElementById('msg1').color = "white";
+                   document.getElementById('msg2').color = "white";
+                   document.getElementById('msg3').color = "white";
+                   document.getElementById('msg4').color = "white";
+                   document.getElementById('msg5').color = "white";
+                   document.getElementById('msg6').color = "red";
+                  // document.getElementById('msg7').color = "white";
+                  // document.getElementById('msg8').color = "red";
+                   document.getElementById('msg6').innerHTML = 'Enter user name!';
+                   return false;
+               }
+               
+               else
+                   {
+                   document.getElementById('msg1').color = "white";
+                   document.getElementById('msg2').color = "white";
+                   document.getElementById('msg3').color = "white";
+                   document.getElementById('msg4').color = "white";
+                   document.getElementById('msg5').color = "white";
+                   document.getElementById('msg6').color = "white";
+                   //document.getElementById('msg7').color = "white";
+                   //document.getElementById('msg8').color = "white";
+                   return true;
+                   }
+          }
+//-->
+</SCRIPT>
+<!--[if lt IE 7]>
+<link rel="stylesheet" href="css/ie/ie6.css" type="text/css" media="screen">
+<script type="text/javascript" src="js/ie_png.js"></script>
+<script type="text/javascript">
+ie_png.fix('.png, #slogan, header nav ul li a, .icon img, .link1, .link1 span');
+</script>
+<![endif]-->
+<!--[if lt IE 9]>
+<script type="text/javascript" src="js/html5.js"></script>
+<![endif]-->
+</head>
+<body id="page1" onLoad="new upgradepicker();">
+    <a href="javascript:$.pageslide({ direction: 'right', href: 'help/Consult.html' })" class="first">Help</a>
+<div class="wrap">
+<%@ include file="headers.jsp" %>
+<section id="content">
+    <div class="inside">
+        <div class="container">
+                        <div class="wrapper indent">
+                          <article class="col-0">
+                  <%
+        //check if a user has logged in. If not redirect to home page
+String currentUser = (String) session.getAttribute("user");        
+        if(currentUser == null){            
+            String redirectURL = "index.jsp";
+            response.sendRedirect(redirectURL);
+        }
+        %>		
+<!-- header -->
+<!-- content -->
+
+<FORM name="consultation_record" action="inserttestconsultation.jsp" onSubmit="return validateForm()" method="post" enctype="multipart/form-data">
+<%
+String pid = request.getParameter("pid");
+String dateofconsultation = " ";
+String whomconsulted = " ";
+String consultedfor = " ";
+String prescription = " ";
+String consultationremindernote = " ";
+String consultationreminderdate= " ";
+String consultationcomments= " ";
+String userid = " ";
+String bttn_value = "Save";
+String button_value = "cancel";
+%>
+</header>
+<!-- content -->
+
+<h3>&nbsp;</h3>
+
+
+    
+        <h2> Create New Consultation </h2>
+        
+        <br>
+        <br>
+        
+        
+       
+<table>
+<tr>
+    <td width = "250"> <h3>Date Of Consultation <font color="RED">*</font> </h3></td>
+    <td>
+        <p>
+        <input name="dateofconsultation" id="DOB" type="text" class ="textbox" size="20" readonly="readonly">
+        </p>
+    </td>
+        <td><font size="5" color="white" id="msg1">*Enter date of consultation!</font></td>
+    
+    <td width = "250"> <h3>Consulted By <font color="RED">*</font> </h3></td>
+    <td><input name="whomconsulted" type="text" class ="textbox"  size="20"></td>
+    <td><font size="5" color="white" id="msg2">Enter Consulted By!</font></td>
+</tr>
+<tr>
+<td width = "250"> <h3>Consulted For <font color="RED">*</font> </h3></td>
+<td>
+    <p>
+        <input name="consultedfor" type="text" class ="textbox" size="20">
+    </p>
+</td>
+<td><font size="5" color="white" id="msg3">Enter consulted for!</font></td>
+<td width = "250"> <h3> Prescription <font color="RED">*</font> </h3></td>
+<td>
+    <p>
+        <input name="prescription" type="text" class ="textbox" size="20">
+    </p>
+</td>
+<td><font size="5" color="white" id="msg4">Enter prescription!</font></td>
+<tr></tr>
+<tr>
+    <td width = "250"> <h3> Consultation Comments <span style="color:red;position:relative;top:-25px;left:208px;">*</span> </h3></td>
+<td>
+    <p>
+        <input name="consultationcomments" type="text" class ="textbox" size="20">
+    </p>
+<td> 
+    <font size="5" color="white" id="msg5">Enter consultation comments!</font>
+</td>
+<td width = "250"> <h3>User Name </h3></td>
+<td>
+    <input readonly="readonly" name="userid" type="text" class ="textbox" size="20" value = "<%=(String) session.getAttribute("user")%>">
+</td>
+<td> <font size="5" color="white" id="msg6">Enter User Name!</font></td>
+<tr></tr>
+<tr></tr>
+</tr> 
+<tr>			
+    <td style="border: 0px none;">
+         <h3>Select report(.pdf) </h3>
+                </td>
+                <td style="border: 0px none;">
+                    <input type="file" name="pdfLink"/>
+                </td>
+            </tr>
+</table>
+
+        <table align="center"> 
+            <tr> <tr>
+                <td colspan="2">
+<input type="submit" name = "submit" class="blue button" value= "<%=bttn_value%>" > </td>
+                <td colspan="2"> &nbsp;</td>
+  <td colspan="2"> 
+<input type="button" class="blue button" onclick="window.location = '/TSRH/testconsultation.jsp?pid=<%=pid%>'" value="Cancel"> </td>
+            </tr>
+        </table>
+            </form>
+
+                          </article>
+                        </div>
+            
+
+        </div>
+</div>
+            <br>
+            <br>
+            </div>
+            
+</section>
+<%@ include file="footers.jsp" %>
+</tr>
+<script type="text/javascript">Cufon.now();</script>
+<script src="js/jquery.pageslide.min.js"></script>
+</body>
+</html>

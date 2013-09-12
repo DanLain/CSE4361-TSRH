@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 28, 2011 9:22:05 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="alertsystemdatabase.Alert" table="alert" catalog="alertsystem">
+        <id name="alertId" type="java.lang.Integer">
+            <column name="alertId" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="userinfo" class="alertsystemdatabase.Userinfo" fetch="select">
+            <column name="userId" length="50" not-null="true" />
+        </many-to-one>
+        <property name="alertCreatedTime" type="timestamp">
+            <column name="alertCreatedTime" length="19" not-null="true" />
+        </property>
+        <property name="alertTime" type="timestamp">
+            <column name="alertTime" length="19" />
+        </property>
+        <property name="alertCreatedBy" type="string">
+            <column name="alertCreatedBy" length="50" not-null="true" />
+        </property>
+        <property name="alertText" type="string">
+            <column name="alertText" length="50" not-null="true" />
+        </property>
+        <property name="alertSourceType" type="java.lang.Integer">
+            <column name="alertSourceType" />
+        </property>
+        <property name="alertSourceId" type="string">
+            <column name="alertSourceId" length="50" not-null="true" />
+        </property>
+        <property name="alertState" type="string">
+            <column name="alertState" length="50" not-null="true" />
+        </property>
+        <property name="repeating" type="java.lang.Byte">
+            <column name="repeating" />
+        </property>
+        <property name="repeatFrequency" type="java.lang.Integer">
+            <column name="repeat_frequency" />
+        </property>
+        <property name="severity" type="java.lang.Byte">
+            <column name="severity" />
+        </property>
+        <set name="alerthistories" inverse="true">
+            <key>
+                <column name="alertId" not-null="true" />
+            </key>
+            <one-to-many class="alertsystemdatabase.Alerthistory" />
+        </set>
+    </class>
+</hibernate-mapping>

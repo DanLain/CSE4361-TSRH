@@ -1,0 +1,84 @@
+<%@page import="edu.uta.tsrh.model.FileDetail"%>
+<%@page import="edu.uta.tsrh.model.SearchResult"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+         pageEncoding="ISO-8859-1"%>
+
+
+<h2>Search Results</h2>
+<table class="bordered">
+    <thead>
+        <tr>
+            <th>File ID</th>
+            <th>Patient Name</th>
+            <th>Location</th>
+        </tr>
+    </thead>
+    <tbody>
+        <%
+            FileDetail fileDetail = (FileDetail) request.getAttribute("fileDetail");
+            ArrayList<SearchResult> searchResult = (ArrayList<SearchResult>) request.getAttribute("searchResult");
+            String url;
+            int id = 0;
+            String idString = null;
+            String patientName = null;
+            String checkout = "disabled=\"disabled\"";
+            String checkin = "disabled=\"disabled\"";
+            String transfer = "disabled=\"disabled\"";
+            for (int i = 0; i < searchResult.size(); i++) {
+                url = "FileTrackingResult?fileID=";
+                SearchResult searchResultElement = (SearchResult) searchResult.get(i);
+                id = (int) searchResultElement.getFileID();
+                idString = Integer.toString(id);
+                url = url + idString;
+                String checkoutUrl = "/TSRH/filetracking/file/checkoutpage.org?fileId=" + idString;
+                String checkinUrl = "/TSRH/filetracking/file/checkinpage.org?fileId=" + idString;
+                String transferUrl = "/TSRH/filetracking/file/transferpage.org?fileId=" + idString;
+                patientName = searchResultElement.getPatientFirstName() + " " + searchResultElement.getPatientLastName();
+                if (searchResultElement.getFileState().equals("OUT")) {
+                    checkin = "enabled=\"enabled\"";
+                    transfer = "enabled=\"enabled\"";
+                    checkout = "disabled=\"disabled\"";
+                } else {
+                    checkout = "enabled=\"enabled\"";
+                    checkin = "disabled=\"disabled\"";
+                    transfer = "disabled=\"disabled\"";
+                }
+        %>
+        <tr>
+            <td>
+                <h3 class="active">
+                    <%=searchResultElement.getFileID()%><br />
+                </h3>
+                <div class="sliding" style="display: none;">
+                    <table cellspacing="3">
+                        <tr>
+                            <td>	
+                                <form action="<%=checkoutUrl%>" method="post" >
+                                    <input type="submit" value="checkout"<%=checkout%>/> 	
+                                </form>
+                            </td>
+                            <td>
+                                <form action="<%=checkinUrl%>" method="post" >
+                                    <input type="submit" value="checkin" <%=checkin%> /> 
+                                </form>
+                            </td>
+                            <td>
+                                <form action="<%=transferUrl%>" method="post" >
+                                    <input type="submit" value="transfer" <%=transfer%> />
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+            <td class="patname">
+                <a href="<%=url%>"><%=patientName%></a>
+            </td>
+            <td class="location">
+                <%=searchResultElement.getLocation()%>
+            </td>
+        </tr>
+        <%}%>
+    </tbody>
+</table>

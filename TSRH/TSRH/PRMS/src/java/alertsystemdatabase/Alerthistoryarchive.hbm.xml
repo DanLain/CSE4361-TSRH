@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 28, 2011 9:22:05 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="alertsystemdatabase.Alerthistoryarchive" table="alerthistoryarchive" catalog="alertsystem">
+        <id name="alertHistoryArchiveId" type="java.lang.Integer">
+            <column name="alertHistoryArchiveId" />
+            <generator class="identity" />
+        </id>
+        <property name="alertHistoryId" type="java.lang.Integer">
+            <column name="alertHistoryId" />
+        </property>
+        <property name="alertId" type="java.lang.Integer">
+            <column name="alertId" />
+        </property>
+        <property name="alertUpdateTime" type="timestamp">
+            <column name="alertUpdateTime" length="19" not-null="true" />
+        </property>
+        <property name="alertUpdateType" type="string">
+            <column name="alertUpdateType" length="50" />
+        </property>
+        <property name="alertRemark" type="string">
+            <column name="alertRemark" length="500" />
+        </property>
+    </class>
+</hibernate-mapping>

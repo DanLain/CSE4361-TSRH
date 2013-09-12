@@ -1,0 +1,71 @@
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
+
+DROP SCHEMA IF EXISTS ALERTSYSTEM;
+CREATE SCHEMA ALERTSYSTEM;
+USE ALERTSYSTEM;
+
+CREATE TABLE UserInfo (
+  userId VARCHAR(50) NOT NULL,
+  userName VARCHAR(45) NOT NULL,
+  emailId VARCHAR(45) NOT NULL,
+  PRIMARY KEY  (userId)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE Alert (
+  alertId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  alertCreatedTime TIMESTAMP DEFAULT NOW(),
+  alertTime TIMESTAMP NULL, 
+  alertCreatedBy VARCHAR(50) NOT NULL,
+  userId VARCHAR(50) NOT NULL,
+  alertText VARCHAR(50) NOT NULL,
+  alertSourceType INT,
+  alertSourceId VARCHAR(50) NOT NULL,
+  alertState VARCHAR(50) NOT NULL,
+  repeating TINYINT DEFAULT 0,
+  repeat_frequency INT UNSIGNED DEFAULT 0,
+  severity TINYINT UNSIGNED DEFAULT 3,
+  PRIMARY KEY (alertId),
+  KEY idx_fk_userId (userId),
+  CONSTRAINT `fk_userId` FOREIGN KEY (userId) REFERENCES UserInfo (userId) ON DELETE CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE AlertHistory (
+  alertHistoryId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  alertId INT UNSIGNED NOT NULL,
+  alertUpdateTime TIMESTAMP DEFAULT NOW(),
+  alertUpdateType VARCHAR(50) NOT NULL,  
+  alertRemark VARCHAR(500),  
+  PRIMARY KEY (alertHistoryId),
+  KEY idx_fk_alertId (alertId),
+  CONSTRAINT `fk_alertId` FOREIGN KEY (alertId) REFERENCES Alert (alertId) ON DELETE CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE AlertArchive (
+  alertArchiveId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  alertId INT UNSIGNED,
+  alertCreatedTime TIMESTAMP NULL,
+  alertTime TIMESTAMP NULL, 
+  alertArchivedTime TIMESTAMP DEFAULT NOW(),
+  alertCreatedBy VARCHAR(50),
+  userId VARCHAR(50),
+  alertText VARCHAR(50),
+  alertSourceType INT,
+  alertSourceId VARCHAR(50),
+  alertState VARCHAR(50),
+  repeating TINYINT,
+  repeat_frequency INT UNSIGNED,
+  severity TINYINT UNSIGNED,
+  PRIMARY KEY (alertArchiveId)  
+)ENGINE=ARCHIVE DEFAULT CHARSET=utf8;
+
+CREATE TABLE AlertHistoryArchive (
+  alertHistoryArchiveId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  alertHistoryId INT UNSIGNED,
+  alertId INT UNSIGNED,
+  alertUpdateTime TIMESTAMP,
+  alertUpdateType VARCHAR(50),
+  alertRemark VARCHAR(500),
+  PRIMARY KEY (alertHistoryArchiveId)  
+)ENGINE=Archive DEFAULT CHARSET=utf8;

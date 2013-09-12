@@ -1,0 +1,69 @@
+package edu.uta.tsrh.db.commandpattern;
+
+import java.sql.ResultSet;
+
+import com.mysql.jdbc.Connection;
+
+import edu.uta.tsrh.db.DAO;
+import edu.uta.tsrh.db.DBQueryExecuter;
+import edu.uta.tsrh.db.QueryBuilder.SelectSQLBuilder;
+import edu.uta.tsrh.db.mapper.FileDetailsMapper;
+import edu.uta.tsrh.db.mapper.Mapper;
+import edu.uta.tsrh.model.FileDetail;
+import edu.uta.tsrh.model.QueryCondition;
+
+public class GetFileDetails
+    implements MySQLCmd
+{
+    private String fileID;
+
+    public GetFileDetails(String fileID)
+    {
+        this.fileID = fileID;
+    }
+
+    @Override
+    public FileDetail execute()
+    {
+        String sqlQuery = buildQuery();
+        System.out.println("query is "+sqlQuery);
+        Connection connection = DAO.getConnection();
+
+        DBQueryExecuter queryExecuter = new DBQueryExecuter();
+        ResultSet resultSet = queryExecuter.read(sqlQuery, connection);
+        
+        Mapper mapper = new FileDetailsMapper();
+        FileDetail fileDetail = (FileDetail) mapper.map(resultSet);
+        
+        DAO.closeConnection();
+        return fileDetail;
+    }
+
+    private String buildQuery()
+    {
+        System.out.println(this.fileID);
+        String sqlQuery = null;
+        SelectSQLBuilder selectSQLBuilder = new SelectSQLBuilder();
+        selectSQLBuilder.addSelectColumn("all");
+        selectSQLBuilder.addFromTableName("physical_file f");
+        selectSQLBuilder.addJoinTableName("patientrecord  p");
+        selectSQLBuilder.addJoinCondition(new QueryCondition("f.file_id", "=", "p.patientid"));
+        selectSQLBuilder.addWhereCondition(new QueryCondition("f.file_id", "=", this.fileID));
+        selectSQLBuilder.construct();
+        sqlQuery = selectSQLBuilder.getSQLString();
+        return sqlQuery;
+    }
+
+    @Override
+    public boolean isReversible()
+    {
+        return false;
+    }
+
+    @Override
+    public void undo()
+    {
+
+    }
+
+}

@@ -1,0 +1,42 @@
+<%-- 
+    Document   : PatientProfile
+    Created on : Apr 1, 2012, 12:41:45 PM
+    Author     : David
+--%>
+<%@page import="edu.uta.t112.RecordController"%>
+<%@page import="edu.uta.t112.PatientRecord"%>
+<%@page import="edu.uta.t112.PatientPhoneCall"%>
+<%@page import="edu.uta.t112.PhoneCallController"%>
+<%
+
+String patientId = request.getParameter("patient");
+PatientRecord pRecord = RecordController.getPatientRecord(patientId);
+
+%>
+<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@page import="java.sql.*"%> 
+<%@page import="java.util.Date"%> 
+<%@page import="model.PatientInfo" %>
+
+        <%
+        %>
+        <div class="mainPanel">   
+            <div class="panel">
+                <h2>Add Phone Call</h2>
+                <h3 class="subheader">Regarding Patient <%= pRecord.getFirstName() %> <%= pRecord.getLastName() %></h3>
+                <form method="post" action="?page=AddPhoneCall">
+            <ul class="infoPanel">
+                <li><div class='name'>Date/Time:</div> <div class='value'><input type='text' name="date" class='textField' value="<%= (new Timestamp((new Date()).getTime())) %>"/></div></li>
+                <li><div class='name'>Subject/Title:</div> <div class='value'><input type='text' name="title" class='textField' /></div></li>
+                <li><div class='name'>Caller:</div> <div class='value'><input type='text' name="caller" class='textField' /></div></li>
+                <li><div class='name'>Source Phone #:</div> <div class='value'><input type='text' name="sourceNumber" class='textField' /></div></li>
+                <li><div class='name'>Content of Call:</div> <div class='value'><textarea name="content" class='textField'></textarea></div></li>
+                <input type="hidden" name='patient' value="<%= patientId %>" />
+            </ul>
+                <input type='submit' class="linkButton submit" value="Save" />
+                </form>
+            </div>
+        </div>
+        

@@ -1,0 +1,98 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package edu.uta.tsrh.model;
+
+/**
+ *
+ * @author Arjun Radhakrishnan
+ */
+import java.sql.Timestamp;
+
+public class Consults
+{
+
+    private int id;
+    
+    private Timestamp dateofconsultation;
+    private int consultationid;
+    private int patientid_consultation;
+    private String whomconsulted;
+    private String Fname;
+    private String Lname;
+
+    public Consults()
+    {
+        super();
+    }
+
+    public Consults(int consultationid,int patientid_consultation, String Fname, String Lname, String whomconsulted, Timestamp dateofconsultation)
+    {
+        this.consultationid = consultationid;
+        this.patientid_consultation = patientid_consultation;
+        this.whomconsulted = whomconsulted;
+        this.dateofconsultation = dateofconsultation;
+        this.Fname = Fname;
+        this.Lname = Lname;
+
+    }
+    
+    public String getFname()
+    {
+        return Fname;
+    }
+    public void setFname(String Fname)
+    {
+        this.Fname = Fname;
+    }        
+           
+    public String getLname()
+    {
+        return Lname;
+    }
+    public void setLname(String Lname)
+    {
+        this.Lname = Lname;
+    } 
+    
+    public int getConsultationId()
+    {
+        return consultationid;
+    }
+
+    public void setConsultationId(int consultationid)
+    {
+        this.consultationid = consultationid;
+    }
+        public int getPatientId()
+    {
+        return patientid_consultation;
+    }
+
+    public void setPatientId(int patientid_consultation)
+    {
+        this.patientid_consultation = patientid_consultation;
+    }
+
+    public String getWhomConsulted() {
+        
+        return whomconsulted;
+    }
+     
+    public void setWhomConsulted(String whomconsulted) {
+        
+        this.whomconsulted = whomconsulted;
+    }
+    
+    public Timestamp getDateOfConsultation()
+    {
+        return dateofconsultation;
+    }
+
+    public void setDateOfConsultation(Timestamp dateofconsultation)
+    {
+        this.dateofconsultation = dateofconsultation;
+    }
+
+}

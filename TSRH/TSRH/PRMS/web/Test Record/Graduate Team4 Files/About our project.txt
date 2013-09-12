@@ -1,0 +1,8 @@
+I run our group application using mysql 5.0 and tomcat 6.0.
+To change database access user name and password, please go to SQLAccess.java file in dbmanager folder, finding the lines:
+
+private static String connectStr = "jdbc:mysql://localhost:3306/alertsystem";
+private static String userName = "root";
+private static String passWord = "1234";
+
+make changes to new database name, username, and password, etc.

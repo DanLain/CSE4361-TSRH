@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+    <!-- <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"> -->
+    <servlet>
+        <servlet-name>PatientProfile</servlet-name>
+        <servlet-class>edu.uta.tsrh.specialnotes.servlets.PatientProfile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Report Generation</servlet-name>
+        <servlet-class>edu.uta.tsrh.reportgeneration.ReportGenerationPendingFiles</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Report Generation Result</servlet-name>
+        <servlet-class>edu.uta.tsrh.reportgeneration.ReportGenerationPendingFilesResult</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Report Generation Tests</servlet-name>
+        <servlet-class>edu.uta.tsrh.reportgeneration.ReportGenerationTests</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Report Generation Test Results</servlet-name>
+        <jsp-file>/reportTestResults.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>Report Generation Consult</servlet-name>
+        <servlet-class>edu.uta.tsrh.reportgeneration.ReportGenerationConsult</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PatientProfile</servlet-name>
+        <url-pattern>/PatientProfile</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>PatientSearch</servlet-name>
+        <servlet-class>edu.uta.tsrh.specialnotes.servlets.PatientSearch</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PatientSearch</servlet-name>
+        <url-pattern>/PatientSearch</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ViewNote</servlet-name>
+        <servlet-class>edu.uta.tsrh.specialnotes.servlets.ViewNote</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ViewNote</servlet-name>
+        <url-pattern>/ViewNote</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>HideNote</servlet-name>
+        <servlet-class>edu.uta.tsrh.specialnotes.servlets.HideNote</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HideNote</servlet-name>
+        <url-pattern>/HideNote</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>AddNote</servlet-name>
+        <servlet-class>edu.uta.tsrh.specialnotes.servlets.AddNote</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddNote</servlet-name>
+        <url-pattern>/AddNote</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>EditNote</servlet-name>
+        <servlet-class>edu.uta.tsrh.specialnotes.servlets.EditNote</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EditNote</servlet-name>
+        <url-pattern>/EditNote</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Report Generation</servlet-name>
+        <url-pattern>/reportgeneration/pendingfiles.org</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Report Generation Result</servlet-name>
+        <url-pattern>/reportgeneration/pendingfiles/pendingfilesresult.org</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Report Generation Tests</servlet-name>
+        <url-pattern>/reportgeneration/tests.org</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Report Generation Test Results</servlet-name>
+        <url-pattern>/reportgeneration/testresults.org</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Report Generation Consult</servlet-name>
+        <url-pattern>/reportgeneration/consult.org</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <display-name>TSRH</display-name>
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+    <servlet>
+        <servlet-name>home page</servlet-name>
+        <servlet-class>edu.uta.tsrh.HomePageController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>home page</servlet-name>
+        <url-pattern>/home.org</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>file tracking page</servlet-name>
+        <servlet-class>edu.uta.tsrh.FileTrackingController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>file tracking page</servlet-name>
+        <url-pattern>/FileTracking</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>search page</servlet-name>
+        <servlet-class>edu.uta.tsrh.filetracking.search.SearchController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>search page</servlet-name>
+        <url-pattern>/SearchResult</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>search results page</servlet-name>
+        <servlet-class>edu.uta.tsrh.filetracking.search.SearchResultController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>search results page</servlet-name>
+        <url-pattern>/FileTrackingResult</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>pending files page</servlet-name>
+        <servlet-class>edu.uta.tsrh.filetracking.pendingfiles.PendingFilesPageController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>pending files page</servlet-name>
+        <url-pattern>/filetracking/todaypendingfilespage.org</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>pending files result page</servlet-name>
+        <servlet-class>edu.uta.tsrh.filetracking.pendingfiles.PendingFilesController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>pending files result page</servlet-name>
+        <url-pattern>/filetracking/todaypendingfiles.org</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>checkout page</servlet-name>
+        <servlet-class>edu.uta.tsrh.filetracking.checkout.CheckOutPageController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>checkout page</servlet-name>
+        <url-pattern>/filetracking/file/checkoutpage.org</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>checkout</servlet-name>
+        <servlet-class>edu.uta.tsrh.filetracking.checkout.CheckOutController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>checkout</servlet-name>
+        <url-pattern>/filetracking/file/checkoutquery.org</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>checkin page</servlet-name>
+        <servlet-class>edu.uta.tsrh.filetracking.checkin.CheckInPageController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>checkin page</servlet-name>
+        <url-pattern>/filetracking/file/checkinpage.org</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>checkin</servlet-name>
+        <servlet-class>edu.uta.tsrh.filetracking.checkin.CheckInController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>checkin</servlet-name>
+        <url-pattern>/filetracking/file/checkinquery.org</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>transfer page</servlet-name>
+        <servlet-class>edu.uta.tsrh.filetracking.transfer.TransferPageController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>transfer page</servlet-name>
+        <url-pattern>/filetracking/file/transferpage.org</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>transfer</servlet-name>
+        <servlet-class>edu.uta.tsrh.filetracking.transfer.TransferController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>transfer</servlet-name>
+        <url-pattern>/filetracking/file/transferquery.org</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>history page</servlet-name>
+        <servlet-class>edu.uta.tsrh.filetracking.history.HistoryPageController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>history page</servlet-name>
+        <url-pattern>/filetracking/file/historypage.org</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>history</servlet-name>
+        <servlet-class>edu.uta.tsrh.filetracking.history.HistoryController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>history</servlet-name>
+        <url-pattern>/filetracking/file/historyquery.org</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>pending dates page</servlet-name>
+        <servlet-class>edu.uta.tsrh.filetracking.pendingdates.PendingDatesPageController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>pending dates page</servlet-name>
+        <url-pattern>/filetracking/file/pendingdatespage.org</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>pending dates add page</servlet-name>
+        <servlet-class>edu.uta.tsrh.filetracking.pendingdates.PendingDatesAddPageController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>pending dates add page</servlet-name>
+        <url-pattern>/filetracking/file/pendingdates/add.org</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>pending dates modify page</servlet-name>
+        <servlet-class>edu.uta.tsrh.filetracking.pendingdates.PendingDatesModifyPageController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>pending dates modify page</servlet-name>
+        <url-pattern>/filetracking/file/pendingdates/modify.org</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>pending dates add</servlet-name>
+        <servlet-class>edu.uta.tsrh.filetracking.pendingdates.PendingDatesAddController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>pending dates add</servlet-name>
+        <url-pattern>/filetracking/file/pendingdates/addDates.org</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>pending dates edit</servlet-name>
+        <servlet-class>edu.uta.tsrh.filetracking.pendingdates.PendingDatesEditController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>pending dates edit</servlet-name>
+        <url-pattern>/filetracking/file/pendingdates/edit.org</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>pending dates delete</servlet-name>
+        <servlet-class>edu.uta.tsrh.filetracking.pendingdates.PendingDatesDeleteController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>pending dates delete</servlet-name>
+        <url-pattern>/filetracking/file/pendingdates/delete.org</url-pattern>
+    </servlet-mapping>
+</web-app>

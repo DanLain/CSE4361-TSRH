@@ -1,0 +1,214 @@
+<%@page import="edu.uta.tsrh.model.PendingFiles"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!--?xml version="1.0" encoding="UTF-8"?-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    
+    
+        <title>Home - Home Page |</title>
+        <meta charset="utf-8">
+
+        <meta name="description" content="Place your description here">
+        <meta name="keywords" content="put, your, keyword, here">
+        <meta name="author" content="Templates.com - website templates provider">
+        <link rel="stylesheet" href="/TSRH/css/reset.css" type="text/css" media="all">
+        <link rel="stylesheet" href="/TSRH/css/layout.css" type="text/css" media="all">
+        <link rel="stylesheet" href="/TSRH/css/style.css" type="text/css" media="all">
+        <link rel="stylesheet" href="/TSRH/css/basic.css" type="text/css" media="all">
+        <link rel="stylesheet" href="/TSRH/css/buttonCSS.css" type="text/css" media="all">
+        <link rel="stylesheet" href="/TSRH/css/tableCSS.css" type="text/css" media="all">
+        <link rel="stylesheet" href="/TSRH/css/comboCSS.css" type="text/css" media="all">
+        <link rel="stylesheet" href="/TSRH/css/radioCSS.css" type="text/css" media="all">
+                <link rel="stylesheet" href="css/help.css" type="text/css" media="all">
+
+       
+        <script type="text/javascript" src="js/cufon-yui.js"></script>
+                <script type="text/javascript" src="js/jquery.pageslide.min.js"></script>
+
+        <script type="text/javascript" src="js/cufon-replace.js"></script>
+        <script type="text/javascript" src="js/Myriad_Pro_400.font.js"></script>        
+
+    
+<meta http-equiv="Content-Script-Type" content="text/javascript" /> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>File tracking Page | Pending files</title>
+<!--Cascading Stylesheets-->
+<link rel="stylesheet" href="/TSRH/css/reset.css" type="text/css" media="all"/>
+<link rel="stylesheet" href="/TSRH/css/layout.css" type="text/css" media="all"/>
+<link rel="stylesheet" href="/TSRH/css/style.css" type="text/css" media="all"/>
+<link href="/TSRH/css/calendar.css" rel="stylesheet" type="text/css" />
+
+<!-- Javascripts -->
+<script type="text/javascript" src="/TSRH/js/maxheight.js"></script>
+<script type="text/javascript" src="/TSRH/js/jquery-1.4.2.min.js" ></script>
+<script type="text/javascript" src="/TSRH/js/cufon-yui.js"></script>
+<script type="text/javascript" src="/TSRH/js/cufon-replace.js"></script>
+<script type="text/javascript" src="/TSRH/js/Myriad_Pro_400.font.js"></script>
+<script type="text/javascript" src="/TSRH/js/script.js"></script>
+<script type="text/javascript" src="/TSRH/js/jquery-1.js"></script>
+<script type="text/javascript" src="/TSRH/js/jquery.js"></script>
+<script type="text/javascript" src="/TSRH/js/cal.js"></script>
+
+<!--[if lt IE 7]>
+	<link rel="stylesheet" href="css/ie/ie6.css" type="text/css" media="screen">
+	<script type="text/javascript" src="js/ie_png.js"></script>
+	<script type="text/javascript">
+		ie_png.fix('.png, #slogan, header nav ul li a, .icon img, .link1, .link1 span');
+	</script>
+<![endif]-->
+<!--[if lt IE 9]>
+	<script type="text/javascript" src="js/html5.js"></script>
+<![endif]-->
+</head>
+<body id="page1" onLoad="new ElementMaxHeight();">
+<div class="wrap">
+<!-- header -->
+	<header>
+		<div class="container">
+			<h1><a href="/TSRH/index.jsp">TSRHC</a></h1>
+			<nav>
+				<ul>
+					
+                                        <li><a href="/TSRH/index.jsp"><strong>Home</strong></a></li>
+                                        <li><a href="/TSRH/ReportSelection.jsp"><strong>Reports</strong></a></li>
+                                        <li><a href="/TSRH/consult.jsp"><strong>Consult</strong></a></li>
+                                        <li class="current"><a href="/TSRH/FileTracking"><strong>File Tracking</strong></a></li>
+                                        <li><a href="/TSRH/notification.jsp"><strong>Set Alert</strong></a></li>
+                                        <li><a href="/TSRH/phone.jsp"><strong>Phone Record</strong></a></li>
+                                        <li><a href="/TSRH/PatientManagement"><strong>Patient Management</strong></a></li>
+                                        <li><a href="/TSRH/test.jsp"><strong>Tests</strong></a></li>
+                                        
+		
+ 				</ul>
+			</nav>
+		  <div id="slogan"></div>
+	 	</div>
+	 </header>
+<!-- content -->
+	<section id="content">
+		<div class="container"><div class="ic">More Website Templates at TemplateMonster.com!</div>
+			<div class="inside">
+				<div class="wrapper indent">
+					<article class="col-1">
+	<h2>Today's Pending files</h2>	
+
+	<div id="tbltxt">			
+<table class="bordered">
+<tr>
+<th>File ID</th>
+<th>Patient Name</th>
+<th>Pending Date</th>
+<th>Location</th>
+<th>Reason</th>
+<th>Staff Name</th>
+</tr>
+<%
+ArrayList<PendingFiles> pendingFileList = (ArrayList<PendingFiles>) request.getAttribute("pendingFileList");
+        String url;
+        int id= 0;
+        String idString = null;
+        String patientName = null;
+        for (int i=0;i<pendingFileList.size();i++)
+        {
+//            url="/TSRH/filetracking/search/results.org?fileID=";
+              //url="PendingFilesResult?fileID=";
+                     PendingFiles pendingFiles = (PendingFiles) pendingFileList.get(i);
+            id=(int)pendingFiles.getFileId();
+            idString = Integer.toString(id);
+            //url= url+idString;
+            patientName = pendingFiles.getPatientFirstName() + " " + pendingFiles.getPatientLastName();
+%>
+<tr>
+<td class="fid"><%= pendingFiles.getFileId()%></td>
+<td class="pname"><%=patientName%></a></td>
+<td class="pedate"><%=pendingFiles.getPendingDate()%></td>
+<td class="location"><%=pendingFiles.getPendingLoaction()%></td>
+<td class="reason"><%= pendingFiles.getReason()%></td>
+<td class="staffname"><%=pendingFiles.getEmployeeName()%></td>
+</tr>
+<%
+}
+%>
+</table>
+<br>
+<form action="/TSRH/FileTracking" method="post">
+    <input type="submit" class="blue button" align="center" style="width:150px" value="File Tracking Home" />
+</form>
+</div>
+   </article>
+
+<ul class="banners col-2">
+ <p>&nbsp;</p>
+    </ul>
+
+<ul class="articles">
+                        <li>
+                            <div class="box">
+                                <span class="icon">
+                                    <img src="/TSRH/images/icon2.png"></span>
+                                <div class="inner">
+                                    <h3>Lab Test</h3>
+                                    <p>Lab test enumerat tentationes deduxit pro singulis patiens. Test details mutari possunt et sic probabis possunt updated quando available</p>
+                                    <!-- <p>Sed ut perspiciatis ungomnis iste natus error sit volup tiatem lautium, totam rem aperiam.<br>& nbsp;<br></p>
+                                    <div>
+                                        <a href="#http://www.tsrhc.org/" class="link1"><span><span><strong>Main Page</strong></span></span></a>
+                                    </div> -->
+                                </div>
+                            </div>
+                          
+                        </li>
+                        <li>
+                            <div class="box">
+                                <span class="icon">
+                                    <img src="/TSRH/images/icon3.png"></span>      
+                                <div class="inner">
+                                    <h3>Consultation</h3>
+                                    <p>Consultations providebit retineo of consultationes pro singulis patiens quos possidet date consultationis, ratio, praescriptio etc</p>
+                                    <!--<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium vo- luptatum deleniti.</p>
+                                    <div>
+                                        <a href="#" class="link1"><span><span><strong>Read More</strong></span></span></a>
+                                    </div>-->
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="box">
+                                <span class="icon">
+                                    <img src="/TSRH/images/icon4.png"></span>           
+                                <div class="inner">
+                                    <h3>Track File</h3>
+                                    <p>Track file page potest dici vestigent lima. Users can reprehendo-in, reprehendo sicco lima Vide album of pendente files etc</p>
+                                    <!--<p>Temporibus autem quibusdam et aut officiis <a href="#">debitis aut rerum</a> necessitatibus saepe eveniet ut et voluptates.</p>
+                                    <div>
+                                        <a href="#" class="link1"><span><span><strong>Read More</strong></span></span></a>
+                                    </div>-->
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+
+	</div>
+	</div>
+	</div>
+	</section>
+</div>
+<!-- footer -->
+<footer>
+	<div class="container">
+		<div class="left">
+			<div class="right">
+				<div class="inside">
+<a rel="nofollow" >Website template</a> designed by TemplateMonster.com<br/><a href="http://www.templates.com/product/illustrations/" class="new_window">Vector Illustrations</a> provided by Templates.com
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<script type="text/javascript">Cufon.now();</script>
+</body>
+</html>

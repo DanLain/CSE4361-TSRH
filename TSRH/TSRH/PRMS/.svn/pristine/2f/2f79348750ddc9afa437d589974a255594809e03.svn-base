@@ -1,0 +1,43 @@
+<div class="box" style="width:500px;background-color: #F0F0F0;">
+    <form action="PatientProfile" method="post" enctype="multipart/form-data">
+        <% String patient = "";%>
+        <table align="center" border='0' style="border: 0;border-color: #FFFFFF">
+            <tr style="text-align: left;vertical-align: central">
+                <td style="border: 0;border-color: #FFFFFF">
+                    <h3>Patient ID Number</h3>
+                </td>
+                <td style="border: 0;border-color: #FFFFFF">
+                    <p>
+                        <input name="patient" class="textbox" type="text" value="<%=patient%>" size="20">
+                    </p>
+                </td>
+            </tr>
+            <tr>			
+                <td style="border: 0px none;">
+                    <h3>Patient Name:(LastName,FirstName)</h3>
+                </td>
+                <td style="border: 0px none;">
+                    <input type="text" class="textbox" name="patientName"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 0px none;">
+                    <h3>Date of Birth:</h3> 
+                </td>
+                <td style="border: 0px none;">
+                    <div id="example" class="k-content">
+                        <input id="DOB" name ="DOB" value="" style="width:165px;height: 19px;padding-top: 1px" />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                   <input name="img" id="files" class="blue button textbox" type="file" />
+                </td>
+            </tr>
+        </table>		
+        <input type="reset" class="blue button" value="Reset"  />       
+        <input type="submit" class="blue button" value="Submit" />
+    </form>
+</div>
+
