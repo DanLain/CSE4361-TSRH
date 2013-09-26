@@ -200,6 +200,10 @@ var/
 sdist/
 develop-eggs/
 .installed.cfg
+tsrh/tsrh/prims/nbproject/build-impl.xml
+tsrh/tsrh/prims/nbproject/genfiles.properties
+tsrh/tsrh/prims/nbproject/private/private.properties
+tsrh/tsrh/prims/nbproject/project.properties
 
 # Installer logs
 pip-log.txt
