@@ -10,4 +10,11 @@ package edu.uta.tsrh.RoleManagement;
  */
 public class CreateUserController {
     
+    public CreateUserController(){
+        
+    }
+    
+    public void Fake() {
+        System.out.println("Remove CreateUserController class, it's completely empty.");
+    }
 }
