@@ -30,16 +30,6 @@
     <!--
                 INITIALIZATION SECTION
             -->
-    <property name="cobertura.dir" value="C:/javastuff/cobertura" />
-
-    <path id="cobertura.classpath">
-        <fileset dir="${cobertura.dir}">
-            <include name="cobertura.jar" />
-            <include name="lib/**/*.jar" />
-        </fileset>
-    </path>
-
-    <taskdef classpathref="cobertura.classpath" resource="tasks.properties" />
     <target name="-pre-init">
         <!-- Empty placeholder for easier customization. -->
         <!-- You can override this target in the ../build.xml file. -->
