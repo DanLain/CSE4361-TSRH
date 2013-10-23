@@ -19,7 +19,7 @@ public class AdminConfigReader {
 	try 
         {			
 	  configFile.load(this.getClass().getClassLoader().
-	  getResourceAsStream("/TSRH_Admin_Config.cfg"));
+	  getResourceAsStream("TSRH_Admin_Config.cfg"));
         }
         catch(Exception exception)
         {
