@@ -17,6 +17,14 @@
         <servlet-name>DisplayRoleController</servlet-name>
         <servlet-class>edu.uta.tsrh.RoleManagement.DisplayRoleController</servlet-class>
     </servlet>
+	<servlet>
+        <servlet-name>UserCreator</servlet-name>
+        <servlet-class>edu.uta.tsrh.RoleManagement.CreateUserController</servlet-class>
+    </servlet>
+	<servlet-mapping>
+        <servlet-name>UserCreator</servlet-name>
+        <url-pattern>/createUser</url-pattern>
+    </servlet-mapping> 
     <servlet>
         <servlet-name>UpdateRoleController</servlet-name>
         <servlet-class>edu.uta.tsrh.RoleManagement.UpdateRoleController</servlet-class>

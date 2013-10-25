@@ -119,7 +119,7 @@
     <!-- header -->
     <%@include file="AdminHeader.jsp" %>
     <!-- Page Content -->
-    <form name="createUserForm" method="POST" onsubmit="return validateForm()" action="userCreationNav.jsp">
+    <form name="createUserForm" method="POST" onsubmit="return validateForm()" action="createUser">
     <section id="content">
         <div class="container">
             <div class="inside">
@@ -232,9 +232,9 @@
                         <tr>
                             <td>
                                  <%
-                                    String created = request.getParameter("created");
+                                    String created = (String) request.getAttribute("created");
                                     if(created != null){
-                                    boolean created_bol = Boolean.parseBoolean(request.getParameter("created"));
+                                    boolean created_bol = Boolean.parseBoolean((String) request.getAttribute("created"));
                                        if(created_bol){
                                   %>
                                   <h4 class="successMessage"> User Created. An e-mail is sent with User Name and Password. </h4>
