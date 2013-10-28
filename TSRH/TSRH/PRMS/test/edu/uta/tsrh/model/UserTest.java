@@ -161,8 +161,28 @@ public class UserTest {
         String v = "Top";
         instance.setPermissionValue(v);
         System.out.println("Remove the PermissionKey attribute and PermissionValue method, it can only be set not retrieved.");
+        int expResult = 1;
+        int result = instance.checkPermissionValueSet();
+        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
+    }
+    
+    /**
+     * Test of checkPermissionValueSet method, of class User.
+     */
+    @Test
+    public void testCheckPermissionValueSet() {
+        System.out.println("checkPermissionValueSet");
+        User test = new User();
+        int expResult = 0;
+        int result = test.checkPermissionValueSet();
+        assertEquals(expResult, result);
+        String v = "test";
+        test.setPermissionValue(v);
+        expResult = 1;
+        result = test.checkPermissionValueSet();
+        assertEquals(expResult, result);
     }
 
     /**
@@ -173,8 +193,28 @@ public class UserTest {
         System.out.println("setPassword");
         String passwordhash = "password1";
         instance.setPassword(passwordhash);
+        int expResult = 1;
+        int result = instance.checkPasswordSet();
+        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
+    }
+    
+    /**
+     * Test of checkPasswordSet method, of class User.
+     */
+    @Test
+    public void testCheckPasswordSet() {
+        System.out.println("checkPasswordSet");
+        User test = new User();
+        int expResult = 0;
+        int result = test.checkPasswordSet();
+        assertEquals(expResult, result);
+        expResult = 1;
+        String passwordhash = "password";
+        test.setPassword(passwordhash);
+        result = test.checkPasswordSet();
+        assertEquals(expResult, result);
     }
 
     /**
@@ -345,8 +385,10 @@ public class UserTest {
     @Test
     public void testSetClearPass() {
         System.out.println("setClearPass - Email password is working probably need to remove.");
-        String cPass = "test";
-        instance.setClearPass(cPass);
+        String expResult = "test";
+        instance.setClearPass(expResult);
+        String result = instance.getClearPass();
+        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }

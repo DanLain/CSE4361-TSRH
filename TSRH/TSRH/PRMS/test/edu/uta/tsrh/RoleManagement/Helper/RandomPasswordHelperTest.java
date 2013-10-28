@@ -44,7 +44,8 @@ public class RandomPasswordHelperTest {
     @Test
     public void testCreateRandomPassword() {
         System.out.println("createRandomPassword");
-        System.out.println(RandomPasswordHelper.createRandomPassword());
+        String result = RandomPasswordHelper.createRandomPassword();
+        assertNotNull(result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }

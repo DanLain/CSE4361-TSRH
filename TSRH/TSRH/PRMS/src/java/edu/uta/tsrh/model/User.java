@@ -97,11 +97,26 @@ public class User {
         this.permissionKey = v;
     }
     
+    public int checkPermissionValueSet() {
+        
+        if ( this.permissionKey.equals("") )
+            return 0;
+        else
+            return 1;
+    }
+    
     public void setPassword(String passwordhash)
     {
 	if(this.password.equals("")){
             this.password = passwordhash;
         }
+    }
+    public int checkPasswordSet() {
+       
+        if ( this.password.equals("") )
+            return 0;
+        else
+            return 1;
     }
     
     public String getEmailId() {

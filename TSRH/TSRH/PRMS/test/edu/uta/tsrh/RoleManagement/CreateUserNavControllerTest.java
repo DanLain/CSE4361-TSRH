@@ -104,10 +104,10 @@ public class CreateUserNavControllerTest {
     @Test
     public void testSetUserName() {
         System.out.println("setUserName");
-        String userName = "test1";
-        System.out.println(instance.getUserName());
-        instance.setUserName(userName);
-        System.out.println(instance.getUserName());
+        String expResult = "test1";
+        instance.setUserName(expResult);
+        String result = instance.getUserName();
+        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
@@ -118,10 +118,10 @@ public class CreateUserNavControllerTest {
     @Test
     public void testSetEmailId() {
         System.out.println("setEmailId");
-        String emailId = "12345";
-        System.out.println(instance.getEmailId());
-        instance.setEmailId(emailId);
-        System.out.println(instance.getEmailId());
+        String expResult = "12345";
+        instance.setEmailId(expResult);
+        String result = instance.getEmailId();
+        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
@@ -132,10 +132,10 @@ public class CreateUserNavControllerTest {
     @Test
     public void testSetPassword() {
         System.out.println("setPassword");
-        String password = "password1";
-        System.out.println(instance.getPassword());
-        instance.setPassword(password);
-        System.out.println(instance.getPassword());
+        String expResult = "password1";
+        instance.setPassword(expResult);
+        String result = instance.getPassword();
+        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
@@ -146,10 +146,10 @@ public class CreateUserNavControllerTest {
     @Test
     public void testSetRole() {
         System.out.println("setRole");
-        String role = "role1";
-        System.out.println(instance.getRole());
-        instance.setRole(role);
-        System.out.println(instance.getRole());
+        String expResult = "role1";
+        instance.setRole(expResult);
+        String result = instance.getRole();
+        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
